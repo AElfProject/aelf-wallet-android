@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/layout_no_identity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/cynao_logo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="@string/what_is_an_ont_id"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="38dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="38dp"
+                android:lineSpacingExtra="1dp"
+                android:text="@string/ontid_info"
+                android:textColor="@color/grey_6E6F70"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/btn_new"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="58dp"
+                android:layout_marginTop="150dp"
+                android:layout_marginRight="58dp"
+                android:background="@color/colorBlack"
+                android:gravity="center"
+                android:text="@string/create_ont_id"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/btn_import"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="58dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="58dp"
+                android:background="@drawable/bg_button"
+                android:gravity="center"
+                android:text="@string/import_ont_id"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="83dp"
+                android:gravity="center"
+                android:text="@string/powered_by_ontology_blockchain"
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/layout_has_identity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" />
+
+</LinearLayout>

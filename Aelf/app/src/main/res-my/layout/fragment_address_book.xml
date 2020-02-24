@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_toolbar" />
+
+    <LinearLayout
+        android:id="@+id/ll_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <FrameLayout
+            android:id="@+id/layoutContainer"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="20dip"
+            android:layout_marginRight="20dip"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/shape_r5_e0e0e0"
+            android:padding="2dp">
+
+            <EditText
+                android:id="@+id/country_et_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:drawableLeft="@mipmap/search"
+                android:drawablePadding="4dp"
+                android:hint="@string/please_search_by_keyword"
+                android:paddingLeft="10dp"
+                android:paddingRight="40dp"
+                android:singleLine="true"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/country_iv_cleartext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:padding="4dp"
+                android:visibility="visible" />
+        </FrameLayout>
+
+        <include layout="@layout/line_e0e0e0" />
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <com.legendwd.hyperpay.aelf.widget.SlideDeleteListView
+                android:id="@+id/country_lv_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cacheColorHint="#000000"
+                android:divider="#e3e3e3"
+                android:dividerHeight="1.0dp"
+                android:fadingEdge="none"
+                android:scrollbars="none"
+                android:scrollingCache="false"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/country_dialog"
+                android:layout_width="80.0dip"
+                android:layout_height="80.0dip"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="30.0dip"
+                android:visibility="invisible" />
+
+            <com.legendwd.hyperpay.aelf.widget.SideBar
+                android:id="@+id/country_sidebar"
+                android:layout_width="30.0dip"
+                android:layout_height="match_parent"
+                android:layout_gravity="right|center"
+                android:layout_marginBottom="5dip" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/information" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/empty_address"
+            android:textColor="#09162D"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+</LinearLayout>

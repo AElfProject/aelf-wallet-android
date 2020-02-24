@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="38dp"
+        android:layout_marginRight="38dp"
+        android:elevation="@dimen/dp_2"
+        app:cardCornerRadius="15dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/dialog_chain_msg_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="19dp"
+                android:text="@string/cross_chain_detected"
+                android:textColor="@color/blue_09162d"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tx_chain_from_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dialog_chain_msg_title"
+                android:layout_marginLeft="120dp"
+                android:layout_marginTop="3dp"
+                android:text="@string/from"
+                android:textColor="@color/gray_787F87"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tx_chain_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dialog_chain_msg_title"
+                android:layout_toRightOf="@+id/tx_chain_from_hint"
+                android:paddingLeft="20dp"
+                android:text=" A chain"
+                android:textColor="@color/blue_09162d"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tx_chain_to_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tx_chain_from"
+                android:layout_marginLeft="120dp"
+                android:layout_marginTop="13dp"
+                android:text="@string/to"
+                android:textColor="@color/gray_787F87"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tx_to_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tx_chain_from"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/tx_chain_to_hint"
+                android:paddingLeft="20dp"
+                android:text=" B chain"
+                android:textColor="@color/blue_09162d"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dialog_chain_next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tx_chain_to_hint"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/gradient_r45_661fb8"
+                android:gravity="center"
+                android:text="@string/confirm"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_welcome_to"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="38dp"
+        android:src="@mipmap/logo_big" />
+
+    <TextView
+        android:id="@+id/tv_welcome_to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_welcome_tip"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:text="@string/welcome_to"
+        android:textColor="@color/blue_09162d"
+        android:textSize="@dimen/sp_18" />
+
+    <TextView
+        android:id="@+id/tv_welcome_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:text="@string/welcome_tip"
+        android:textColor="@color/gray_787F87"
+        android:textSize="@dimen/sp_13" />
+
+    <TextView
+        android:id="@+id/tv_learn_tutorial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_welcome_tip"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/gradient_r45_661fb8"
+        android:gravity="center"
+        android:text="@string/welcome_learn_tutorial"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_14" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_learn_tutorial"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:text="@string/welcome_skip_tutorial"
+        android:textColor="@color/blue_641eb0"
+        android:textSize="@dimen/sp_14" />
+
+</RelativeLayout>

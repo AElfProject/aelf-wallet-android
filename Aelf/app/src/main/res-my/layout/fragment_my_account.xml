@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_toolbar" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="100dp">
+
+            <RelativeLayout
+                android:id="@+id/rel_name"
+                android:layout_width="match_parent"
+                android:layout_height="103dp"
+                android:background="@drawable/shape_banner_bg"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp">
+
+                <com.legendwd.hyperpay.aelf.widget.RoundImageView
+                    android:id="@+id/iv_cover"
+                    android:layout_width="63dp"
+                    android:layout_height="63dp"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerCrop"
+                    app:type="circle" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_toRightOf="@+id/iv_cover"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    tools:text="@string/app_name" />
+
+                <ImageView
+                    android:id="@+id/iv_copy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="20dp"
+                    android:src="@mipmap/copy_white"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rel_password_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:paddingLeft="16dp"
+                android:paddingTop="15dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@mipmap/p_word_hint"
+                    android:drawablePadding="20dp"
+                    android:text="@string/password_hint"
+                    android:textColor="#101829" />
+            </RelativeLayout>
+
+            <include layout="@layout/line_e0e0e0" />
+
+
+            <RelativeLayout
+                android:id="@+id/rel_export_qr_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:paddingLeft="16dp"
+                android:paddingTop="15dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@mipmap/export_qr"
+                    android:drawablePadding="20dp"
+                    android:text="@string/export_qr_code"
+                    android:textColor="#101829" />
+            </RelativeLayout>
+
+            <include layout="@layout/line_e0e0e0" />
+
+            <RelativeLayout
+                android:id="@+id/rel_export_keystore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:paddingLeft="16dp"
+                android:paddingTop="15dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@mipmap/export_keyword"
+                    android:drawablePadding="20dp"
+                    android:text="@string/export_keystore"
+                    android:textColor="#101829" />
+
+            </RelativeLayout>
+
+            <include layout="@layout/line_e0e0e0" />
+
+
+            <LinearLayout
+                android:id="@+id/rel_export_mnemonic_phrase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="15dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawableLeft="@mipmap/export_mnemonic"
+                        android:drawablePadding="20dp"
+                        android:text="@string/export_mnemonic_phrase"
+                        android:textColor="#101829" />
+
+                </RelativeLayout>
+
+                <include layout="@layout/line_e0e0e0"/>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rel_export_private_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:paddingLeft="16dp"
+                android:paddingTop="15dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@mipmap/export_private_key"
+                    android:drawablePadding="20dp"
+                    android:text="@string/export_private_key"
+                    android:textColor="#101829" />
+            </RelativeLayout>
+
+            <include layout="@layout/line_e0e0e0" />
+
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/shape_logout_bg"
+        android:text="@string/logout"
+        android:textAllCaps="false"
+        android:textColor="#641EB0"
+        android:textSize="14sp" />
+</LinearLayout>

@@ -1,0 +1,30 @@
+<resources>
+    <string name="what_is_an_ont_id">What is an ONT ID?</string>
+    <string name="ontid_info">ONT ID is a passport to the blockchain world. It is a distributed identity framework supporting identity verification and authentication for people, assets, objects, and affairs</string>
+    <string name="create_ont_id">CREATE ONT ID</string>
+    <string name="import_ont_id">IMPORT ONT ID</string>
+    <string name="powered_by_ontology_blockchain">Powered by Ontology Blockchain</string>
+    <string name="ont_id_password">ONT ID Password</string>
+    <string name="digits">6 digits</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="re_enter_password">Re-enter password</string>
+    <string name="create_account_policy_1">I agree with Terms of Service and Privacy Policy.</string>
+    <string name="create_account_policy_2">Terms of Service</string>
+    <string name="create_account_policy_3">Privacy Policy</string>
+    <string name="verify_your_identity">VERIFY YOUR IDENTITY</string>
+    <string name="create_notice">You can create an ONT ID only after you have completed verification.</string>
+    <string name="ontid_password_used">ONT ID password is used to protect your identity information.</string>
+    <string name="onto_not_save">ONTO does not save your password, nor help you recover your password. Please remember it carefully.</string>
+    <string name="import_wif">ONT ID Private Key (WIF format) Import</string>
+    <string name="what_wif">What is Private Key (WIF format)?</string>
+    <string name="please_paste_your_private_key_wif_format_here">Please paste your Private Key (WIF format) here.</string>
+    <string name="import1">IMPORT</string>
+    <string name="enter_your_ont_id_password">Enter Your ONT ID Password</string>
+    <string name="export_ontid">EXPORT ONT ID</string>
+    <string name="wif_info">Please save the private key (WIF format) to a secure environment</string>
+    <string name="what_is_private_key_wif_format">What is private key (WIF format)?</string>
+    <string name="copy">copy</string>
+    <string name="wif_copied">WIF COPIED!</string>
+    <string name="enter_your_wallet_password">Enter Your Wallet Password</string>
+    <string name="no_wallet">No Ont Wallet</string>
+</resources>

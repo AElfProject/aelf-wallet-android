@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_choose_chain"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="20dp"
+    android:background="@drawable/shape_chain_purple">
+
+    <ImageView
+        android:id="@+id/iv_chain"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/shape_oval_white"
+        android:src="@drawable/fragmentation_ic_stack" />
+
+    <TextView
+        android:id="@+id/tx_chain_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/iv_chain"
+        android:text="A  Chain"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_19" />
+
+    <TextView
+
+        android:id="@+id/tx_chain_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:text="128,000.00"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_18" />
+
+</RelativeLayout>

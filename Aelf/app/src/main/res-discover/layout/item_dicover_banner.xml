@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
+
+    <com.youth.banner.Banner
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        app:banner_default_image="@mipmap/img_hyper_dragon"
+        app:image_scale_type="center_inside"
+        app:indicator_drawable_selected="@drawable/shape_indicator_selected"
+        app:indicator_drawable_unselected="@drawable/shape_indicator_unselected"
+        app:indicator_height="5dp"
+        app:indicator_margin="5dp"
+        app:indicator_width="5dp" />
+</LinearLayout>

@@ -1,0 +1,115 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    dexOptions {
+        javaMaxHeapSize "4g" // 2g should be also OK
+    }
+
+    defaultConfig {
+        multiDexEnabled true
+        applicationId "com.legendwd.hyperpay.aelf"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk { abiFilters 'armeabi-v7a' }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            zipAlignEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            res.srcDirs += ['src/main/res-assets', 'src/main/res-market'
+                            , 'src/main/res-discover', 'src/main/res-my', 'src/main/res-transaction']
+        }
+    }
+//  自动打包配置
+    signingConfigs {
+        config {
+            keyAlias 'aelf'
+            keyPassword 'legend'
+            storeFile file('aelf.jks')
+            storePassword 'legend'
+        }
+    }
+    lintOptions {
+        disable 'MissingTranslation'
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+    implementation project(':httputil')
+    implementation project(':lib')
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.+'
+    implementation 'com.google.code.gson:gson:2.+'
+    implementation 'com.squareup.retrofit2:converter-gson:2.+'
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.+'
+    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.1.0'
+    implementation 'me.yokeyword:fragmentation:1.3.6'
+    implementation 'me.yokeyword:fragmentation-swipeback:1.3.6'
+    implementation 'com.jakewharton:butterknife:8.+'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.+'
+    implementation 'com.android.support:design:28.+'
+    implementation 'com.githang:status-bar-compat:0.3'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.5.1'
+    implementation 'com.youth.banner:banner:1.4.10'
+    // 基础依赖包，必须要依赖
+    implementation 'com.gyf.immersionbar:immersionbar:3.0.0-beta05'
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    implementation project(path: ':httputil')
+    implementation 'me.grantland:autofittextview:0.2.+'
+    implementation 'io.github.novacrypto:BIP39:0.1.9'
+    implementation 'org.bitcoinj:bitcoinj-core:0.14.7'
+    implementation 'org.web3j:core:4.1.0-android'
+    implementation project(':router')
+    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
+    implementation project(path: ':cyano')
+    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
+    implementation 'com.umeng.umsdk:huawei-basetb:2.6.0.301'
+    implementation 'com.umeng.umsdk:huawei-pushtb:2.6.0.301'
+    implementation 'com.umeng.umsdk:huawei-umengaccs:1.1.3'
+    implementation 'com.umeng.umsdk:meizu-push:3.8.1'
+    implementation 'com.umeng.umsdk:meizu-umengaccs:1.0.6'
+    implementation 'com.umeng.umsdk:xiaomi-push:3.6.9'
+    implementation 'com.umeng.umsdk:xiaomi-umengaccs:1.0.9'
+    //PushSDK必须依赖基础组件库，所以需要加入对应依赖
+    implementation 'com.umeng.umsdk:common:1.5.4'
+    //PushSDK必须依赖utdid库，所以需要加入对应依赖
+    implementation 'com.umeng.umsdk:utdid:1.1.5.3'
+    //PushSDK
+    implementation 'com.umeng.umsdk:push:6.0.1'
+    // bugly
+    implementation 'com.tencent.bugly:crashreport:latest.release'
+    //draglist
+    implementation 'com.github.1993hzw:Androids:1.2.3'
+    implementation 'com.github.CodingEnding:PopupLayout:v1.0'
+    implementation files('libs/core-3.3.3.jar')
+}

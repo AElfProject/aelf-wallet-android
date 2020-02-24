@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ **************************************************************************************
+  ~   Copyright © 2014-2018 Ontology Foundation Ltd.
+  ~   All rights reserved.
+  ~
+  ~   This software is supplied only under the terms of a license agreement,
+  ~   nondisclosure agreement or other written agreement with Ontology Foundation Ltd.
+  ~   Use, redistribution or other disclosure of any parts of this
+  ~   software is prohibited except in accordance with the terms of such written
+  ~   agreement with Ontology Foundation Ltd. This software is confidential
+  ~   and proprietary information of Ontology Foundation Ltd.
+  ~
+  ~ **************************************************************************************
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:background="@color/green_196BD8">
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
+            android:alpha="0.8"
+            android:gravity="center_vertical"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+</LinearLayout>

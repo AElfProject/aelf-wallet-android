@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_toolbar" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="100dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@drawable/shape_banner_bg"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.legendwd.hyperpay.aelf.widget.RoundImageView
+                    android:id="@+id/iv_cover"
+                    android:layout_width="63dp"
+                    android:layout_height="63dp"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/layer_portrait_bg"
+                    app:type="circle" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/img_head"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_horizontal"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    tools:text="身份名" />
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rel_my_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:paddingLeft="16dp"
+                android:paddingTop="15dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/my_account"
+                    android:textColor="#101829" />
+            </RelativeLayout>
+
+            <include layout="@layout/line_e0e0e0" />
+
+            <RelativeLayout
+                android:id="@+id/rel_address_book"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:paddingLeft="16dp"
+                android:paddingTop="15dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/address_book"
+                    android:textColor="#101829" />
+
+            </RelativeLayout>
+
+            <include layout="@layout/line_e0e0e0" />
+
+            <RelativeLayout
+                android:id="@+id/rel_notifications"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:paddingLeft="16dp"
+                android:paddingTop="15dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:id="@+id/tv_messages"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_un_read"
+                    android:layout_centerVertical="true"
+                    android:text="@string/messages"
+                    android:textColor="#101829" />
+
+                <TextView
+                    android:id="@+id/tv_un_read"
+                    android:layout_width="wrap_content"
+                    android:layout_height="16dp"
+                    android:layout_marginLeft="-5dp"
+                    android:layout_marginBottom="-10dp"
+                    android:layout_toRightOf="@+id/tv_messages"
+                    android:background="@drawable/gradient_r10_e8353d"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:minWidth="16dp"
+                    android:minHeight="16dp"
+                    android:paddingLeft="@dimen/dp_3"
+                    android:paddingRight="@dimen/dp_3"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:visibility="visible" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="#e0e0e0" />
+
+            <RelativeLayout
+                android:id="@+id/rel_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:paddingLeft="16dp"
+                android:paddingTop="15dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/settings"
+                    android:textColor="#101829" />
+            </RelativeLayout>
+
+            <include layout="@layout/line_e0e0e0" />
+
+            <RelativeLayout
+                android:id="@+id/rel_help"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:paddingLeft="16dp"
+                android:paddingTop="15dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/help"
+                    android:textColor="#101829" />
+
+            </RelativeLayout>
+
+            <include layout="@layout/line_e0e0e0" />
+
+            <RelativeLayout
+                android:id="@+id/rel_user_agreement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:paddingLeft="16dp"
+                android:paddingTop="15dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/user_agreement"
+                    android:textColor="#101829" />
+
+            </RelativeLayout>
+
+            <include layout="@layout/line_e0e0e0" />
+
+            <RelativeLayout
+                android:id="@+id/rel_about_us"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:paddingLeft="16dp"
+                android:paddingTop="15dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/about_us"
+                    android:textColor="#101829" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="#e0e0e0" />
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_un_read"
+        android:layout_centerInParent="true"
+        android:text="Transaction Notice"
+        android:textColor="@color/blue_202941"
+        android:textSize="@dimen/sp_13"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_un_read"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginBottom="-10dp"
+        android:layout_toRightOf="@+id/tv_title"
+        android:background="@drawable/gradient_r10_e8353d"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:minWidth="16dp"
+        android:minHeight="16dp"
+        android:paddingLeft="@dimen/dp_3"
+        android:paddingRight="@dimen/dp_3"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:visibility="gone" />
+</RelativeLayout>

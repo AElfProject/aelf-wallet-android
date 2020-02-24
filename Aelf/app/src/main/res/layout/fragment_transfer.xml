@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    xmlns:android="http://schemas.android.com/apk/res/android" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_toolbar" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gradient_661fb8"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
+
+            <com.legendwd.hyperpay.aelf.widget.webview.DWebView
+                android:id="@+id/wv_bridge"
+                android:layout_width="0dp"
+                android:layout_height="0dp" />
+
+            <TextView
+                android:id="@+id/tv_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12"
+                android:textStyle="bold"
+                tools:text="A-chain Elf Balance:" />
+
+            <TextView
+                android:id="@+id/tv_balance_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_balance"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="bold"
+                tools:text="1000.00 ELF" />
+
+        </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/shape_r10_e0e0e0"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <EditText
+                android:id="@+id/et_address"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="@string/receiver_address"
+                android:imeOptions="actionNext"
+                android:singleLine="true"
+                android:textColorHint="@color/gray_787F87"
+                android:textSize="@dimen/sp_13" />
+
+            <ImageView
+                android:id="@+id/iv_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:padding="10dp"
+                android:src="@mipmap/receiver" />
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/et_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/shape_r10_e0e0e0"
+            android:digits="0123456789."
+            android:hint="@string/transfer_amount"
+            android:imeOptions="actionNext"
+            android:inputType="numberDecimal"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_12"
+            android:paddingRight="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_12"
+            android:singleLine="true"
+            android:textColorHint="@color/gray_787F87"
+            android:textSize="@dimen/sp_13" />
+
+        <EditText
+            android:id="@+id/et_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/shape_r10_e0e0e0"
+            android:hint="@string/notes_optional"
+            android:paddingLeft="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_12"
+            android:paddingRight="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_12"
+            android:textColorHint="@color/gray_787F87"
+            android:textSize="@dimen/sp_13" />
+
+        <LinearLayout
+            android:id="@+id/linearbtn_info"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@mipmap/ic_info"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_787F87"
+                android:text="@string/transferfragment_tip01"
+                android:textSize="@dimen/sp_13" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/gradient_r45_661fb8"
+            android:gravity="center"
+            android:text="@string/next"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14" />
+
+    </LinearLayout>
+</ScrollView>

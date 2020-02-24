@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorAccent">#ffffff</color>
+
+    <color name="white">#ffffff</color>
+    <color name="white_f3f5f9">#f3f5f9</color>
+    <color name="white_e6f3f5f9">#e6f3f5f9</color>
+    <color name="blue_641eb0">#641EB0</color>
+    <color name="blue_09162d">#09162D</color>
+    <color name="blue_101829">#101829</color>
+    <color name="black">#000</color>
+    <color name="gray_787F87">#787F87</color>
+    <color name="blue_202941">#202941</color>
+    <color name="gray_E0E0E0">#E0E0E0</color>
+
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="result_view">#b0000000</color>
+    <color name="possible_result_points">#c0ffff00</color>
+    <color name="head_bg">#130C22</color>
+    <color name="yellow">#BA8E2F</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="colorC">#CCCCCC</color>
+    <color name="btninvalid">#f33213</color>
+    <color name="color_F9B74B">#F9B74B</color>
+    <color name="color_FF4946">#FF4946</color>
+    <color name="color_316FF6">#316FF6</color>
+</resources>

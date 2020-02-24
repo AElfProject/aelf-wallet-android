@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/inc_trans_title"
+        layout="@layout/layout_toolbar" />
+
+    <ImageView
+        android:id="@+id/iv_transaction_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:src="@mipmap/added"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inc_trans_title" />
+
+    <TextView
+        android:id="@+id/tv_transaction_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/transaction_successful"
+        android:textColor="@color/blue_09162d"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_transaction_status" />
+
+    <TextView
+        android:id="@+id/tv_transaction_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="15 Mar 2018 09:12 AM"
+        android:textColor="@color/blue_09162d"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_transaction_status" />
+
+    <TextView
+        android:id="@+id/tv_error_details"
+        android:layout_width="match_parent"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_height="50dp"
+        android:background="@drawable/shape_record_fail"
+        android:gravity="center"
+        android:maxEms="15"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="You need to re-sign transaction to initiate a transfer"
+        android:textColor="#FF4946"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:visibility="gone"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_transaction_date" />
+
+    <TextView
+        android:id="@+id/tv_balance_tx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/balance_tx"
+        android:textColor="@color/gray_787F87"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_error_details" />
+
+    <TextView
+        android:id="@+id/tv_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="85dp"
+        android:layout_marginTop="35dp"
+        android:text="1.2345 ELF"
+        android:textColor="@color/blue_09162d"
+        android:textSize="@dimen/sp_18"
+        app:layout_constraintLeft_toLeftOf="@id/tv_balance_tx"
+        app:layout_constraintTop_toBottomOf="@+id/tv_error_details" />
+
+    <TextView
+        android:id="@+id/tv_minerfee_tx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/minerfee_tx"
+        android:textColor="@color/gray_787F87"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_balance_tx" />
+
+    <TextView
+        android:id="@+id/tv_minerfee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="85dp"
+        android:layout_marginTop="25dp"
+        android:text="0.00023455 ELF"
+        android:textColor="@color/blue_09162d"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintLeft_toLeftOf="@id/tv_minerfee_tx"
+        app:layout_constraintTop_toBottomOf="@+id/tv_balance" />
+
+    <TextView
+        android:id="@+id/tv_to_tx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/to_tx"
+        android:textColor="@color/gray_787F87"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_minerfee_tx" />
+
+    <TextView
+        android:id="@+id/tv_to_address"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="85dp"
+        android:layout_marginTop="20dp"
+        android:drawableRight="@mipmap/copy_grey"
+        android:drawablePadding="@dimen/dp_5"
+        android:text="1BvBMSEYetqEYstWetqTFn5A 47hjdh421"
+        android:textColor="@color/blue_09162d"
+        android:textSize="@dimen/sp_13"
+        app:layout_constraintLeft_toLeftOf="@id/tv_to_tx"
+        app:layout_constraintTop_toBottomOf="@+id/tv_minerfee" />
+
+    <TextView
+        android:id="@+id/tv_from_tx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/from_tx"
+        android:textColor="@color/gray_787F87"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_to_tx" />
+
+
+    <TextView
+        android:id="@+id/tv_from_address"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="85dp"
+        android:layout_marginTop="20dp"
+        android:drawableRight="@mipmap/copy_grey"
+        android:drawablePadding="@dimen/dp_5"
+        android:text="1BvBMSEYetqEYstWetqTFn5A 47hjdh421"
+        android:textColor="@color/blue_09162d"
+        android:textSize="@dimen/sp_13"
+        app:layout_constraintLeft_toLeftOf="@id/tv_from_tx"
+        app:layout_constraintTop_toBottomOf="@+id/tv_to_address" />
+
+    <TextView
+        android:id="@+id/tv_memo_tx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/memo_tx"
+        android:textColor="@color/gray_787F87"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_from_tx" />
+
+    <TextView
+        android:id="@+id/tv_memo"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="85dp"
+        android:layout_marginTop="20dp"
+        android:drawableRight="@mipmap/copy_grey"
+        android:drawablePadding="@dimen/dp_5"
+        android:text="Cross-chain transaction from chain-A to chain-B"
+        android:textColor="@color/blue_09162d"
+        android:textSize="@dimen/sp_13"
+        app:layout_constraintLeft_toLeftOf="@id/tv_from_tx"
+        app:layout_constraintTop_toBottomOf="@+id/tv_from_address" />
+
+    <View
+        android:id="@+id/v_line"
+        android:layout_width="250dp"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="35dp"
+        android:background="@color/gray_787F87"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_memo_tx"></View>
+
+    <TextView
+        android:id="@+id/tv_txid_tx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/txid_tx"
+        android:textColor="@color/gray_787F87"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_line" />
+
+    <TextView
+        android:id="@+id/tv_txid"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="85dp"
+        android:layout_marginTop="28dp"
+        android:drawableRight="@mipmap/copy_grey"
+        android:drawablePadding="@dimen/dp_5"
+        android:lines="1"
+        android:text="vBMS....EYetqEY"
+        android:textColor="@color/blue_09162d"
+        android:textSize="@dimen/sp_13"
+        app:layout_constraintLeft_toLeftOf="@id/tv_from_tx"
+        app:layout_constraintTop_toBottomOf="@+id/v_line" />
+
+    <TextView
+        android:id="@+id/tv_block_tx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/block_tx"
+        android:textColor="@color/gray_787F87"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_txid_tx" />
+
+    <TextView
+        android:id="@+id/tv_block"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="85dp"
+        android:layout_marginTop="28dp"
+        android:lines="1"
+        android:text="6488836"
+        android:textColor="@color/blue_09162d"
+        android:textSize="@dimen/sp_13"
+        app:layout_constraintLeft_toLeftOf="@id/tv_block_tx"
+        app:layout_constraintTop_toBottomOf="@+id/tv_txid" />
+
+    <ImageView
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/black"
+        app:layout_constraintLeft_toLeftOf="@id/tv_txid"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_line" />
+
+    <TextView
+        android:id="@+id/tv_more_derails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:text="View more details in Aelf explorer"
+        android:textColor="@color/blue_641eb0"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+</android.support.constraint.ConstraintLayout>

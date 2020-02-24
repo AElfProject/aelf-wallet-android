@@ -1,0 +1,31 @@
+<!--<resources>--><!--<string name="what_is_an_ont_id">什么是ONT ID？</string>--><!--<string name="ontid_info">Ontology DID（简称：ONT ID）是一个去中心化的身份标识协议，基于W3C的DID规范。协议支持各类实体包括人、组织机构、物品及内容的分布式和多样化的确权、识别、认证等协同服务。</string>--><!--<string name="create_ont_id">创建ONT ID</string>--><!--<string name="import_ont_id">导入ONT ID</string>--><!--<string name="powered_by_ontology_blockchain">Powered by Ontology Blockchain</string>--><!--<string name="ont_id_password">设置ONT ID密码</string>--><!--<string name="digits">请输入6位数字密码</string>--><!--<string name="confirm_password">确认密码</string>--><!--<string name="re_enter_password">重复密码</string>--><!--<string name="verify_your_identity">认证身份</string>--><!--<string name="create_notice">只有先进行认证才可以创建ONT ID。</string>--><!--<string name="create_account_policy_1">我已阅读并同意服务条款和隐私策略。</string>--><!--<string name="create_account_policy_2">服务条款</string>--><!--<string name="create_account_policy_3">隐私策略</string>--><!--<string name="ontid_password_used">ONT ID 密码用于保护您的身份信息。</string>--><!--<string name="onto_not_save">ONTO 不存储您的密码，也无法帮您找回，请务必牢记。</string>--><!--<string name="import_wif">导入ONT ID私钥（WIF格式）</string>--><!--<string name="what_wif">什么是私钥（WIF格式）？</string>--><!--<string name="please_paste_your_private_key_wif_format_here">请输入52位的WIF文本</string>--><!--<string name="import1">导入</string>--><!--<string name="enter_your_ont_id_password">请输入ONT ID密码</string>--><!--<string name="export_ontid">导出ONT ID</string>--><!--<string name="wif_info">请在安全环境下保存私钥 (WIF 格式)</string>--><!--<string name="what_is_private_key_wif_format">什么是私钥(WIF 格式)?</string>--><!--<string name="copy">复制</string>--><!--<string name="wif_copied">WIF 已复制!</string>--><!--<string name="enter_your_wallet_password">请输入您得钱包密码</string>--><!--<string name="no_wallet">没有ONT 钱包</string>--><!--</resources>-->
+<resources>
+    <string name="what_is_an_ont_id">What is an ONT ID?</string>
+    <string name="ontid_info">ONT ID is a passport to the blockchain world. It is a distributed identity framework supporting identity verification and authentication for people, assets, objects, and affairs</string>
+    <string name="create_ont_id">CREATE ONT ID</string>
+    <string name="import_ont_id">IMPORT ONT ID</string>
+    <string name="powered_by_ontology_blockchain">Powered by Ontology Blockchain</string>
+    <string name="ont_id_password">ONT ID Password</string>
+    <string name="digits">6 digits</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="re_enter_password">Re-enter password</string>
+    <string name="create_account_policy_1">I agree with Terms of Service and Privacy Policy.</string>
+    <string name="create_account_policy_2">Terms of Service</string>
+    <string name="create_account_policy_3">Privacy Policy</string>
+    <string name="verify_your_identity">VERIFY YOUR IDENTITY</string>
+    <string name="create_notice">You can create an ONT ID only after you have completed verification.</string>
+    <string name="ontid_password_used">ONT ID password is used to protect your identity information.</string>
+    <string name="onto_not_save">ONTO does not save your password, nor help you recover your password. Please remember it carefully.</string>
+    <string name="import_wif">ONT ID Private Key (WIF format) Import</string>
+    <string name="what_wif">What is Private Key (WIF format)?</string>
+    <string name="please_paste_your_private_key_wif_format_here">Please paste your Private Key (WIF format) here.</string>
+    <string name="import1">IMPORT</string>
+    <string name="enter_your_ont_id_password">Enter Your ONT ID Password</string>
+    <string name="export_ontid">EXPORT ONT ID</string>
+    <string name="wif_info">Please save the private key (WIF format) to a secure environment</string>
+    <string name="what_is_private_key_wif_format">What is private key (WIF format)?</string>
+    <string name="copy">copy</string>
+    <string name="wif_copied">WIF COPIED!</string>
+    <string name="enter_your_wallet_password">Enter Your Wallet Password</string>
+    <string name="no_wallet">No Ont Wallet</string>
+</resources>

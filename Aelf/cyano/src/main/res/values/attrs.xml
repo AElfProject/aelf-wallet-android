@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ /***************************************************************************************
+  ~ * Copyright © 2014-2018 Ontology Foundation Ltd.
+  ~ * All rights reserved.
+  ~ *
+  ~ * This software is supplied only under the terms of a license agreement,
+  ~ * nondisclosure agreement or other written agreement with Ontology Foundation Ltd.
+  ~ * Use, redistribution or other disclosure of any parts of this
+  ~ * software is prohibited except in accordance with the terms of such written
+  ~ * agreement with Ontology Foundation Ltd. This software is confidential
+  ~ * and proprietary information of Ontology Foundation Ltd.
+  ~ *
+  ~ ****************************************************************************************/
+  -->
+
+<resources>
+    <declare-styleable name="PswInputView">
+        <attr name="count" format="integer" />
+        <attr name="divide" format="integer" />
+        <attr name="border_color" format="color" />
+        <attr name="dot_color" format="color" />
+    </declare-styleable>
+    <declare-styleable name="PickerView">
+        <attr name="lineColor" format="color|reference" />
+        <attr name="selectedTextColor" format="color|reference" />
+        <attr name="textSize" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="JPTabBar">
+        <attr name="TabNormalColor" format="reference|color" />
+        <attr name="TabSelectColor" format="reference|color" />
+        <attr name="TabSelectBg" format="reference|color" />
+        <attr name="TabTextSize" format="dimension|reference" />
+        <attr name="TabIconSize" format="dimension|reference" />
+        <attr name="TabIconFilter" format="boolean" />
+        <attr name="TabMargin" format="dimension|reference" />
+        <attr name="TabAnimate" format="enum">
+            <enum name="Flip" value="0" />
+            <enum name="Rotate" value="1" />
+            <enum name="Scale" value="2" />
+            <enum name="Jump" value="3" />
+            <enum name="Scale2" value="4" />
+            <enum name="None" value="4" />
+        </attr>
+        <attr name="TabMiddleBottomDis" format="dimension|reference" />
+        <attr name="TabMiddleView" format="reference" />
+        <attr name="TabMiddleHMargin" format="dimension|reference" />
+        <attr name="BadgeColor" format="reference|color" />
+        <attr name="BadgePadding" format="dimension|reference" />
+        <attr name="BadgeTextSize" format="reference|dimension" />
+        <attr name="BadgeVerticalMargin" format="reference|dimension" />
+        <attr name="BadgeHorizonalMargin" format="reference|dimension" />
+    </declare-styleable>
+    <declare-styleable name="PullToRefreshLayout">
+        <attr name="view_error" format="reference" />
+        <attr name="view_empty" format="reference" />
+        <attr name="view_loading" format="reference" />
+    </declare-styleable>
+    <item name="tag_name" type="id" />
+    <item name="tag_pubKey" type="id" />
+
+    <declare-styleable name="CustomTitleBar">
+        <attr name="title_background_color" format="reference|integer" />
+        <attr name="left_button_visible" format="boolean" />
+        <attr name="right_button_visible" format="boolean" />
+        <attr name="title_text" format="string" />
+        <attr name="title_text_color" format="color" />
+        <attr name="title_text_size" format="dimension|reference" />
+        <attr name="title_text_drawable" format="reference|integer" />
+        <attr name="right_button_text" format="string" />
+        <attr name="right_button_text_color" format="color" />
+        <attr name="right_button_drawable" format="reference|integer" />
+        <attr name="left_button_text" format="string" />
+        <attr name="left_button_text_color" format="color" />
+        <attr name="left_button_drawable" format="reference|integer" />
+    </declare-styleable>
+
+    <declare-styleable name="ItemLineDesc">
+        <attr name="left_text" format="string" />
+        <attr name="right_text" format="string" />
+    </declare-styleable>
+    <declare-styleable name="arkTitle">
+        <attr name="name" format="string" />
+        <attr name="name_right" format="string" />
+    </declare-styleable>
+    <declare-styleable name="authDetail">
+        <attr name="title" format="string" />
+        <attr name="data" format="string" />
+        <attr name="data_color" format="color" />
+    </declare-styleable>
+
+    <string-array name="release_port">
+        <item>http://dappnode1.ont.io</item>
+        <item>http://dappnode2.ont.io</item>
+        <item>http://dappnode3.ont.io</item>
+        <item>http://dappnode4.ont.io</item>
+    </string-array>
+    <string-array name="debug_port">
+        <item>http://polaris1.ont.io</item>
+        <item>http://polaris2.ont.io</item>
+        <item>http://polaris3.ont.io</item>
+        <item>http://polaris4.ont.io</item>
+        <item>http://polaris5.ont.io</item>
+    </string-array>
+</resources>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="30dp">
+
+        <include layout="@layout/layout_toolbar" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="27dp"
+            android:layout_marginTop="47dp"
+            android:layout_marginRight="27dp"
+            android:gravity="center_horizontal"
+            android:text="@string/mnemonic_confirm_tip"
+            android:textColor="@color/gray_787F87"
+            android:textSize="@dimen/sp_13" />
+
+        <RelativeLayout
+            android:id="@+id/rel_word"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/shape_r10_e0e0e0"
+            android:padding="15dp">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"></android.support.v7.widget.RecyclerView>
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="60dp"></android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/tv_done"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/gradient_r45_661fb8"
+            android:gravity="center"
+            android:text="@string/done"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14" />
+
+    </LinearLayout>
+
+</ScrollView>

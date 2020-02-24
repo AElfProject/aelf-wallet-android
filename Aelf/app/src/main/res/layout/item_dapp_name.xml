@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="94dp">
+
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginLeft="14dp"
+        android:layout_centerVertical="true" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="17dp"
+        android:layout_toRightOf="@+id/img_logo"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:singleLine="true"
+            android:textSize="@dimen/sp_18"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            tools:text="IOST Play" />
+
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title"
+            android:layout_marginTop="6dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/gray_787F87"
+            tools:text="AllAllAllAlAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAlllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAllAll" />
+    </LinearLayout>
+
+</RelativeLayout>

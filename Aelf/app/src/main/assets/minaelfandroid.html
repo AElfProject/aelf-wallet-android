@@ -1,0 +1,726 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Hello AElf</title>
+</head>
+
+<body>
+    <h1>minaelf</h1>
+    <script type="text/javascript" src="dsbridge.js"></script>
+
+<!--    <script type="text/javascript" src="https://unpkg.com/aelf-sdk@latest/dist/aelf.umd.js"></script>-->
+<!--    <script type="text/javascript"-->
+<!--            src="https://unpkg.com/aelf-sdk-cross-chain@latest/dist/aelf-cross-chain.umd.js"></script>-->
+
+    <script type="text/javascript" src="aelf.umd.js"></script>
+    <script type="text/javascript" src="aelf-cross-chain.umd.js"></script>
+
+    <script type="text/javascript">
+        AElf = window.AElf;
+        const Wallet = AElf.wallet;
+        window.onerror = function (err) {
+            //  log('window.onerror: ' + err)
+        }
+
+        function connectWebViewJavascriptBridge(callback) {
+            if (window.WebViewJavascriptBridge) {
+                callback(WebViewJavascriptBridge)
+            } else {
+                document.addEventListener('WebViewJavascriptBridgeReady', function () {
+                    callback(WebViewJavascriptBridge)
+                }, false);
+            }
+        }
+
+        connectWebViewJavascriptBridge(function (bridge) {
+            bridge.init(function (message, responseCallback) {
+                console.log('JS got a message', message);
+                var data = {
+                    'Javascript Responds': '测试中文!'
+                };
+
+                console.log('JS responding with', data);
+                dsBridge.call("onResult", JSON.stringify(data));
+            });
+            var uniqueId = 1
+            function log(message, data, type) {
+                var log = document.getElementById('log')
+                var el = document.createElement('div')
+                el.className = type == 'native'
+                    ? 'logLine_Native'
+                    : 'logLine_JS'
+                el.innerHTML = uniqueId++ + '. ' + message + ':<br/>' + JSON.stringify(data)
+                if (log.children.length) {
+                    log.insertBefore(el, log.children[0])
+                } else {
+                    log.appendChild(el)
+                }
+            }
+
+            bridge.registerHandler('testJavascriptHandler', function (data, responseCallback) {
+                log('iOS called testJavascriptHandler with', data, 'native')
+                var responseData = {
+                    'Javascript Says': 'Right back atcha!'
+                }
+                log('JS responding with', responseData, 'native')
+                dsBridge.call("onResult", JSON.stringify(responseData));
+            })
+
+            bridge.registerHandler('getWalletByMnemonicJS', function (data, responseCallback) {
+                log('iOS called getWalletByMnemonicJS with', data, 'native')
+                //let mnemonic = 'weekend merge garden buddy future twelve tenant stone remind awake bomb dust'
+                var mnemonicJson = data //mnemonic 字符串
+                var mnemonic = JSON.parse(mnemonicJson).mnemonic;
+                let elfWallet = Wallet.getWalletByMnemonic(mnemonic);
+                let keyPair = elfWallet.keyPair
+                //# 产生私钥
+                let privateKey = elfWallet.privateKey
+                //# 产生地址
+                let address = elfWallet.address
+
+                let getPub = keyPair.getPublic()
+                let publicKeyDapp = keyPair.getPublic('hex')
+                let publicKey = JSON.stringify({
+                    x: getPub
+                        .x
+                        .toString('hex'),
+                    y: getPub
+                        .y
+                        .toString('hex')
+                })
+
+                let signedAddress = keyPair.sign(address)
+                // document.writeln('signedAddress = ' + JSON.stringify(signedAddress))
+                var responseData = {
+                    'privateKey': privateKey,
+                    'publicKey': publicKey,
+                    'publicKeyDapp': publicKeyDapp,
+                    'signedAddress': JSON.stringify(signedAddress),
+                    'address': address
+                }
+                log('iOS called getWalletByMnemonicJS Result ', responseData, 'native')
+                dsBridge.call("onResult", JSON.stringify(responseData));
+            })
+
+            bridge.registerHandler('getWalletKeyStoreJS', function (data, responseCallback) {
+                try {
+                    log('iOS called getWalletKeyStoreJS1 with', data, 'native')
+
+                    var keyStoreJson = JSON.parse(data) //mnemonic 字符串
+
+                    let privateKeyStr = keyStoreJson.privateKey
+                    //# 密码
+                    let password = keyStoreJson.password
+                    // 验证地址格式
+                    let elfWallet = Wallet.getWalletByPrivateKey(privateKeyStr)
+                    log('iOS called getWalletKeyStoreJS3 with', keyStoreJson, 'native')
+
+                    let privateKey = elfWallet.privateKey
+                    //# 产生地址
+                    let address = elfWallet.address
+                    const keystroeObj = {
+                        address,
+                        privateKey,
+                        mnemonic: ''
+                    }
+
+                    //# 产生keystore
+                    const keyStore = Wallet
+                        .keyStore
+                        .getKeystore(keystroeObj, password, {}, 1);
+                    var responseData = {
+                        'keystore': JSON.stringify(keyStore),
+                        'success': 1
+                    }
+                    log('iOS called getWalletKeyStoreJS with', responseData, 'native')
+                    dsBridge.call("onResult", JSON.stringify(responseData));
+                } catch (err) {
+                    log('iOS called getWalletKeyStoreJS with', err, 'native')
+                    //TODO handle the exception
+                    var responseData = {
+                        'keystore': err.message,
+                        'success': 0
+                    }
+                    dsBridge.call("onResult", JSON.stringify(responseData));
+                }
+
+            })
+
+            bridge.registerHandler('importWalletKeyStoreJS', function (data, responseCallback) {
+                try {
+
+                    var keyStoreJson = JSON.parse(data)
+
+
+                    let keystore = JSON.parse(keyStoreJson.keystore)
+                    //# 密码
+                    let password = keyStoreJson.password
+
+                    //# 产生keystore
+                    const unlockData = Wallet
+                        .keyStore
+                        .unlockKeystore(keystore, password);
+
+                    if ("privateKey" in unlockData) {
+                        //# 产生私钥
+                        let privateKey = unlockData.privateKey
+                        let elfWallet = Wallet.getWalletByPrivateKey(privateKey)
+                        let keyPair = elfWallet.keyPair
+                        console.log('keyPair: ', JSON.stringify(keyPair));
+                        //# 产生地址
+                        let address = elfWallet.address
+                        let publicKeyDapp = keyPair.getPublic('hex')
+                        let getPub = keyPair.getPublic()
+                        let publicKey = JSON.stringify({
+                            x: getPub
+                                .x
+                                .toString('hex'),
+                            y: getPub
+                                .y
+                                .toString('hex')
+                        })
+                        // let x  = publicKey.x.toString('hex')
+                        //console.log('publicKey :',publicKey)
+
+                        let signedAddress = keyPair.sign(address)
+                        // document.writeln('signedAddress = ' + JSON.stringify(signedAddress))
+                        var responseData = {
+                            'privateKey': privateKey,
+                            'publicKey': publicKey,
+                            'publicKeyDapp': publicKeyDapp,
+                            'signedAddress': signedAddress,
+                            'address': address
+                        }
+                        log('iOS called getWalletByMnemonicJS Result ', responseData, 'native')
+                        dsBridge.call("onResult", JSON.stringify(responseData));
+                    } else {
+                        var responseData = {
+                            'privateKey': '',
+                            'publicKey': '',
+                            'publicKeyDapp': '',
+                            'signedAddress': '',
+                            'address': ''
+                        }
+                        dsBridge.call("onResult", JSON.stringify(responseData));
+                    }
+
+                } catch (err) {
+                    log('iOS called importWalletKeyStoreJS4 with', err, 'native')
+                    //TODO handle the exception
+                    var responseData = {
+                        'privateKey': '',
+                        'publicKey': '',
+                        'publicKeyDapp': '',
+                        'signedAddress': '',
+                        'address': ''
+                    }
+                    dsBridge.call("onResult", JSON.stringify(responseData));
+                }
+
+            })
+
+            bridge.registerHandler('importWalletPrivateKeyJS', function (data, responseCallback) {
+                try {
+
+                    var keyStoreJson = JSON.parse(data)
+
+                    //# 密码
+                    let password = keyStoreJson.password
+
+                    //# 获取私钥
+                    let privateKey = keyStoreJson.privateKey
+
+                    let elfWallet = Wallet.getWalletByPrivateKey(privateKey)
+                    let keyPair = elfWallet.keyPair
+
+                    console.log('keyPair: ', JSON.stringify(keyPair));
+                    //# 产生地址
+                    let address = elfWallet.address
+                    let publicKeyDapp = keyPair.getPublic('hex')
+                    let getPub = keyPair.getPublic()
+                    let publicKey = JSON.stringify({
+                        x: getPub
+                            .x
+                            .toString('hex'),
+                        y: getPub
+                            .y
+                            .toString('hex')
+                    })
+                    // let x  = publicKey.x.toString('hex')
+                    //console.log('publicKey :',publicKey)
+
+                    let signedAddress = keyPair.sign(address)
+                    // document.writeln('signedAddress = ' + JSON.stringify(signedAddress))
+                    var responseData = {
+                        'privateKey': privateKey,
+                        'publicKey': publicKey,
+                        'publicKeyDapp': publicKeyDapp,
+                        'signedAddress': signedAddress,
+                        'address': address
+                    }
+                    dsBridge.call("onResult", JSON.stringify(responseData));
+
+                } catch (err) {
+                    //TODO handle the exception
+                    var responseData = {
+                        'privateKey': '',
+                        'publicKey': '',
+                        'publicKeyDapp': '',
+                        'signedAddress': '',
+                        'address': ''
+                    }
+                    dsBridge.call("onResult", JSON.stringify(responseData));
+                }
+
+            })
+
+            //传 json {"privateKey":"xx","toAddress":"xx,"amount":100,"symbol":"xx","nodeUrl":"","contractAt",""}
+            bridge.registerHandler('transferElfJS', function (data, responseCallback) {
+
+                try {
+                    var transferJson = JSON.parse(data)
+                    let privateKey = transferJson.privateKey
+
+                    //# 目标地址
+                    let toAddress = transferJson.toAddress
+                    //# 密码
+                    let amount = transferJson.amount
+                    let symbol = transferJson.symbol
+                    // 新增节点地址
+                    let nodeUrl = transferJson.nodeUrl
+                    // 新增合约地址
+                    let contractAt = transferJson.contractAt
+
+                    const aelf = new AElf(new AElf.providers.HttpProvider(nodeUrl));
+                    // 获取钱包
+                    const wallet = Wallet.getWalletByPrivateKey(privateKey);
+                    const tokenC = aelf
+                        .chain
+                        .contractAt(contractAt, wallet, { sync: true });
+                    if (!aelf.isConnected()) {
+                        var responseData = {
+                            'txId': '',
+                            'err': 'Unable to link service',
+                            'success': 0
+                        }
+                        dsBridge.call("onResult", JSON.stringify(responseData));
+                    }
+
+                    //#构造交易
+                    tokenC.Transfer({
+                        to: toAddress,
+                        symbol: symbol,
+                        amount: amount
+                    }, (error, txObj) => {
+
+                        if (error) {
+                            var responseData = {
+                                'txId': '',
+                                'err': error.message,
+                                'success': 0
+                            }
+                            dsBridge.call("onResult", JSON.stringify(responseData));
+                        } else {
+                            var responseData = {
+                                'txId': txObj.TransactionId,
+                                'err': '',
+                                'success': 1
+                            }
+                            dsBridge.call("onResult", JSON.stringify(responseData));
+                        }
+                    });
+                } catch (err) {
+                    var responseData = {
+                        'txId': '',
+                        'err': err.message,
+                        'success': 0
+                    }
+                    dsBridge.call("onResult", JSON.stringify(responseData));
+                }
+
+            })
+
+            // 新增跨链转账接口 json {"privateKey":"xx","toAddress":"xx,"amount":100,"symbol":"xx","memo","xx","sendNode":"xx","receiveNode","xx"}
+            bridge.registerHandler('transferCrossChainJS', function (data, responseCallback) {
+
+                var transferJson = JSON.parse(data)
+
+                function crossChain() {
+
+
+                    const { CrossChain } = window.AElfCrossChain;
+
+                    const wallet = Wallet.getWalletByPrivateKey(transferJson.privateKey);
+                    const receiveInstance = new AElf(new AElf.providers.HttpProvider(transferJson.toNode));
+                    const sendInstance = new AElf(new AElf.providers.HttpProvider(transferJson.fromNode));
+                    if (!sendInstance.isConnected() || !receiveInstance.isConnected()) {
+                        console.log('Blockchain Node is not running or missing connection');
+                        throw Error('Not Connected');
+                    }
+
+                    const crossChainInstance = new CrossChain({
+                        AElfUtils: AElf.utils,
+                        sendInstance,
+                        receiveInstance,
+                        wallet,
+                        mainChainId: transferJson.mainChainId,
+                        issueChainId: transferJson.issueChainId
+                    });
+
+                    crossChainInstanceInited = 0;
+
+                    async function send(sendParams) {
+                        await crossChainInstance.init(
+                            {
+                                contractAddresses: {
+                                    tokenContractAddressSend: transferJson.fromTokenContractAddres,
+                                    crossChainContractAddressSend: transferJson.fromChainContractAddres,
+                                    tokenContractAddressReceive: transferJson.toTokenContractAddres,
+                                    crossChainContractAddressReceive: transferJson.toChainContractAddres
+                                },
+                                chainIds: {
+                                    chainIdSend: transferJson.fromChain,
+                                    chainIdReceive: transferJson.toChain
+                                }
+                            }
+                        );
+                        crossChainInstanceInited = 1;
+                        const { crossTransferTxId } = await crossChainInstance.send(sendParams);
+                        console.log('crossTransferTxId: ', crossTransferTxId);
+                        return crossTransferTxId;
+                    }
+
+                    return { send };
+                }
+                try {
+                    const crossChainInstance = crossChain();
+                    var start = new Date().getTime();
+                    console.log('crossTransferTxId: ', start);
+                    crossChainInstance
+                        .send({ to: transferJson.toAddress, symbol: transferJson.symbol, amount: transferJson.amount, memo: transferJson.memo })
+                        .then(result => {
+                            // 从这里拿到发送的 交易id
+                            console.log('crossTransferTxId: ', new Date().getTime() - start);
+                            var responseData = {
+                                'txId': result,
+                                'err': '',
+                                'success': 1
+                            }
+                            dsBridge.call("onResult", JSON.stringify(responseData));
+                        })
+                        .catch(error => {
+                            var responseData = {
+                                'txId': '',
+                                'err': error.message,
+                                'success': 0
+                            }
+                            dsBridge.call("onResult", JSON.stringify(responseData));
+                        });
+
+                } catch (error) {
+                    var responseData = {
+                        'txId': error,
+                        'err': error.message,
+                        'success': 0
+                    }
+                    dsBridge.call("onResult", JSON.stringify(responseData));
+                }
+            });
+
+
+
+            // 跨链 Receive 接收方法
+            bridge.registerHandler('transferCrossChainReceiveJS', function (data, responseCallback) {
+
+
+                try {
+                    var transferJson = JSON.parse(data)
+                    function crossChain() {
+                        const { CrossChain } = window.AElfCrossChain;
+                        const wallet = Wallet.getWalletByPrivateKey(transferJson.privateKey);
+                        const sendInstance = new AElf(new AElf.providers.HttpProvider(transferJson.fromNode));
+                        const receiveInstance = new AElf(new AElf.providers.HttpProvider(transferJson.toNode));
+                        if (!sendInstance.isConnected() || !receiveInstance.isConnected()) {
+                            console.log('Blockchain Node is not running or missing connection');
+                            throw Error('Not Connected');
+                        }
+                        const crossChainInstance = new CrossChain({
+                            AElfUtils: AElf.utils,
+                            sendInstance,
+                            receiveInstance,
+                            wallet,
+                            mainChainId: Number(transferJson.mainChainId),
+                            issueChainId: Number(transferJson.issueChainId)
+                        });
+
+                        // send 之后，达到可以receive的状态需要等一段时间，需要等等主链和侧链相互索引
+                        // 有一种情况是，侧链欠费了，那么这个侧链到主链的转账就永远不会成功了
+
+                        async function receive(crossTransferTxId) {
+
+                            await crossChainInstance.init(
+                                {
+                                    contractAddresses: {
+                                        tokenContractAddressSend: transferJson.fromTokenContractAddres,
+                                        crossChainContractAddressSend: transferJson.fromChainContractAddres,
+                                        tokenContractAddressReceive: transferJson.toTokenContractAddres,
+                                        crossChainContractAddressReceive: transferJson.toChainContractAddres
+                                    },
+                                    chainIds: {
+                                        chainIdSend: transferJson.fromChain,
+                                        chainIdReceive: transferJson.toChain
+                                    }
+                                }
+                            );
+                            const receiveInfo = await crossChainInstance.receive(crossTransferTxId);
+                            return receiveInfo;
+                        }
+
+                        return {
+                            receive
+                        };
+                    }
+                    const crossChainInstance = crossChain();
+                    crossChainInstance.receive({ crossTransferTxId: transferJson.txID }).then(result => {
+                        var responseData = {
+                            'txId': result.TransactionId,
+                            'err': JSON.stringify(result),
+                            'success': 1
+                        }
+                        dsBridge.call("onResult", JSON.stringify(responseData));
+                    }).catch(error => {
+                        var responseData = {
+                            'txId': error,
+                            'err': error.message,
+                            'success': 0
+                        }
+                        dsBridge.call("onResult", JSON.stringify(responseData));
+                    });
+                } catch (error) {
+                    var responseData = {
+                        'txId': error,
+                        'err': error.message,
+                        'success': 0
+                    }
+                    dsBridge.call("onResult", JSON.stringify(responseData));
+                }
+            });
+
+            // 获取txid状态 (nodeURL,txID)
+            bridge.registerHandler('chainGetTxResultJS', function (data, responseCallback) {
+
+                try {
+                    var transferJson = JSON.parse(data)
+                    const aelf = new AElf(new AElf.providers.HttpProvider(transferJson.nodeUrl));
+                    if (!aelf.isConnected()) {
+                        console.log('Blockchain Node is not running or missing connection');
+                        throw Error('Not Connected');
+                    }
+                    // 获取钱包
+                    aelf.chain.getTxResult(transferJson.txid).then(result => {
+                        var isSuccess = result.Status == "NotExisted" ? 0 : 1 // 不等于 NotExisted 即可。
+                        var responseData = { 'txId': result.TransactionId, "params": result, 'err': result.Status, 'success': isSuccess }
+                        dsBridge.call("onResult", JSON.stringify(responseData));
+                    }).catch(error => {
+                        var responseData = { 'txId': error, 'err': error.message, 'success': 0 }
+                        dsBridge.call("onResult", JSON.stringify(responseData));
+                    });
+
+                } catch (error) {
+                    var responseData = { 'txId': error, 'err': error.message, 'success': 0 }
+                    dsBridge.call("onResult", JSON.stringify(responseData));
+                }
+
+            });
+
+
+
+            // invokeOrinvokeReadJs
+            bridge.registerHandler('invokeOrinvokeReadJs', function (data, responseCallback) {
+
+                try {
+
+                    var resultJson = JSON.parse(data)
+                    const wallet = Wallet.getWalletByPrivateKey(resultJson.privateKey);
+                    const aelf = new AElf(new AElf.providers.HttpProvider(resultJson.nodeUrl));
+                    if (!aelf.isConnected()) {
+                        console.log('Blockchain Node is not running or missing connection');
+                        var responseData = { 'err': 'Blockchain Node is not running or missing connection', 'success': -1 }
+                        dsBridge.call("onResult", JSON.stringify(responseData));
+                        throw Error('Not Connected');
+
+                    }
+
+                    const action = resultJson.action;
+                    const args = resultJson.arguments || [];
+                    console.log('contractAddress', resultJson.contractAddress);
+
+
+
+                    aelf.chain.contractAt(resultJson.contractAddress, wallet).then(contractInstance => {
+                        console.log('contract method', Object.keys(contractInstance));
+
+                        // invokeRead是不需要授权的，随便找一个公共的私钥签名就行了
+                        // 返回数据结果
+                        if (action === 'invokeRead') {
+                            contractInstance[resultJson.contractMethod].call.apply(null, args.map(v => v.value)).then(result => {
+
+                                var responseData = {
+                                    'data': result,
+                                    'id': resultJson.id,
+                                    'success': 1
+                                }
+                                dsBridge.call("onResult", JSON.stringify(responseData));
+                                console.log('invokeRead', JSON.stringify(responseData));
+
+                            }).catch(error => {
+                                console.log('invokeRead catch: ', JSON.stringify(error));
+                                var responseData = {
+                                    'err': JSON.stringify(error),
+                                    'msg': JSON.stringify(error),
+                                    'id': resultJson.id,
+                                    'success': -1
+                                }
+                                dsBridge.call("onResult", JSON.stringify(responseData));
+                            });
+                        }
+
+
+                        if (action === 'invoke') {
+                            contractInstance[resultJson.contractMethod].apply(null, args.map(v => v.value)).then(result => {
+                                var responseData = {
+                                    'data': result,
+                                    'id': resultJson.id,
+                                    'success': 1
+                                }
+
+                                dsBridge.call("onResult", JSON.stringify(responseData));
+                                console.log('invoke', JSON.stringify(responseData));
+
+                            }).catch(error => {
+                                console.log('invoke catch: ', JSON.stringify(error));
+                                var responseData = {
+                                    'err': JSON.stringify(error),
+                                    'id': resultJson.id,
+                                    'msg': JSON.stringify(error),
+                                    'success': -1
+                                }
+                                dsBridge.call("onResult", JSON.stringify(responseData));
+                            });
+                        }
+
+                    }).catch(error => {
+                        console.log('contractAt catch: ', JSON.stringify(error));
+                        var responseData = {
+                            'err': JSON.stringify(error),
+                            'msg': JSON.stringify(error),
+                            'id': resultJson.id,
+                            'success': -1
+                        }
+                        dsBridge.call("onResult", JSON.stringify(responseData));
+                    });
+
+                } catch (error) {
+                    var resultJson = JSON.parse(data)
+                    console.log('invokeOrinvokeReadJs catch: ', JSON.stringify(error));
+                    var responseData = {
+                        'err': JSON.stringify(error),
+                        'id': resultJson.id,
+                        'msg': JSON.stringify(error),
+                        'success': -1
+                    }
+                    dsBridge.call("onResult", JSON.stringify(responseData));
+                }
+
+            });
+
+
+
+            // apiJs
+            bridge.registerHandler('apiJs', function (data, responseCallback) {
+
+                try {
+                    var resultJson = JSON.parse(data)
+                    const aelf = new AElf(new AElf.providers.HttpProvider(resultJson.nodeUrl));
+                    if (!aelf.isConnected()) {
+                        console.log('Blockchain Node is not running or missing connection');
+                        var responseData = { 'err': 'Blockchain Node is not running or missing connection', 'success': -1 }
+                        dsBridge.call("onResult", JSON.stringify(responseData));
+                        throw Error('Not Connected');
+
+                    }
+                    const action = resultJson.action;
+
+                    const CHAIN_APIS = {
+                        '/api/blockChain/chainStatus': 'getChainStatus',
+                        '/api/blockChain/blockState': 'getChainState',
+                        '/api/blockChain/contractFileDescriptorSet': 'getContractFileDescriptorSet',
+                        '/api/blockChain/blockHeight': 'getBlockHeight',
+                        '/api/blockChain/block': 'getBlock',
+                        '/api/blockChain/blockByHeight': 'getBlockByHeight',
+                        '/api/blockChain/transactionResult': 'getTxResult',
+                        '/api/blockChain/transactionResults': 'getTxResults',
+                        '/api/blockChain/merklePathByTransactionId': 'getMerklePathByTxId'
+                    };
+
+
+
+                    if (!CHAIN_APIS[resultJson.apiPath]) {
+                        console.log('Not support api ${resultJson.apiPath}');
+                        var responseData = { 'err': 'Not support api ${resultJson.apiPath}', 'success': -1 }
+                        dsBridge.call("onResult", JSON.stringify(responseData));
+                        throw Error('Not Connected');
+
+                    }
+
+
+                    const arguments = resultJson.arguments || [];
+
+
+                    aelf.chain[CHAIN_APIS[resultJson.apiPath]].apply(null, arguments.map(v => v.value)).then(result => {
+
+                        var responseData = {
+                            'data': result,
+                            'id': resultJson.id,
+                            'success': 1
+                        };
+                        dsBridge.call("onResult", JSON.stringify(responseData));
+                        console.log('api', JSON.stringify(responseData));
+
+                    }).catch(error => {
+                        console.log('api apply catch: ', JSON.stringify(error));
+                        var responseData = {
+                            'error': JSON.stringify(error),
+                            'msg': JSON.stringify(error),
+                            'id': resultJson.id,
+                            'success': -1
+                        }
+                        dsBridge.call("onResult", JSON.stringify(responseData));
+                    });
+
+                } catch (error) {
+                    console.log('apiJs catch: ', JSON.stringify(error));
+                    var resultJson = JSON.parse(data)
+                    var responseData = {
+                        'error': JSON.stringify(error),
+                        'msg': JSON.stringify(error),
+                        'id': resultJson.id,
+                        'success': -1
+                    }
+                    dsBridge.call("onResult", JSON.stringify(responseData));
+                }
+
+            });
+
+
+
+
+
+        })
+    </script>
+    <div id='buttons'></div>
+    <div id='log'></div>
+</body>
+
+</html>

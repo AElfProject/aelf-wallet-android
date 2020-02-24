@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <RelativeLayout
+        android:id="@+id/inc_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/iv_popup_chain_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/arrow_down"
+            android:drawablePadding="@dimen/dp_5"
+            android:padding="@dimen/dp_10"
+            android:background="@drawable/shape_chin_check"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_12"
+            android:textStyle="bold"/>
+
+    </RelativeLayout>
+
+
+    <FrameLayout
+        android:id="@+id/layoutContainer_choose"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/inc_toolbar"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/shape_r5_e0e0e0"
+        android:padding="2dp">
+
+        <EditText
+            android:id="@+id/choose_et_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:drawableLeft="@mipmap/search"
+            android:drawablePadding="4dp"
+            android:hint="@string/enter_chain_id"
+            android:paddingLeft="10dp"
+            android:paddingRight="40dp"
+            android:singleLine="true"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/choose_iv_cleartext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:padding="4dp"
+            android:visibility="visible" />
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_on_chain"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@+id/layoutContainer_choose"
+        android:background="#4A1395"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:padding="7dp"
+            android:text="@string/total_assets_new"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:id="@+id/tx_onchain_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:padding="5dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/tx_onchain_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tx_onchain_money"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_13" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tx_fo_tx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_on_chain"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/elf_id_chain"
+        android:textColor="@color/blue_202941"
+        android:textSize="@dimen/sp_13" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refresh_choose_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tx_fo_tx"
+        android:layout_marginTop="15dp"
+        android:background="@color/colorPrimary">
+
+        <com.scwang.smartrefresh.header.WaterDropHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_choose_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</RelativeLayout>
