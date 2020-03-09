@@ -162,6 +162,8 @@ public class TransferFragment extends BaseFragment implements ITransferView, Cha
                     }
                 } catch (JSONException e) {
                     dismissDialog();
+                    DialogUtils.showDialog(ToastDialog.class, getFragmentManager())
+                            .setToast(getString(R.string.transfer_fail)+ e.getMessage());
                     e.printStackTrace();
                 }
             }
@@ -497,8 +499,6 @@ public class TransferFragment extends BaseFragment implements ITransferView, Cha
                 return;
             }
             if (transToChain) {
-
-                postBalance(toChainId);
                 if (isValileChain()) {
                     postBalance(toChainId);
                 }else {
@@ -520,28 +520,24 @@ public class TransferFragment extends BaseFragment implements ITransferView, Cha
     }
 
     private boolean isValileChain() {
-        switch (toChainId) {
-            case "AELF":
-                return true;
-            case "tDVV":
-                return isEquals("EPC");
-            case "tDVW":
-                return isEquals("EDA");
-            case "tDVX":
-                return isEquals("EDB");
-            case "tDVY":
-                return isEquals("EDC");
-            case "tDVZ":
-                return isEquals("EDD");
-            default:
-                return false;
+        ChooseChainsBean bean = getContractAddress(toChainId);
+        if (bean == null) {
+            return false;
         }
-    }
-
-    private boolean isEquals(String symbol) {
-        return "EPC".equals(mSymbol) || "EDA".equals(mSymbol) ||
-                "EDB".equals(mSymbol)|| "EDC".equals(mSymbol)||
-                "EDD".equals(mSymbol)|| "ELF".equals(mSymbol);
+        String tag = bean.getTransferCoins();
+        if(TextUtils.isEmpty(tag)){
+            return false;
+        }
+        if("*".equals(tag)){
+            return true;
+        }
+        String[] values = tag.split(",");
+        for(String key : values) {
+            if(mSymbol.equals(key)){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void postBalance(String chainId) {

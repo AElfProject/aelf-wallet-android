@@ -114,6 +114,10 @@ public class MarketFavouritesFragment extends BaseFragment implements IMarketVie
                 refresh.autoRefresh();
             } else {
                 Bundle bundle = new Bundle();
+                int index = (Integer) o;
+                if(index >= mDataList.size()) {
+                    return;
+                }
                 MarketListBean.ListBean bean = mDataList.get((Integer) o);
                 bundle.putSerializable("bean", bean);
                 bundle.putString("name", bean.getName());

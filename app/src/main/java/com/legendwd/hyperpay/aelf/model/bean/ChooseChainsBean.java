@@ -18,6 +18,7 @@ public class ChooseChainsBean extends BaseAdapterModel {
     String issueid;
     String explorer;
     String crossChainContractAddress;
+    String transferCoins;
 
     public String getCrossChainContractAddress() {
         return crossChainContractAddress;
@@ -97,6 +98,14 @@ public class ChooseChainsBean extends BaseAdapterModel {
 
     public void setNode(String node) {
         this.node = node;
+    }
+
+    public String getTransferCoins() {
+        return transferCoins;
+    }
+
+    public void setTransferCoins(String transferCoins) {
+        this.transferCoins = transferCoins;
     }
 
     @Override
