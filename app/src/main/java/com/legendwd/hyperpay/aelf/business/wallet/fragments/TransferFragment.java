@@ -497,6 +497,8 @@ public class TransferFragment extends BaseFragment implements ITransferView, Cha
                 return;
             }
             if (transToChain) {
+
+                postBalance(toChainId);
                 if (isValileChain()) {
                     postBalance(toChainId);
                 }else {
@@ -537,7 +539,9 @@ public class TransferFragment extends BaseFragment implements ITransferView, Cha
     }
 
     private boolean isEquals(String symbol) {
-        return symbol.equals(mSymbol) || "ELF".equals(mSymbol);
+        return "EPC".equals(mSymbol) || "EDA".equals(mSymbol) ||
+                "EDB".equals(mSymbol)|| "EDC".equals(mSymbol)||
+                "EDD".equals(mSymbol)|| "ELF".equals(mSymbol);
     }
 
     private void postBalance(String chainId) {

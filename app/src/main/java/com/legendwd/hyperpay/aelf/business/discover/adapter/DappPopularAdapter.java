@@ -51,7 +51,7 @@ public class DappPopularAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         Dapp dapp = mDapps.get(position);
 
         if (null != dapp) {
-            viewHolder.tv_position.setText(position + "");
+            viewHolder.tv_position.setText(position + 1 + "");
             switch (position) {
                 case 0:
                     viewHolder.tv_position.setTextColor(Color.parseColor("#FE4302"));

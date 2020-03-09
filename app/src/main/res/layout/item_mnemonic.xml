@@ -16,7 +16,6 @@
         android:paddingTop="5dp"
         android:paddingRight="8dp"
         android:paddingBottom="5dp"
-        android:singleLine="true"
         android:text="asdaasdasds"
         android:textColor="@color/selector_word_color"
         android:textSize="13sp">

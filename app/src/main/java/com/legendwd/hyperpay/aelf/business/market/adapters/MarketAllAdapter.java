@@ -74,11 +74,9 @@ public class MarketAllAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             }
         });
         marketViewHolder.mTvName.setText(bean.getName());
-        String symbol = CacheUtil.getInstance().getProperty(Constant.Sp.PRICING_CURRENCY_SYMBOL_DEFAULT);
 
-        if (TextUtils.isEmpty(symbol)) {
-            symbol = "$";
-        }
+        String currency = CacheUtil.getInstance().getProperty(Constant.Sp.PRICING_CURRENCY_ID_DEFAULT, Constant.DEFAULT_CURRENCY);
+        String symbol = Constant.DEFAULT_CURRENCY.equals(currency) ? "$" : "¥";
 
         marketViewHolder.mTvPrice.setText(symbol + bean.getLast_price());
         float increase = Float.parseFloat(bean.getIncrease()) * 100;

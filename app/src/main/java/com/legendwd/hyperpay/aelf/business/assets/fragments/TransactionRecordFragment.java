@@ -180,7 +180,6 @@ public class TransactionRecordFragment extends BaseFragment implements View.OnCl
                 mTimer = null;
             }
         }
-
     }
 
     private void initSameView(LinearLayout layout) {
@@ -199,7 +198,10 @@ public class TransactionRecordFragment extends BaseFragment implements View.OnCl
             symbol = "ELF";
         }
         tv_balance.setText(bean.getAmount() + " " + symbol);
-        tv_miner_fee.setText(TextUtils.isEmpty(bean.fee) ? "0.00 " + symbol : bean.fee + " " + symbol);
+        if(TextUtils.isEmpty(bean.fee)) {
+            bean.fee = "0.00";
+        }
+        tv_miner_fee.setText(bean.fee + " " + bean.feeSymbol);
         tv_copy_to.setText(StringUtil.formatAddress(bean.to, bean.to_chainid));
         tv_copy_from.setText(StringUtil.formatAddress(bean.from, bean.from_chainid));
         tv_copy_txid.setText(bean.txid);

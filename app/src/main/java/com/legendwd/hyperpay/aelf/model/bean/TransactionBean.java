@@ -56,6 +56,7 @@ public class TransactionBean {
         public String time;
         public String nonce;
         public String fee;
+        public String feeSymbol;
         public String gasLimit;
         public String gasPrice;
         public String gasUsed;

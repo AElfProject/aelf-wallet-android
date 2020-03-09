@@ -361,6 +361,9 @@ public abstract class BaseFragment extends SwipeBackFragment implements Lifecycl
             DialogUtils.showDialog(ToastDialog.class, getFragmentManager()).setToast(getString(R.string.pwd_not_correct));
         } else {
             if (null != callback) {
+                if (dialogFragment != null) {
+                    dialogFragment.dismiss();
+                }
                 callback.onTextCorrect(pwd, data);
             }
         }
