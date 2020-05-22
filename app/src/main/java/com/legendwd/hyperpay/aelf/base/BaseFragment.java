@@ -18,21 +18,22 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.gyf.immersionbar.ImmersionBar;
+import com.legendwd.hyperpay.aelf.R;
 import com.legendwd.hyperpay.aelf.business.wallet.CreateImportWalletActivity;
 import com.legendwd.hyperpay.aelf.dialogfragments.FingerDialog;
-import com.legendwd.hyperpay.aelf.ui.fragment.MainFragment;
-import com.legendwd.hyperpay.aelf.R;
 import com.legendwd.hyperpay.aelf.dialogfragments.InputDialog;
 import com.legendwd.hyperpay.aelf.dialogfragments.ToastDialog;
 import com.legendwd.hyperpay.aelf.listeners.HandleCallback;
 import com.legendwd.hyperpay.aelf.listeners.OnTextCorrectCallback;
 import com.legendwd.hyperpay.aelf.model.MessageEvent;
+import com.legendwd.hyperpay.aelf.ui.fragment.MainFragment;
 import com.legendwd.hyperpay.aelf.util.AESUtil;
 import com.legendwd.hyperpay.aelf.util.DialogUtils;
 import com.legendwd.hyperpay.aelf.util.LanguageUtil;
 import com.legendwd.hyperpay.aelf.util.ScreenUtils;
 import com.legendwd.hyperpay.lib.CacheUtil;
 import com.legendwd.hyperpay.lib.Constant;
+import com.legendwd.hyperpay.lib.Logger;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.RxLifecycle;
@@ -100,6 +101,7 @@ public abstract class BaseFragment extends SwipeBackFragment implements Lifecycl
         if (mToolbar != null) {
             mToolbar.setPadding(0, ScreenUtils.getStatusBarHeight(_mActivity), 0, 0);
         }
+        Logger.d(getClass().getSimpleName());
         view.postDelayed(new Runnable() {
             @Override
             public void run() {

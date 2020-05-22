@@ -15,6 +15,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            <com.legendwd.hyperpay.aelf.widget.webview.DWebView
+            android:id="@+id/wv_bridge"
+            android:layout_width="0dp"
+            android:layout_height="0dp" />
 
             <ViewStub
                 android:id="@+id/stub_transaction_success"

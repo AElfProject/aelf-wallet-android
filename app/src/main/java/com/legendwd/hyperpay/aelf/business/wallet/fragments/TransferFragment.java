@@ -131,6 +131,7 @@ public class TransferFragment extends BaseFragment implements ITransferView, Cha
                             if (!transToChain) {
                                 Bundle bundle = new Bundle();
                                 bundle.putString(Constant.BundleKey.TXID, txId);
+                                bundle.putString(Constant.BundleKey.CHAIN_ID, mDataBean.getChain_id());
                                 startWithPop(TransactionRecordFragment.newInstance(bundle));
                                 EventBus.getDefault().post(new MessageEvent(Constant.Event.REFRSH_TRANSATION));
                             } else {

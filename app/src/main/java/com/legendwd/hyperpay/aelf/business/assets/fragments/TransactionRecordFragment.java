@@ -4,32 +4,41 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import com.legendwd.hyperpay.aelf.R;
+import com.legendwd.hyperpay.aelf.base.ApiUrl;
 import com.legendwd.hyperpay.aelf.base.BaseFragment;
-import com.legendwd.hyperpay.aelf.business.my.fragments.UserAgreementFragment;
+import com.legendwd.hyperpay.aelf.dialogfragments.ToastDialog;
+import com.legendwd.hyperpay.aelf.listeners.HandleCallback;
 import com.legendwd.hyperpay.aelf.model.bean.ChainAddressBean;
 import com.legendwd.hyperpay.aelf.model.bean.ChooseChainsBean;
+import com.legendwd.hyperpay.aelf.model.bean.JsResultBean;
 import com.legendwd.hyperpay.aelf.model.bean.ResultBean;
 import com.legendwd.hyperpay.aelf.model.bean.TransactionBean;
 import com.legendwd.hyperpay.aelf.model.bean.TransferBalanceBean;
+import com.legendwd.hyperpay.aelf.model.bean.TransferBean;
 import com.legendwd.hyperpay.aelf.presenters.impl.TransactionRecordPresenter;
 import com.legendwd.hyperpay.aelf.presenters.impl.TransferPresenter;
 import com.legendwd.hyperpay.aelf.util.BitmapUtil;
+import com.legendwd.hyperpay.aelf.util.DialogUtils;
 import com.legendwd.hyperpay.aelf.util.LanguageUtil;
 import com.legendwd.hyperpay.aelf.util.StringUtil;
 import com.legendwd.hyperpay.aelf.views.ITransactionRecordView;
 import com.legendwd.hyperpay.aelf.views.ITransferView;
+import com.legendwd.hyperpay.aelf.widget.webview.DWebView;
+import com.legendwd.hyperpay.aelf.widget.webview.JsApi;
 import com.legendwd.hyperpay.lib.CacheUtil;
 import com.legendwd.hyperpay.lib.Constant;
+import com.legendwd.hyperpay.lib.Logger;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -48,6 +57,8 @@ public class TransactionRecordFragment extends BaseFragment implements View.OnCl
     ViewStub stub_transaction_packing;
     @BindView(R.id.stub_transaction_success)
     ViewStub stub_transaction_success;
+    @BindView(R.id.wv_bridge)
+    DWebView mWvbridge;
 
     TextView tv_copy_txid, tv_memo, tv_copy_from, tv_copy_to, tv_block, tv_miner_fee,
             tv_balance, tv_time, tv_title, tv_url, tv_detail, tv_state, tv_sign_transaction;
@@ -61,6 +72,11 @@ public class TransactionRecordFragment extends BaseFragment implements View.OnCl
     private Timer mTime;//计时器
     private TimerTask mTimer;//计时器
     private TransferPresenter presenter;
+    private String mTxid;
+    private String mChainId;
+    private String mExplorer;
+    private String mNodeUrl;
+    private String mJsFee;
 
 
     public static TransactionRecordFragment newInstance(Bundle args) {
@@ -83,8 +99,11 @@ public class TransactionRecordFragment extends BaseFragment implements View.OnCl
 
     @Override
     public void process() {
+        initWeb();
         mTransactionRecordPresenter = new TransactionRecordPresenter(this);
         presenter = new TransferPresenter(this);
+        initTxid();
+        presenter.getCrossChains();
         getTransData();
         if (mTimer == null && mTime == null) {
             mTime = new Timer();
@@ -94,15 +113,52 @@ public class TransactionRecordFragment extends BaseFragment implements View.OnCl
                     getTransData();
                 }
             };
-            mTime.schedule(mTimer, 0, 3000);
+            mTime.schedule(mTimer, 3000, 3000);
         }
-
     }
 
-    /**
-     * 重新刷新获取数据
-     */
-    private void getTransData() {
+    private void initWeb() {
+        mWvbridge.loadUrl(ApiUrl.AssetsUrl);
+        mWvbridge.addJavascriptObject(new JsApi(new HandleCallback() {
+            @Override
+            public void onHandle(Object o) {
+                String data = (String) o;
+                Logger.d("result ===>", (String) o);
+                try {
+                    JsResultBean bean = new Gson().fromJson(data, JsResultBean.class);
+                    if (bean.getSuccess() == 1) {
+                        if(bean.getFee() != null && !bean.getFee().isEmpty()) {
+                            JsResultBean.Fee fee = bean.getFee().get(0);
+                            mJsFee = fee.getAmount();
+                        }
+                        if(!TextUtils.isEmpty(mJsFee)) {
+                            tv_miner_fee.setText(mJsFee);
+                        }
+                    } else {
+                        String err = bean.getErr();
+                        DialogUtils.showDialog(ToastDialog.class, getFragmentManager())
+                                .setToast(TextUtils.isEmpty(err) ? getString(R.string.transfer_fail) : err);
+                    }
+                }catch (JsonSyntaxException e){
+                    e.printStackTrace();
+                    DialogUtils.showDialog(ToastDialog.class, getFragmentManager())
+                            .setToast(getString(R.string.transfer_fail)+ e.getMessage());
+                    e.printStackTrace();
+                }}}), null);
+    }
+
+    private void getJsFee() {
+        TransferBean bean = new TransferBean();
+        bean.setNodeUrl(mNodeUrl);
+        bean.setTxid(mTxid);
+        mWvbridge.callHandler("chainGetTxResultJS", new Gson().toJson(bean), new CallBackFunction() {
+            @Override
+            public void onCallBack(String data) {
+            }
+        });
+    }
+
+    private void initTxid() {
         Bundle bundle = getArguments();
         bean = new Gson().fromJson(bundle.getString("bean"), TransactionBean.ListBean.class);
         String txid;
@@ -118,9 +174,17 @@ public class TransactionRecordFragment extends BaseFragment implements View.OnCl
             txid = bean.txid;
             chainId = bean.chain;
         }
+        mTxid = txid;
+        mChainId = chainId;
+    }
+
+    /**
+     * 重新刷新获取数据
+     */
+    private void getTransData() {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("txid", txid);
-        jsonObject.addProperty("chainid_c", chainId);
+        jsonObject.addProperty("txid", mTxid);
+        jsonObject.addProperty("chainid_c", mChainId);
         mTransactionRecordPresenter.getTransactionDetail(jsonObject);
 
     }
@@ -198,10 +262,11 @@ public class TransactionRecordFragment extends BaseFragment implements View.OnCl
             symbol = "ELF";
         }
         tv_balance.setText(bean.getAmount() + " " + symbol);
-        if(TextUtils.isEmpty(bean.fee)) {
-            bean.fee = "0.00";
+        String fee = mJsFee;
+        if(TextUtils.isEmpty(fee)) {
+            fee = "0.00";
         }
-        tv_miner_fee.setText(bean.fee + " " + bean.feeSymbol);
+        tv_miner_fee.setText(fee);
         tv_copy_to.setText(StringUtil.formatAddress(bean.to, bean.to_chainid));
         tv_copy_from.setText(StringUtil.formatAddress(bean.from, bean.from_chainid));
         tv_copy_txid.setText(bean.txid);
@@ -232,7 +297,6 @@ public class TransactionRecordFragment extends BaseFragment implements View.OnCl
     public void onTransactionDetailSuccess(TransactionBean.ListBean bean) {
         this.bean = bean;
         initData();
-        presenter.getCrossChains();
 
     }
 
@@ -285,37 +349,21 @@ public class TransactionRecordFragment extends BaseFragment implements View.OnCl
     public void onConcurrentError(int code, String msg) {
 
     }
-    String explorer = "";
-    String txid;
-    String chainId = "";
     @Override
     public void onChainsSuccess(ResultBean<List<ChooseChainsBean>> resultBean) {
 
-
-        Bundle bundle = getArguments();
-        bean = new Gson().fromJson(bundle.getString("bean"), TransactionBean.ListBean.class);
-        if (null == bean) {
-            txid = getArguments().getString(Constant.BundleKey.TXID);
-            chainId = getArguments().getString(Constant.BundleKey.CHAIN_ID);
-            if (TextUtils.isEmpty(txid)) {
-                pop();
-                return;
-            }
-        } else {
-            txid = bean.txid;
-            chainId = bean.chain;
-        }
-
         for(ChooseChainsBean chooseChainsBean:resultBean.getData()){
-            if(chooseChainsBean.getName().equalsIgnoreCase(chainId)){
-                explorer = chooseChainsBean.getExplorer();
+            if(chooseChainsBean.getName().equalsIgnoreCase(mChainId)){
+                mExplorer = chooseChainsBean.getExplorer();
+                mNodeUrl = chooseChainsBean.getNode();
             }
         }
-        if(!TextUtils.isEmpty(explorer)&&!TextUtils.isEmpty(txid)){
+        getJsFee();
+        if(!TextUtils.isEmpty(mExplorer)&&!TextUtils.isEmpty(mTxid)){
             tv_url.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    start(ExplorerFragment.newInstance(chainId+" explorer",explorer+"/tx/"+txid));
+                    start(ExplorerFragment.newInstance(mChainId+" explorer",mExplorer+"/tx/"+mTxid));
                 }
             });
             tv_url.setVisibility(View.VISIBLE);

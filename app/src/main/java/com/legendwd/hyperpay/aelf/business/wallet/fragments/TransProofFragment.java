@@ -92,7 +92,8 @@ public class TransProofFragment extends BaseFragment implements ITransactionReco
             @Override
             public void onClick(View v) {
                 mLoadDialog.show();
-                getTransferBalance();
+                mTransactionRecordPresenter.addIndex(transProofFragment);
+//                getTransferBalance();
             }
         });
     }

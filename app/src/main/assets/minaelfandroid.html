@@ -9,9 +9,9 @@
     <h1>minaelf</h1>
     <script type="text/javascript" src="dsbridge.js"></script>
 
-<!--    <script type="text/javascript" src="https://unpkg.com/aelf-sdk@latest/dist/aelf.umd.js"></script>-->
-<!--    <script type="text/javascript"-->
-<!--            src="https://unpkg.com/aelf-sdk-cross-chain@latest/dist/aelf-cross-chain.umd.js"></script>-->
+<!--        <scriptpt type="text/javascript" src="https://unpkg.com/aelf-sdk@latest/dist/aelf.umd.js"></scriptpt>-->
+<!--        <script type="text/javascript"-->
+<!--                src="https://unpkg.com/aelf-sdk-cross-chain@latest/dist/aelf-cross-chain.umd.js"></script>-->
 
     <script type="text/javascript" src="aelf.umd.js"></script>
     <script type="text/javascript" src="aelf-cross-chain.umd.js"></script>
@@ -520,7 +520,8 @@
                     // 获取钱包
                     aelf.chain.getTxResult(transferJson.txid).then(result => {
                         var isSuccess = result.Status == "NotExisted" ? 0 : 1 // 不等于 NotExisted 即可。
-                        var responseData = { 'txId': result.TransactionId, "params": result, 'err': result.Status, 'success': isSuccess }
+                        var responseData = { 'txId': result.TransactionId, "params": result, 'err': result.Status,
+                         'success': isSuccess, 'fee': AElf.pbUtils.getTransactionFee(result.Logs) }
                         dsBridge.call("onResult", JSON.stringify(responseData));
                     }).catch(error => {
                         var responseData = { 'txId': error, 'err': error.message, 'success': 0 }
@@ -533,8 +534,6 @@
                 }
 
             });
-
-
 
             // invokeOrinvokeReadJs
             bridge.registerHandler('invokeOrinvokeReadJs', function (data, responseCallback) {
