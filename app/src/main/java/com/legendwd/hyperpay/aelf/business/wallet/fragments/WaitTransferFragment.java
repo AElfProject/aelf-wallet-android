@@ -10,16 +10,15 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.legendwd.hyperpay.aelf.R;
-import com.legendwd.hyperpay.aelf.base.ApiUrl;
 import com.legendwd.hyperpay.aelf.base.BaseFragment;
 import com.legendwd.hyperpay.aelf.business.assets.fragments.ExplorerFragment;
 import com.legendwd.hyperpay.aelf.business.assets.fragments.TransactionRecordFragment;
+import com.legendwd.hyperpay.aelf.config.ApiUrlConfig;
 import com.legendwd.hyperpay.aelf.dialogfragments.ToastDialog;
 import com.legendwd.hyperpay.aelf.listeners.HandleCallback;
 import com.legendwd.hyperpay.aelf.listeners.OnTextCorrectCallback;
@@ -80,7 +79,7 @@ public class WaitTransferFragment extends BaseFragment implements IWaitTransferV
 
     @Override
     public void process() {
-        mWvbridge.loadUrl(ApiUrl.AssetsUrl);
+        mWvbridge.loadUrl(ApiUrlConfig.AssetsUrl);
         mWvbridge.addJavascriptObject(new JsApi(new HandleCallback() {
             @Override
             public void onHandle(Object o) {

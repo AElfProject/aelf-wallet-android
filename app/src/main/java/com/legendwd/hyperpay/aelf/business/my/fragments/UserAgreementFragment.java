@@ -3,8 +3,8 @@ package com.legendwd.hyperpay.aelf.business.my.fragments;
 import android.text.TextUtils;
 
 import com.legendwd.hyperpay.aelf.R;
-import com.legendwd.hyperpay.aelf.base.ApiUrl;
 import com.legendwd.hyperpay.aelf.base.BaseFragment;
+import com.legendwd.hyperpay.aelf.config.ApiUrlConfig;
 import com.legendwd.hyperpay.aelf.util.LanguageUtil;
 import com.legendwd.hyperpay.aelf.widget.webview.DWebView;
 
@@ -33,9 +33,9 @@ public class UserAgreementFragment extends BaseFragment {
         String lang = LanguageUtil.readLanguage();
 
         if (TextUtils.equals(LanguageUtil.LANG_CN, lang)) {
-            webview.loadUrl(ApiUrl.UserAgreeUrl_ZH);
+            webview.loadUrl(ApiUrlConfig.UserAgreeUrl_ZH);
         } else {
-            webview.loadUrl(ApiUrl.UserAgreeUrl_EN);
+            webview.loadUrl(ApiUrlConfig.UserAgreeUrl_EN);
         }
     }
 

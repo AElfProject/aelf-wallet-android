@@ -5,8 +5,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -17,8 +15,8 @@ import com.bumptech.glide.Glide;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.google.gson.Gson;
 import com.legendwd.hyperpay.aelf.R;
-import com.legendwd.hyperpay.aelf.base.ApiUrl;
 import com.legendwd.hyperpay.aelf.base.BaseFragment;
+import com.legendwd.hyperpay.aelf.config.ApiUrlConfig;
 import com.legendwd.hyperpay.aelf.dialogfragments.ToastDialog;
 import com.legendwd.hyperpay.aelf.listeners.HandleCallback;
 import com.legendwd.hyperpay.aelf.model.bean.WalletBean;
@@ -68,7 +66,7 @@ public class QRCodeFragment extends BaseFragment {
 
         loadKeystoreValue();
 
-        webview.loadUrl(ApiUrl.AssetsUrl);
+        webview.loadUrl(ApiUrlConfig.AssetsUrl);
 
         webview.addJavascriptObject(new JsApi(new HandleCallback() {
             @Override
@@ -85,8 +83,7 @@ public class QRCodeFragment extends BaseFragment {
                             int success = jo.optInt("success", -1);
                             if (1 == success) {
 
-                            }
-                            else {
+                            } else {
                                 loadDialog.setLoading(false);
                                 loadDialog.setToast(getString(R.string.load_fail));
                                 loadDialog.show(getFragmentManager(), "ToastDialog");
@@ -149,13 +146,11 @@ public class QRCodeFragment extends BaseFragment {
             if (ContextCompat.checkSelfPermission(_mActivity, permissions[0]) != PackageManager.PERMISSION_GRANTED) {
                 //申请权限
                 requestPermissions(permissions, REQUEST_CODE_CONTACT);
-            }
-            else {
+            } else {
                 screenshot();
             }
 
-        }
-        else {
+        } else {
             screenshot();
         }
 
@@ -178,8 +173,7 @@ public class QRCodeFragment extends BaseFragment {
         if (ImgUtils.saveImageToGallery(_mActivity, temBitmap, "qr_code")) {
             DialogUtils.showDialog(ToastDialog.class, getFragmentManager())
                     .setToast(R.string.save_success);
-        }
-        else {
+        } else {
             DialogUtils.showDialog(ToastDialog.class, getFragmentManager())
                     .setToast(R.string.permisson_denied);
         }
@@ -204,8 +198,7 @@ public class QRCodeFragment extends BaseFragment {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (checkPermissionResult(grantResults)) {
             screenshot();
-        }
-        else {
+        } else {
             DialogUtils.showDialog(ToastDialog.class, getFragmentManager())
                     .setToast(R.string.permisson_denied);
         }

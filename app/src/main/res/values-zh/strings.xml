@@ -462,4 +462,12 @@ AELF Wallet为去中心化钱包，不存储用户的钱包助记词，导入的
     <string name="touch_id_title_1">您要允许\“AELF Wallet\”使用生物识别吗？使用生物识别可应用于解锁应用和验证支付</string>
     <string name="please_verify_fingerprint">请验证指纹</string>
     <string name="enter_wallet_password">输入钱包密码</string>
+
+
+    <string name="switch_network">网络配置</string>
+    <string name="default_address">可选网络</string>
+    <string name="custom_address">自定义网络</string>
+    <string name="network_tip">请输入网络地址</string>
+    <string name="network_tip_error">网络地址格式有误，请重新输入</string>
+    <string name="network_tip_sucess">网络切换成功</string>
 </resources>

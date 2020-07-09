@@ -2,7 +2,6 @@ package com.legendwd.hyperpay.aelf.business.market.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,8 @@ import com.legendwd.hyperpay.aelf.R;
 import com.legendwd.hyperpay.aelf.base.BaseAdapterModel;
 import com.legendwd.hyperpay.aelf.common.EmptyViewHolder;
 import com.legendwd.hyperpay.aelf.listeners.OnItemClickListener;
-import com.legendwd.hyperpay.aelf.model.bean.MarketListBean;
+import com.legendwd.hyperpay.aelf.model.bean.MarketDataBean;
+import com.legendwd.hyperpay.aelf.util.StringUtil;
 import com.legendwd.hyperpay.lib.CacheUtil;
 import com.legendwd.hyperpay.lib.Constant;
 
@@ -20,14 +20,14 @@ import java.util.List;
 
 public class MarketAllAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    List<MarketListBean.ListBean> mDatas;
+    List<MarketDataBean> mDatas;
     private OnItemClickListener mClickListener;
 
-    public MarketAllAdapter(List<MarketListBean.ListBean> datas) {
+    public MarketAllAdapter(List<MarketDataBean> datas) {
         this.mDatas = datas;
     }
 
-    public void refreshView(List<MarketListBean.ListBean> datas) {
+    public void refreshView(List<MarketDataBean> datas) {
         this.mDatas = datas;
         notifyDataSetChanged();
     }
@@ -50,7 +50,7 @@ public class MarketAllAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-        MarketListBean.ListBean bean = mDatas.get(i);
+        MarketDataBean bean = mDatas.get(i);
         if (bean.getItemType() == BaseAdapterModel.ItemType.EMPTY) {
             EmptyViewHolder emptyViewHolder = (EmptyViewHolder) viewHolder;
             emptyViewHolder.tv_retry.setOnClickListener(new View.OnClickListener() {
@@ -78,8 +78,8 @@ public class MarketAllAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         String currency = CacheUtil.getInstance().getProperty(Constant.Sp.PRICING_CURRENCY_ID_DEFAULT, Constant.DEFAULT_CURRENCY);
         String symbol = Constant.DEFAULT_CURRENCY.equals(currency) ? "$" : "¥";
 
-        marketViewHolder.mTvPrice.setText(symbol + bean.getLast_price());
-        float increase = Float.parseFloat(bean.getIncrease()) * 100;
+        marketViewHolder.mTvPrice.setText(symbol + bean.getCurrentPrice());
+        double increase = StringUtil.parseDouble(bean.getPriceChangePercentage24h());
         StringBuilder stringBuilder = new StringBuilder();
         if (increase >= 0) {
             stringBuilder.append("+")

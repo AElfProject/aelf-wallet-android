@@ -15,7 +15,12 @@ import com.legendwd.hyperpay.aelf.business.market.adapters.MarketFragmentAdapter
 import com.legendwd.hyperpay.aelf.business.market.fragments.MarketAllFragment;
 import com.legendwd.hyperpay.aelf.business.market.fragments.MarketFavouritesFragment;
 import com.legendwd.hyperpay.aelf.business.market.fragments.MarketSearchFragment;
+import com.legendwd.hyperpay.aelf.db.MarketCoindb;
+import com.legendwd.hyperpay.aelf.db.dao.MarketCoinDao;
 import com.legendwd.hyperpay.aelf.model.MessageEvent;
+import com.legendwd.hyperpay.aelf.presenters.IMarketHomePresenter;
+import com.legendwd.hyperpay.aelf.presenters.impl.MarketHomePresenter;
+import com.legendwd.hyperpay.aelf.views.IMarketHomeView;
 import com.legendwd.hyperpay.lib.Constant;
 
 import java.util.ArrayList;
@@ -27,7 +32,7 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
 /**
  * 市场Fragment
  */
-public class MarketFragment extends BaseFragment {
+public class MarketFragment extends BaseFragment implements IMarketHomeView {
 
     @BindView(R.id.tv_title_right)
     TextView titleRight;
@@ -73,7 +78,7 @@ public class MarketFragment extends BaseFragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mViewPager.setCurrentItem(tab.getPosition());
-                if(tab.getPosition() == 0) {
+                if (tab.getPosition() == 0) {
                     mMarketFavouritesFragment.referData();
                 }
             }
@@ -127,6 +132,8 @@ public class MarketFragment extends BaseFragment {
                 startBrotherFragment(MarketSearchFragment.newInstance());
             }
         });
+        IMarketHomePresenter presenter = new MarketHomePresenter(this);
+        presenter.getMarketCoinList();
     }
 
 
@@ -145,5 +152,16 @@ public class MarketFragment extends BaseFragment {
                 startBrotherFragment(MarketSearchFragment.newInstance());
                 break;
         }
+    }
+
+    @Override
+    public void onCoinListSuccess(List<MarketCoindb> list) {
+        MarketCoinDao.deleteAll();
+        MarketCoinDao.save(list);
+    }
+
+    @Override
+    public void onCoinListError(int code, String msg) {
+
     }
 }

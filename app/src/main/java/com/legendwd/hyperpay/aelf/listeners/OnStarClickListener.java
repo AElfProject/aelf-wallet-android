@@ -2,7 +2,7 @@ package com.legendwd.hyperpay.aelf.listeners;
 
 import android.view.View;
 
-import com.legendwd.hyperpay.aelf.model.bean.MarketListBean;
+import com.legendwd.hyperpay.aelf.model.bean.MarketDataBean;
 
 /**
  * @author lovelyzxing
@@ -10,5 +10,5 @@ import com.legendwd.hyperpay.aelf.model.bean.MarketListBean;
  * @Description
  */
 public interface OnStarClickListener {
-    void onStarPosition(MarketListBean.ListBean listBean, int position, View view);
+    void onStarPosition(MarketDataBean listBean, int position, View view);
 }

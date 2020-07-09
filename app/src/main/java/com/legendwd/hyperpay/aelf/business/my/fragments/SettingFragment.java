@@ -1,7 +1,6 @@
 package com.legendwd.hyperpay.aelf.business.my.fragments;
 
 import android.app.KeyguardManager;
-import android.content.Intent;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,19 +12,22 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.legendwd.hyperpay.aelf.R;
 import com.legendwd.hyperpay.aelf.base.BaseFragment;
-import com.legendwd.hyperpay.aelf.business.wallet.CreateImportWalletActivity;
 import com.legendwd.hyperpay.aelf.dialogfragments.ConfirmDialog;
-import com.legendwd.hyperpay.aelf.dialogfragments.DoubleButtonDialog;
 import com.legendwd.hyperpay.aelf.dialogfragments.FingerDialog;
 import com.legendwd.hyperpay.aelf.dialogfragments.ToastDialog;
 import com.legendwd.hyperpay.aelf.listeners.HandleCallback;
 import com.legendwd.hyperpay.aelf.listeners.OnTextCorrectCallback;
 import com.legendwd.hyperpay.aelf.model.bean.CurrenciesBean;
+import com.legendwd.hyperpay.aelf.model.bean.NetWorkBean;
 import com.legendwd.hyperpay.aelf.util.AESUtil;
 import com.legendwd.hyperpay.aelf.util.DialogUtils;
+import com.legendwd.hyperpay.aelf.util.JsonUtils;
 import com.legendwd.hyperpay.aelf.util.LanguageUtil;
+import com.legendwd.hyperpay.aelf.util.StringUtil;
 import com.legendwd.hyperpay.lib.CacheUtil;
 import com.legendwd.hyperpay.lib.Constant;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -43,6 +45,8 @@ public class SettingFragment extends BaseFragment {
     SwitchCompat switch_touch;
     @BindView(R.id.switch_mode)
     SwitchCompat switch_mode;
+    @BindView(R.id.tv_rel_network)
+    TextView tv_rel_network;
 
     public static SettingFragment newInstance() {
         Bundle args = new Bundle();
@@ -53,7 +57,6 @@ public class SettingFragment extends BaseFragment {
 
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {
-        //         return super.onCreateFragmentAnimation();
         return new FragmentAnimator();
     }
 
@@ -69,7 +72,6 @@ public class SettingFragment extends BaseFragment {
 
         boolean isMode = CacheUtil.getInstance().getProperty(Constant.Sp.PRIVATE_MODE, false);
         switch_mode.setChecked(isMode);
-
         switch_mode.setOnCheckedChangeListener((buttonView, isChecked) -> CacheUtil.getInstance().setProperty(Constant.Sp.PRIVATE_MODE, isChecked));
     }
 
@@ -85,6 +87,18 @@ public class SettingFragment extends BaseFragment {
         showLanguage();
         showPricingCurrency();
         showTouchIdView();
+        showUrl();
+    }
+
+    private void showUrl() {
+        int index = CacheUtil.getInstance().getProperty(Constant.Sp.NETWORK_SELECT_KEY, 0);
+        if (index >= 0) {
+            String json = StringUtil.getAssetsJson(getContext());
+            List<NetWorkBean> list = JsonUtils.jsonToList(json, NetWorkBean.class);
+            tv_rel_network.setText(list.get(index).getName());
+        } else {
+            tv_rel_network.setText(CacheUtil.getInstance().getProperty(Constant.Sp.NETWORK_BASE_URL));
+        }
     }
 
     private void showTouchIdView() {
@@ -110,13 +124,15 @@ public class SettingFragment extends BaseFragment {
             tv_asset_display.setText(R.string.by_chain);
         }
     }
+
     private void showPricingCurrency() {
         String json = CacheUtil.getInstance().getProperty(Constant.Sp.PRICING_CURRENCY_DEFAULT);
         CurrenciesBean.ListBean bean = new Gson().fromJson(json, CurrenciesBean.ListBean.class);
         tv_pricing_currency.setText(null == bean ? "" : bean.id);
     }
 
-    @OnClick({R.id.rel_language, R.id.rel_asset_display, R.id.rel_pricing_currency, R.id.rel_touch})
+    @OnClick({R.id.rel_language, R.id.rel_asset_display, R.id.rel_pricing_currency,
+            R.id.rel_touch, R.id.rel_network})
     public void clickView(View view) {
         switch (view.getId()) {
             case R.id.rel_language:
@@ -135,6 +151,11 @@ public class SettingFragment extends BaseFragment {
             case R.id.rel_touch:
                 showTouchId();
 //                start(TouchIDFragment.newInstance());
+                break;
+            case R.id.rel_network:
+                start(NetworkConfigFragment.newInstance());
+                break;
+            default:
                 break;
         }
     }

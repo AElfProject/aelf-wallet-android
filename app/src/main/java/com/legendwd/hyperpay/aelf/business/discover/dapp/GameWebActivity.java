@@ -19,7 +19,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.ConsoleMessage;
@@ -36,17 +35,14 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.legendwd.hyperpay.aelf.R;
-import com.legendwd.hyperpay.aelf.base.ApiUrl;
 import com.legendwd.hyperpay.aelf.base.BaseActivity;
 import com.legendwd.hyperpay.aelf.business.discover.cyano.Constant;
 import com.legendwd.hyperpay.aelf.business.discover.cyano.CyanoWebView;
 import com.legendwd.hyperpay.aelf.business.discover.cyano.DappUtils;
-import com.legendwd.hyperpay.aelf.business.discover.cyano.ECDSASignature;
-import com.legendwd.hyperpay.aelf.business.discover.cyano.KeyUtils;
+import com.legendwd.hyperpay.aelf.config.ApiUrlConfig;
 import com.legendwd.hyperpay.aelf.dialogfragments.DappInputDialog;
 import com.legendwd.hyperpay.aelf.dialogfragments.DoubleButtonDialog;
 import com.legendwd.hyperpay.aelf.dialogfragments.ToastDialog;
-import com.legendwd.hyperpay.aelf.dialogfragments.TransGameDialog;
 import com.legendwd.hyperpay.aelf.listeners.OnTextCorrectCallback;
 import com.legendwd.hyperpay.aelf.model.bean.ChainAddressBean;
 import com.legendwd.hyperpay.aelf.model.bean.ChooseChainsBean;
@@ -55,7 +51,6 @@ import com.legendwd.hyperpay.aelf.model.bean.ResultBean;
 import com.legendwd.hyperpay.aelf.model.bean.TransferBalanceBean;
 import com.legendwd.hyperpay.aelf.presenters.impl.DiscoveryPresenter;
 import com.legendwd.hyperpay.aelf.presenters.impl.TransferPresenter;
-import com.legendwd.hyperpay.aelf.util.CryptUtil;
 import com.legendwd.hyperpay.aelf.util.DialogUtils;
 import com.legendwd.hyperpay.aelf.util.JsonFormatUtil;
 import com.legendwd.hyperpay.aelf.views.IDiscoveryView;
@@ -63,6 +58,7 @@ import com.legendwd.hyperpay.aelf.views.ITransferView;
 import com.legendwd.hyperpay.aelf.widget.webview.DWebView;
 import com.legendwd.hyperpay.aelf.widget.webview.JsApi;
 import com.legendwd.hyperpay.lib.CacheUtil;
+import com.legendwd.hyperpay.lib.Logger;
 
 import org.bitcoinj.core.Utils;
 import org.bitcoinj.crypto.LazyECPoint;
@@ -75,7 +71,6 @@ import org.spongycastle.crypto.params.ECKeyGenerationParameters;
 import org.spongycastle.crypto.params.ECPrivateKeyParameters;
 import org.spongycastle.crypto.params.ECPublicKeyParameters;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.List;
@@ -85,6 +80,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.legendwd.hyperpay.aelf.AelfApplication.PRIVATEKEY_DAPP;
+import static com.legendwd.hyperpay.aelf.business.discover.cyano.Constant.ACTION_GET_CONTRACT_METHODS;
 import static com.legendwd.hyperpay.aelf.business.discover.cyano.Constant.ACTION_INVOKE;
 import static com.legendwd.hyperpay.aelf.business.discover.cyano.Constant.ACTION_INVOKEREAD;
 
@@ -100,6 +96,7 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
     private static final SecureRandom secureRandom;
 
     private JSONObject webData;
+
     static {
         X9ECParameters params = SECNamedCurves.getByName("secp256k1");
         CURVE = new ECDomainParameters(params.getCurve(), params.getG(),
@@ -148,20 +145,19 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
         }
 
 
-
         DialogUtils.showDialog(DoubleButtonDialog.class, getSupportFragmentManager())
-                .setTitle(String.format(getString(R.string.title_03),mTitle))
-                .setMessage(String.format(getString(R.string.title_04),mTitle))
+                .setTitle(String.format(getString(R.string.title_03), mTitle))
+                .setMessage(String.format(getString(R.string.title_04), mTitle))
                 .setHandleCallback(o -> {
-            if((boolean)o){
-                initData();
-                presenter = new TransferPresenter(GameWebActivity.this);
-                mDiscoveryPresenter = new DiscoveryPresenter(GameWebActivity.this);
-            }else{
-                finish();
-            }
+                    if ((boolean) o) {
+                        initData();
+                        presenter = new TransferPresenter(GameWebActivity.this);
+                        mDiscoveryPresenter = new DiscoveryPresenter(GameWebActivity.this);
+                    } else {
+                        finish();
+                    }
 
-        });
+                });
 
 
     }
@@ -170,13 +166,14 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
      * 初始化桥接动作
      */
     private void initAction() {
-        if(mWebView.getNativeJsBridge()!=null){
+        if (mWebView.getNativeJsBridge() != null) {
             mWebView.getNativeJsBridge().setHandleConnect(data -> actionConnect(data));
             mWebView.getNativeJsBridge().setHandleAccount(data -> actionAccount(data));
             mWebView.getNativeJsBridge().setHandleInvokeRead(data -> actionInvokeRead(data));
             mWebView.getNativeJsBridge().setHandleInvoke(data -> actionInvoke(data));
             mWebView.getNativeJsBridge().setHandleApi(data -> actionApi(data));
             mWebView.getNativeJsBridge().setHandleDisconnect(data -> actionDisconnect(data));
+            mWebView.getNativeJsBridge().setHandleGetContractMethos(data -> actionGetContractMethos(data));
         }
     }
 
@@ -207,7 +204,7 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
             DiscoveryBean.DappBean dapp = new Gson().fromJson(extras.getString("bean"), DiscoveryBean.DappBean.class);
             tv_title.setText(dapp.getName());
         }
-//        mWebView.loadUrl("http://192.168.1.249:9527/dapp.html");
+//        mWebView.loadUrl("http://54.249.197.246:9876/dapp.html");
         mWebView.loadUrl(mUrl);
     }
 
@@ -218,7 +215,7 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-                if(!TextUtils.isEmpty(title)){
+                if (!TextUtils.isEmpty(title)) {
                     tv_title.setText(title);
                 }
             }
@@ -238,6 +235,7 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
             public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
                 return super.onJsAlert(view, url, message, result);
             }
+
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 if (newProgress == 100) {
@@ -260,23 +258,23 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
         });
 
 
-        mWvbridge.loadUrl(ApiUrl.AssetsUrl);
+        mWvbridge.loadUrl(ApiUrlConfig.AssetsUrl);
         mWvbridge.addJavascriptObject(new JsApi(o -> {
             dismissLoading();
-            try{
-                com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject((String)o);
+            try {
+                com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject((String) o);
                 int success = jsonObject.getInteger("success");
                 if (success == 1) {
                     mWebView.sendSuccessToWeb(jsonObject.get("data"),
                             jsonObject.getString("id"));
-                }else{
+                } else {
                     mWebView.sendFailToWeb(jsonObject.getString("msg"),
                             jsonObject.getString("id"),
-                            jsonObject.getString("error"),1100);
+                            jsonObject.getString("error"), 1100);
                 }
 
-            }catch (Exception e){
-                mWebView.sendFailToWeb("","Data parsing failed", 1002);
+            } catch (Exception e) {
+                mWebView.sendFailToWeb("", "Data parsing failed", 1002);
             }
         }), null);
 
@@ -291,7 +289,7 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
         if (mWebView.canGoBack() && keyCode == KeyEvent.KEYCODE_BACK) {//点击返回按钮的时候判断有没有上一页
             mWebView.goBack(); // goBack()表示返回webView的上一页面
             return true;
-        }else{
+        } else {
             finish();
         }
         return super.onKeyDown(keyCode, event);
@@ -306,7 +304,7 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
         super.onDestroy();
     }
 
-    public void showLoading(){
+    public void showLoading() {
 //        if (mToastDialog == null) {
 //            mToastDialog = DialogUtils.showDialog(ToastDialog.class, getSupportFragmentManager())
 //                    .setToast(R.string.loading)
@@ -329,7 +327,7 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
     /**
      * 链接
      */
-    private void actionConnect(String data){
+    private void actionConnect(String data) {
 
 
         showLoading();
@@ -347,19 +345,18 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
         }
         if (!DappUtils.checkTimestamp(timestamp)) {
             dismissLoading();
-            mWebView.sendFailToWeb(id,"Invalid timestamp",1001);
+            mWebView.sendFailToWeb(id, "Invalid timestamp", 1001);
             return;
         }
 
         DappUtils.VerifySignParam(timestamp, signature, o -> {
-            if((boolean)o){
+            if ((boolean) o) {
                 runOnUiThread(() -> handlerConnect(id));
-            }else{
+            } else {
                 runOnUiThread(() -> dismissLoading());
-                mWebView.sendFailToWeb(id,"Data parsing failed",1002);
+                mWebView.sendFailToWeb(id, "Data parsing failed", 1002);
             }
         });
-
 
 
     }
@@ -367,7 +364,7 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
     /**
      * 链接
      */
-    private void actionDisconnect(String webdata){
+    private void actionDisconnect(String webdata) {
         showLoading();
         com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(webdata);
         String id = jsonObject.getString("id");
@@ -380,34 +377,74 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
         String timestamp = resultJson.getString("timestamp");
         if (!DappUtils.checkTimestamp(timestamp)) {
             dismissLoading();
-            mWebView.sendFailToWeb(id,"Invalid timestamp",1001);
+            mWebView.sendFailToWeb(id, "Invalid timestamp", 1001);
             return;
         }
         DappUtils.VerifySignParam(Base64.decode(originalParams, Base64.NO_WRAP), signature, o -> {
-            if((boolean)o){
-                runOnUiThread(() -> mWebView.sendSuccessToWeb("",id));
-            }else{
+            if ((boolean) o) {
+                runOnUiThread(() -> mWebView.sendSuccessToWeb("", id));
+            } else {
                 runOnUiThread(() -> dismissLoading());
-                mWebView.sendFailToWeb(id,"Data parsing failed",1002);
+                mWebView.sendFailToWeb(id, "Data parsing failed", 1002);
             }
         });
 
 
+    }
 
+    private void actionGetContractMethos(String webData) {
+        showLoading();
+        com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(webData);
+        String id = jsonObject.getString("id");
+        JSONObject params = jsonObject.getJSONObject("params");
+        String originalParams = params.getString("originalParams");
+        String signature = params.getString("signature");
+        byte[] decode = Base64.decode(originalParams, Base64.NO_WRAP);
+        String result = Uri.decode(new String(decode));
+        com.alibaba.fastjson.JSONObject resultJson = JSON.parseObject(result);
+        Logger.d(new Gson().toJson(resultJson));
+        String timestamp = resultJson.getString("timestamp");
+        if (!DappUtils.checkTimestamp(timestamp)) {
+            dismissLoading();
+            mWebView.sendFailToWeb(id, "Invalid timestamp", 1001);
+            return;
+        }
+        DappUtils.VerifySignParam(Base64.decode(originalParams, Base64.NO_WRAP), signature, o -> {
+            if ((boolean) o) {
+                runOnUiThread(() -> {
+                    String nodeUrl = "";
+                    if (chooseChainsBeans != null && chooseChainsBeans.size() > 0) {
+                        for (ChooseChainsBean chooseChainsBean : chooseChainsBeans) {
+                            boolean isMain = "main".equals(chooseChainsBean.getType());
+                            if (isMain) {
+                                nodeUrl = chooseChainsBean.getNode();
+                                break;
+                            }
+                        }
+                    }
+                    resultJson.put("nodeUrl", nodeUrl);
+                    resultJson.put("action", ACTION_GET_CONTRACT_METHODS);
+                    resultJson.put("id", id);
+                    mWvbridge.callHandler("getContractMethods", new Gson().toJson(resultJson), data -> {
+                    });
+
+                });
+            } else {
+                mWebView.sendFailToWeb(id, "Data parsing failed", 1002);
+                runOnUiThread(() -> dismissLoading());
+            }
+        });
     }
 
 
-
-    public interface Callback{
+    public interface Callback {
         void callback(Object o);
     }
 
 
-
-
     private void handlerConnect(String id) {
 
-        String random=UUID.randomUUID().toString().replace("-","");
+        String random = UUID.randomUUID().toString().replace("-", "");
         try {
             org.spongycastle.crypto.generators.ECKeyPairGenerator generator = new ECKeyPairGenerator();
             ECKeyGenerationParameters keygenParams = new ECKeyGenerationParameters(CURVE, secureRandom);
@@ -422,15 +459,15 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
 
             DappUtils.doSign(random, o -> runOnUiThread(() -> {
                 webData.put("signature", o.toString());
-                webData.put("random",random);
-                webData.put("publicKey",Utils.HEX.encode(pub.getEncoded()));
-                mWebView.sendSuccessToWebNoSign(webData,id);
+                webData.put("random", random);
+                webData.put("publicKey", Utils.HEX.encode(pub.getEncoded()));
+                mWebView.sendSuccessToWebNoSign(webData, id);
                 dismissLoading();
             }));
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            mWebView.sendFailToWeb(id,"Signature failure",1007);
+            mWebView.sendFailToWeb(id, "Signature failure", 1007);
             dismissLoading();
             return;
         }
@@ -440,15 +477,15 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
 
     /**
      * 获取账户
+     *
      * @param data
      */
-    private void actionAccount(String data){
+    private void actionAccount(String data) {
 
         showLoading();
         com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(data);
         String id = jsonObject.getString("id");
         JSONObject params = jsonObject.getJSONObject("params");
-
 
 
         String originalParams = params.getString("originalParams");
@@ -462,17 +499,17 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
 
         if (!DappUtils.checkTimestamp(timestamp)) {
             dismissLoading();
-            mWebView.sendFailToWeb(id,"Invalid timestamp",1001);
+            mWebView.sendFailToWeb(id, "Invalid timestamp", 1001);
             return;
         }
 
 
         DappUtils.VerifySignParam(Base64.decode(originalParams, Base64.NO_WRAP), signature, o -> {
-            if((boolean)o){
+            if ((boolean) o) {
                 runOnUiThread(() -> presenter.getCrossChains_forDapp(id));
-            }else{
+            } else {
                 runOnUiThread(() -> dismissLoading());
-                mWebView.sendFailToWeb(id,"Data parsing failed",1002);
+                mWebView.sendFailToWeb(id, "Data parsing failed", 1002);
             }
         });
 
@@ -481,9 +518,10 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
 
     /**
      * 获取账户
+     *
      * @param webdata
      */
-    private void actionInvokeRead(String webdata){
+    private void actionInvokeRead(String webdata) {
         showLoading();
         com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(webdata);
         String id = jsonObject.getString("id");
@@ -496,32 +534,32 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
         String timestamp = resultJson.getString("timestamp");
         if (!DappUtils.checkTimestamp(timestamp)) {
             dismissLoading();
-            mWebView.sendFailToWeb(id,"Invalid timestamp",1001);
+            mWebView.sendFailToWeb(id, "Invalid timestamp", 1001);
             return;
         }
         DappUtils.VerifySignParam(Base64.decode(originalParams, Base64.NO_WRAP), signature, o -> {
-            if((boolean)o){
+            if ((boolean) o) {
                 runOnUiThread(() -> {
-                    resultJson.put("privateKey","bdb3b39ef4cd18c2697a920eb6d9e8c3cf1a930570beb37d04fb52400092c42b");
+                    resultJson.put("privateKey", "bdb3b39ef4cd18c2697a920eb6d9e8c3cf1a930570beb37d04fb52400092c42b");
                     String nodeUrl = "";
-                    if(chooseChainsBeans!=null&&chooseChainsBeans.size()>0){
-                        for(ChooseChainsBean chooseChainsBean:chooseChainsBeans){
+                    if (chooseChainsBeans != null && chooseChainsBeans.size() > 0) {
+                        for (ChooseChainsBean chooseChainsBean : chooseChainsBeans) {
                             boolean isMain = "main".equals(chooseChainsBean.getType());
-                            if(isMain){
-                                nodeUrl = chooseChainsBean.getNode().substring(0,chooseChainsBean.getNode().length()-1);
+                            if (isMain) {
+                                nodeUrl = chooseChainsBean.getNode();
                                 break;
                             }
                         }
                     }
-                    resultJson.put("nodeUrl",nodeUrl);
-                    resultJson.put("action",ACTION_INVOKEREAD);
-                    resultJson.put("id",id);
+                    resultJson.put("nodeUrl", nodeUrl);
+                    resultJson.put("action", ACTION_INVOKEREAD);
+                    resultJson.put("id", id);
                     mWvbridge.callHandler("invokeOrinvokeReadJs", new Gson().toJson(resultJson), data -> {
                     });
 
                 });
-            }else{
-                mWebView.sendFailToWeb(id,"Data parsing failed",1002);
+            } else {
+                mWebView.sendFailToWeb(id, "Data parsing failed", 1002);
                 runOnUiThread(() -> dismissLoading());
             }
         });
@@ -556,9 +594,10 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
 
     /**
      * 获取账户
+     *
      * @param webdata
      */
-    private void actionInvoke(String webdata){
+    private void actionInvoke(String webdata) {
         showLoading();
         com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(webdata);
         String id = jsonObject.getString("id");
@@ -571,63 +610,63 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
         String timestamp = resultJson.getString("timestamp");
         if (!DappUtils.checkTimestamp(timestamp)) {
             dismissLoading();
-            mWebView.sendFailToWeb(id,"Invalid timestamp",1001);
+            mWebView.sendFailToWeb(id, "Invalid timestamp", 1001);
             return;
         }
 
 
         DappUtils.VerifySignParam(Base64.decode(originalParams, Base64.NO_WRAP), signature, o -> {
-            if((boolean)o){
+            if ((boolean) o) {
                 runOnUiThread(() -> {
                     String privateKey = PRIVATEKEY_DAPP.get(mUrl);
-                    if(TextUtils.isEmpty(privateKey)){
+                    if (TextUtils.isEmpty(privateKey)) {
                         showPasswordDialogForPrivate(obj -> {
-                            if("".equalsIgnoreCase(obj[0].toString())){
-                                mWebView.sendFailToWeb(id,"Cancelled",1101);
-                            }else{
+                            if ("".equalsIgnoreCase(obj[0].toString())) {
+                                mWebView.sendFailToWeb(id, "Cancelled", 1101);
+                            } else {
                                 String nodeUrl = "";
-                                if(chooseChainsBeans!=null&&chooseChainsBeans.size()>0){
-                                    for(ChooseChainsBean chooseChainsBean:chooseChainsBeans){
+                                if (chooseChainsBeans != null && chooseChainsBeans.size() > 0) {
+                                    for (ChooseChainsBean chooseChainsBean : chooseChainsBeans) {
                                         boolean isMain = "main".equals(chooseChainsBean.getType());
-                                        if(isMain){
-                                            nodeUrl = chooseChainsBean.getNode().substring(0,chooseChainsBean.getNode().length()-1);
+                                        if (isMain) {
+                                            nodeUrl = chooseChainsBean.getNode();
                                             break;
                                         }
                                     }
                                 }
-                                resultJson.put("nodeUrl",nodeUrl);
-                                resultJson.put("action",ACTION_INVOKE);
-                                resultJson.put("id",id);
-                                resultJson.put("privateKey",transfer_privateKey);
+                                resultJson.put("nodeUrl", nodeUrl);
+                                resultJson.put("action", ACTION_INVOKE);
+                                resultJson.put("id", id);
+                                resultJson.put("privateKey", transfer_privateKey);
                                 mWvbridge.callHandler("invokeOrinvokeReadJs", new Gson().toJson(resultJson), data -> {
                                 });
                             }
 
-                        },resultJson.getString("contractAddress"),result);
-                    }else{
+                        }, resultJson.getString("contractAddress"), result);
+                    } else {
 
                         String nodeUrl = "";
-                        if(chooseChainsBeans!=null&&chooseChainsBeans.size()>0){
-                            for(ChooseChainsBean chooseChainsBean:chooseChainsBeans){
+                        if (chooseChainsBeans != null && chooseChainsBeans.size() > 0) {
+                            for (ChooseChainsBean chooseChainsBean : chooseChainsBeans) {
                                 boolean isMain = "main".equals(chooseChainsBean.getType());
-                                if(isMain){
-                                    nodeUrl = chooseChainsBean.getNode().substring(0,chooseChainsBean.getNode().length()-1);
+                                if (isMain) {
+                                    nodeUrl = chooseChainsBean.getNode();
                                     break;
                                 }
                             }
                         }
                         transfer_privateKey = privateKey;
-                        resultJson.put("privateKey",transfer_privateKey);
-                        resultJson.put("nodeUrl",nodeUrl);
-                        resultJson.put("action",ACTION_INVOKE);
-                        resultJson.put("id",id);
+                        resultJson.put("privateKey", transfer_privateKey);
+                        resultJson.put("nodeUrl", nodeUrl);
+                        resultJson.put("action", ACTION_INVOKE);
+                        resultJson.put("id", id);
                         mWvbridge.callHandler("invokeOrinvokeReadJs", new Gson().toJson(resultJson), data -> {
                         });
                     }
                 });
-            }else{
+            } else {
                 runOnUiThread(() -> dismissLoading());
-                mWebView.sendFailToWeb(id,"Data parsing failed",1002);
+                mWebView.sendFailToWeb(id, "Data parsing failed", 1002);
             }
         });
 
@@ -637,7 +676,7 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
     /**
      * @param webData
      */
-    private void actionApi(String webData){
+    private void actionApi(String webData) {
         showLoading();
         com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(webData);
         String id = jsonObject.getString("id");
@@ -652,39 +691,39 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
 
         if (!DappUtils.checkTimestamp(timestamp)) {
             dismissLoading();
-            mWebView.sendFailToWeb(id,"Invalid timestamp",1001);
+            mWebView.sendFailToWeb(id, "Invalid timestamp", 1001);
             return;
         }
 
 
         DappUtils.VerifySignParam(Base64.decode(originalParams, Base64.NO_WRAP), signature, o -> {
-            if((boolean)o){
+            if ((boolean) o) {
                 runOnUiThread(() -> {
 
                     String nodeUrl = "";
-                    if(chooseChainsBeans!=null&&chooseChainsBeans.size()>0){
-                        for(ChooseChainsBean chooseChainsBean:chooseChainsBeans){
+                    if (chooseChainsBeans != null && chooseChainsBeans.size() > 0) {
+                        for (ChooseChainsBean chooseChainsBean : chooseChainsBeans) {
                             boolean isMain = "main".equals(chooseChainsBean.getType());
-                            if(isMain){
-                                nodeUrl = chooseChainsBean.getNode().substring(0,chooseChainsBean.getNode().length()-1);
+                            if (isMain) {
+                                nodeUrl = chooseChainsBean.getNode();
                                 break;
                             }
                         }
                     }
-                    resultJson.put("nodeUrl",nodeUrl);
-                    resultJson.put("id",id);
+                    resultJson.put("nodeUrl", nodeUrl);
+                    resultJson.put("id", id);
                     mWvbridge.callHandler("apiJs", new Gson().toJson(resultJson), data -> {
+//                        Logger.d(data);
+
                     });
 
                 });
-            }else{
+            } else {
                 runOnUiThread(() -> dismissLoading());
-                mWebView.sendFailToWeb(id,"Data parsing failed",1002);
+                mWebView.sendFailToWeb(id, "Data parsing failed", 1002);
             }
         });
     }
-
-
 
 
     /**
@@ -692,18 +731,18 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
      *
      * @param callback
      */
-    protected void showPasswordDialogForPrivate(OnTextCorrectCallback callback,String contractAddress,String result) {
+    protected void showPasswordDialogForPrivate(OnTextCorrectCallback callback, String contractAddress, String result) {
         DappInputDialog dialogFragment = DialogUtils.showDialog(DappInputDialog.class, getSupportFragmentManager())
-                .setTv01Str(getString(R.string.sign_text01)+": "+contractAddress)
-                .setTv02Str(getString(R.string.sign_text02)+": \n"+ JsonFormatUtil.formatJson(result))
+                .setTv01Str(getString(R.string.sign_text01) + ": " + contractAddress)
+                .setTv02Str(getString(R.string.sign_text02) + ": \n" + JsonFormatUtil.formatJson(result))
                 .setTitle(getString(R.string.sign_title))
                 .setInputCancelable(false);
         dialogFragment.setHandleCallback(o -> {
-            if("close".equalsIgnoreCase((String) o)){
+            if ("close".equalsIgnoreCase((String) o)) {
                 if (null != callback) {
                     callback.onTextCorrect("");
                 }
-            }else{
+            } else {
                 String pwd = (String) o;
                 String data = CacheUtil.getInstance().getProperty(pwd + "private");
                 if (TextUtils.isEmpty(data)) {
@@ -711,10 +750,10 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
                 } else {
                     transfer_privateKey = data;
 
-                    if(dialogFragment.isAddWhite()){
-                        PRIVATEKEY_DAPP.put(mUrl,data);
-                    }else{
-                        PRIVATEKEY_DAPP.put(mUrl,"");
+                    if (dialogFragment.isAddWhite()) {
+                        PRIVATEKEY_DAPP.put(mUrl, data);
+                    } else {
+                        PRIVATEKEY_DAPP.put(mUrl, "");
                     }
                     if (null != callback) {
                         dialogFragment.dismiss();
@@ -725,9 +764,6 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
 
         });
     }
-
-
-
 
 
     @Override
@@ -759,7 +795,7 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
     }
 
     @Override
-    public void onGameListSuccess(GameListBean gameListBean,String refreshType ) {
+    public void onGameListSuccess(GameListBean gameListBean, String refreshType) {
 
     }
 
@@ -787,7 +823,7 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
 
     @Override
     public void onChainsSuccessForDapp(String id, ResultBean<List<ChooseChainsBean>> resultBean) {
-        if (resultBean == null){
+        if (resultBean == null) {
             dismissLoading();
             return;
         }
@@ -796,40 +832,39 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
         DialogUtils.showDialog(DoubleButtonDialog.class, getSupportFragmentManager())
                 .setTitle(getString(R.string.title_01))
                 .setLeftText(getString(R.string.Refused))
-                .setMessage(String.format(getString(R.string.title_02),mTitle))
+                .setMessage(String.format(getString(R.string.title_02), mTitle))
                 .setHandleCallback(o -> {
-                    if((boolean)o){
+                    if ((boolean) o) {
                         showLoading();
                         chooseChainsBeans = resultBean.getData();
                         JSONArray accounts = new JSONArray();
                         com.alibaba.fastjson.JSONObject account = new JSONObject();
-                        account.put("name",CacheUtil.getInstance().getProperty(com.legendwd.hyperpay.lib.Constant.Sp.ACCOUNT_NAME));
-                        account.put("address",(CacheUtil.getInstance().getProperty(com.legendwd.hyperpay.lib.Constant.Sp.WALLET_COIN_ADDRESS)).split("_")[1]);
-                        account.put("publicKey",CacheUtil.getInstance().getProperty(com.legendwd.hyperpay.lib.Constant.Sp.WALLET_PUBLIC_KEY_DAPP));
+                        account.put("name", CacheUtil.getInstance().getProperty(com.legendwd.hyperpay.lib.Constant.Sp.ACCOUNT_NAME));
+                        account.put("address", (CacheUtil.getInstance().getProperty(com.legendwd.hyperpay.lib.Constant.Sp.WALLET_COIN_ADDRESS)).split("_")[1]);
+                        account.put("publicKey", CacheUtil.getInstance().getProperty(com.legendwd.hyperpay.lib.Constant.Sp.WALLET_PUBLIC_KEY_DAPP));
                         accounts.add(account);
 
                         JSONArray chains = new JSONArray();
-                        if(chooseChainsBeans!=null&&chooseChainsBeans.size()>0){
-                            for(ChooseChainsBean chooseChainsBean:chooseChainsBeans){
+                        if (chooseChainsBeans != null && chooseChainsBeans.size() > 0) {
+                            for (ChooseChainsBean chooseChainsBean : chooseChainsBeans) {
                                 com.alibaba.fastjson.JSONObject chain = new JSONObject();
                                 chain.put("chainId", chooseChainsBean.getSymbol());
                                 boolean isMain = "main".equals(chooseChainsBean.getType());
-                                chain.put("isMainChain",isMain);
-                                chain.put("url",chooseChainsBean.getNode().substring(0,chooseChainsBean.getNode().length()-1));
+                                chain.put("isMainChain", isMain);
+                                chain.put("url", chooseChainsBean.getNode());
                                 chains.add(chain);
                             }
                         }
                         com.alibaba.fastjson.JSONObject webData = new JSONObject();
-                        webData.put("accounts",accounts);
-                        webData.put("chains",chains);
-                        mWebView.sendSuccessToWeb(webData,id);
+                        webData.put("accounts", accounts);
+                        webData.put("chains", chains);
+                        mWebView.sendSuccessToWeb(webData, id);
                         dismissLoading();
-                    }else{
-                        mWebView.sendFailToWeb(id,"Cancelled",1101);
+                    } else {
+                        mWebView.sendFailToWeb(id, "Cancelled", 1101);
                     }
 
                 });
-
 
 
     }
@@ -837,10 +872,8 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
     @Override
     public void onChainsErrorForDapp(String id, int code, String msg) {
         dismissLoading();
-        mWebView.sendFailToWeb(id," Data parsing failed",1002);
+        mWebView.sendFailToWeb(id, " Data parsing failed", 1002);
     }
-
-
 
 
 }

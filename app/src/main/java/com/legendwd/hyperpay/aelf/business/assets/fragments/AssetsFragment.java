@@ -194,6 +194,7 @@ public class AssetsFragment extends BaseFragment implements IAssetsView {
             } else {
                 if (mPopList == null || mPopList.size() == 0) {
                     tv_main_check.setText(getString(R.string.current_chain, ServiceGenerator.getChainId()));
+
                     mAssetsPresenter.getAssetsList(CacheUtil.getInstance().getProperty(Constant.Sp.WALLET_COIN_ADDRESS));
                     return;
                 }

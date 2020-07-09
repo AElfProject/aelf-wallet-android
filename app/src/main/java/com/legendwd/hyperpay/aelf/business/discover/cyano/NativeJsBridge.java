@@ -4,15 +4,15 @@ import android.net.Uri;
 import android.util.Base64;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import static com.legendwd.hyperpay.aelf.business.discover.cyano.Constant.ACTION_ACCOUNT;
 import static com.legendwd.hyperpay.aelf.business.discover.cyano.Constant.ACTION_API;
 import static com.legendwd.hyperpay.aelf.business.discover.cyano.Constant.ACTION_CONNECT;
 import static com.legendwd.hyperpay.aelf.business.discover.cyano.Constant.ACTION_DISCONNECT;
+import static com.legendwd.hyperpay.aelf.business.discover.cyano.Constant.ACTION_GET_CONTRACT_METHODS;
 import static com.legendwd.hyperpay.aelf.business.discover.cyano.Constant.ACTION_INVOKE;
 import static com.legendwd.hyperpay.aelf.business.discover.cyano.Constant.ACTION_INVOKEREAD;
 import static com.legendwd.hyperpay.aelf.business.discover.cyano.Constant.CYANO_SPLIT_TAG;
@@ -27,6 +27,7 @@ public class NativeJsBridge {
     private HandleInvokeRead handleInvokeRead;
     private HandleAccount handleAccount;
     private HandleDisconnect handleDisconnect;
+    private HandleGetContractMethos handleGetContractMethos;
     private CyanoWebView cyanoWebView;
 
     public NativeJsBridge(CyanoWebView cyanoWebView) {
@@ -81,6 +82,11 @@ public class NativeJsBridge {
                         handleDisconnect.handleAction(result);
                     }
                     break;
+                case ACTION_GET_CONTRACT_METHODS:
+                    if(handleGetContractMethos!=null){
+                        handleGetContractMethos.handleAction(result);
+                    }
+                    break;
                 default:
             }
         } catch (JSONException e) {
@@ -110,6 +116,10 @@ public class NativeJsBridge {
         void handleAction(String data);
     }
 
+    public interface HandleGetContractMethos {
+        void handleAction(String data);
+    }
+
 
     public void setHandleInvokeRead(HandleInvokeRead handleInvokeRead) {
         this.handleInvokeRead = handleInvokeRead;
@@ -133,5 +143,9 @@ public class NativeJsBridge {
 
     public void setHandleDisconnect(HandleDisconnect handleDisconnect) {
         this.handleDisconnect = handleDisconnect;
+    }
+
+    public void setHandleGetContractMethos(HandleGetContractMethos handleGetContractMethos) {
+        this.handleGetContractMethos = handleGetContractMethos;
     }
 }

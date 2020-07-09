@@ -9,11 +9,15 @@ public class Constant {
 
     public final static String sharePath = "/images";
     public final static String DEFAULT_CURRENCY = "USD";
+    public static final String DB_NAME = "aelf.db";
     public static String lang = "";
     public static int sScreenH = 0;
     public final static Integer DEFAULT_DECIMALS = 8;
     public final static String DEFAULT_CHAIN_ID = "AELF";
     public final static String DEFAULT_PREFIX = "ELF_";
+
+    public final static String IP_MATCHER = "(\\d+\\.\\d+\\.\\d+\\.\\d+):(\\d+)";
+    public final static String URL_MATCHER = "^(https?|http)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
 
     public interface Sp {
         // common
@@ -40,7 +44,7 @@ public class Constant {
 
         // wallet
         String CHAIN_ID = "chain_id";
-        String COIN_CHAIN_ID= "coin_cross_chain_id";
+        String COIN_CHAIN_ID = "coin_cross_chain_id";
         String CURRENT_CHAIN = "current_chain";
         String WALLET_ADDRESS = "wallet_address";
         String WALLET_COIN_ADDRESS = "wallet_coin_address";
@@ -61,6 +65,10 @@ public class Constant {
         String CURRENT_CHAIN_ID = "current_chain_id"; //按chain data
 
         String Dapp_List_Cache = "dapp_list_cache"; //按chain data
+
+        String NETWORK_SELECT_KEY = "network_select_key";
+
+        String NETWORK_BASE_URL = "network_base_url";
 
     }
 

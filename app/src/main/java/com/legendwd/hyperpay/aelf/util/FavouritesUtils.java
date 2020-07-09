@@ -2,7 +2,7 @@ package com.legendwd.hyperpay.aelf.util;
 
 import android.util.Log;
 
-import com.legendwd.hyperpay.aelf.model.bean.MarketListBean;
+import com.legendwd.hyperpay.aelf.model.bean.MarketDataBean;
 import com.legendwd.hyperpay.lib.CacheUtil;
 import com.legendwd.hyperpay.lib.Constant;
 
@@ -20,12 +20,12 @@ public class FavouritesUtils {
      *
      * @return
      */
-    public static List<MarketListBean.ListBean> getFavourites() {
-        List<MarketListBean.ListBean> localDatas = null;
+    public static List<MarketDataBean> getFavourites() {
+        List<MarketDataBean> localDatas = null;
         try {
             String property = CacheUtil.getInstance().getProperty(Constant.Sp.MARKET_STAR);
             Log.d("====getFavourites", property);
-            localDatas = JsonUtils.jsonToList(property, MarketListBean.ListBean.class);
+            localDatas = JsonUtils.jsonToList(property, MarketDataBean.class);
         } catch (Exception e) {
             Log.d("====getFavourites", "error");
         }
@@ -41,7 +41,7 @@ public class FavouritesUtils {
      *
      * @return
      */
-    public static boolean setFavourites(List<MarketListBean.ListBean> listBeans) {
+    public static boolean setFavourites(List<MarketDataBean> listBeans) {
         try {
             if (listBeans != null) {
                 String data = JsonUtils.objToJson(listBeans);

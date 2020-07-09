@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,8 +14,7 @@ import com.legendwd.hyperpay.aelf.base.BaseAdapterModel;
 import com.legendwd.hyperpay.aelf.base.BaseFragment;
 import com.legendwd.hyperpay.aelf.business.market.adapters.MarketAllAdapter;
 import com.legendwd.hyperpay.aelf.model.MessageEvent;
-import com.legendwd.hyperpay.aelf.model.bean.MarketListBean;
-import com.legendwd.hyperpay.aelf.model.bean.ResultBean;
+import com.legendwd.hyperpay.aelf.model.bean.MarketDataBean;
 import com.legendwd.hyperpay.aelf.model.param.MarketParam;
 import com.legendwd.hyperpay.aelf.presenters.impl.MarketPresenter;
 import com.legendwd.hyperpay.aelf.views.IMarketView;
@@ -29,6 +27,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -57,9 +56,9 @@ public class MarketAllFragment extends BaseFragment implements IMarketView {
     @BindView(R.id.tv_sort_change)
     TextView tv_sort_change;
     private MarketPresenter mMarketPresenter;
-    private List<MarketListBean.ListBean> mBeanList = new ArrayList<>();
+    private List<MarketDataBean> mBeanList = new ArrayList<>();
     private MarketAllAdapter mMarketAdapter;
-    private String mSortType = "-1";
+    private int mSortType = -1;
     private int mPriceClickTimes;
     private int mChangeClickTimes;
     private int mCurrentPage = 1;
@@ -102,7 +101,7 @@ public class MarketAllFragment extends BaseFragment implements IMarketView {
             public void onRefresh(RefreshLayout refreshLayout) {
                 mCurrentPage = 1;
                 refresh.setEnableLoadMore(true);
-                getMarketList(mSortType);
+                getMarketList("");
             }
         });
 
@@ -113,7 +112,7 @@ public class MarketAllFragment extends BaseFragment implements IMarketView {
             public void onLoadMore(RefreshLayout refreshLayout) {
 
                 mCurrentPage++;
-                getMarketList(mSortType, TYPE_PULL_UP);
+                getMarketList(" ", TYPE_PULL_UP);
             }
         });
     }
@@ -162,26 +161,28 @@ public class MarketAllFragment extends BaseFragment implements IMarketView {
     private void setSortType() {
         if (mPriceClickTimes == 0) {
             if (mChangeClickTimes == 0) {
-                mSortType = "-1";
+                mSortType = -1;
             } else if (mChangeClickTimes == 1) {
-                mSortType = "3";
+                mSortType = 3;
             } else {
-                mSortType = "2";
+                mSortType = 2;
             }
         }
 
         if (mChangeClickTimes == 0) {
 
             if (mPriceClickTimes == 0) {
-                mSortType = "-1";
+                mSortType = -1;
             } else if (mPriceClickTimes == 1) {
-                mSortType = "1";
+                mSortType = 1;
             } else {
-                mSortType = "0";
+                mSortType = 0;
             }
         }
-        Log.d("mSortType===>", mSortType);
-        getMarketList(mSortType);
+        MarketDataBean.mSort = mSortType;
+        Collections.sort(mBeanList);
+        mMarketAdapter.notifyDataSetChanged();
+//        mMarketAdapter.refreshView(mBeanList);
     }
 
     @OnClick({R.id.ll_sort_price, R.id.ll_sort_change})
@@ -217,32 +218,31 @@ public class MarketAllFragment extends BaseFragment implements IMarketView {
     }
 
     @Override
-    public void onCoinListSuccess(ResultBean<MarketListBean> resultBean, String type) {
+    public void onCoinListSuccess(List<MarketDataBean> resultBean, String type) {
         refresh.finishRefresh();
         refresh.finishLoadMore();
 
-        if (resultBean == null || resultBean.getData() == null) {
+        if (resultBean == null) {
             return;
         }
-
-        List<MarketListBean.ListBean> list = resultBean.getData().getList();
-
         if (TYPE_PULL_UP.equals(type)) {
-            if (list.size() < PAGE_COUNT) {
+            if (resultBean.size() < PAGE_COUNT) {
                 refresh.setEnableLoadMore(false);
             }
-            mBeanList.addAll(list);
+            mBeanList.addAll(resultBean);
         } else {
 
             if (mCurrentPage == 1) {
-                PAGE_COUNT = list.size();
+                PAGE_COUNT = resultBean.size();
             }
             mBeanList.clear();
-            mBeanList.addAll(list);
+            mBeanList.addAll(resultBean);
         }
 
+        Collections.sort(mBeanList);
+
         if (mBeanList.size() == 0) {
-            MarketListBean.ListBean bean = new MarketListBean.ListBean();
+            MarketDataBean bean = new MarketDataBean();
             bean.setItemType(BaseAdapterModel.ItemType.EMPTY);
             mBeanList.add(bean);
         } else {
@@ -260,11 +260,11 @@ public class MarketAllFragment extends BaseFragment implements IMarketView {
                     refresh.autoRefresh();
                 } else {
                     Bundle bundle = new Bundle();
-                    MarketListBean.ListBean bean = mBeanList.get((Integer) o);
+                    MarketDataBean bean = mBeanList.get((Integer) o);
                     bundle.putSerializable("bean", bean);
-                    bundle.putString("name", bean.getName());
-                    bundle.putString("price", bean.getLast_price());
-                    bundle.putString("increase", bean.getIncrease());
+                    bundle.putString("name", bean.getId());
+                    bundle.putString("price", bean.getCurrentPrice() + "");
+                    bundle.putString("increase", bean.getPriceChangePercentage24h() + "");
                     ((BaseFragment) getParentFragment()).startBrotherFragment(HomeMarketFragment.newInstance(bundle));
                 }
             });
@@ -280,7 +280,7 @@ public class MarketAllFragment extends BaseFragment implements IMarketView {
     }
 
     @Override
-    public void onMyCoinListSuccess(ResultBean<MarketListBean> marketListBeanResultBean) {
+    public void onMyCoinListSuccess(List<MarketDataBean> dataBean) {
 
     }
 

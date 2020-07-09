@@ -1,10 +1,16 @@
 package com.legendwd.hyperpay.aelf.util;
 
+import android.content.Context;
+import android.content.res.AssetManager;
+
 import com.github.ontio.crypto.Base58;
 import com.github.ontio.crypto.Digest;
 import com.legendwd.hyperpay.lib.CacheUtil;
 import com.legendwd.hyperpay.lib.Constant;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
@@ -91,7 +97,7 @@ public class StringUtil {
 
     public static String checkAddress(String showAddress) {
         String[] addressarray = showAddress.split("_");
-        if(addressarray.length != 3) {
+        if (addressarray.length != 3) {
             showAddress = formatAddress(getRealAelfAddress(showAddress));
         }
         return showAddress;
@@ -221,5 +227,39 @@ public class StringUtil {
      */
     public static String multiplyDataString(int decimals, String value) {
         return StringUtil.formatDataNoZero(decimals, multiplyDataDouble(decimals, value));
+    }
+
+    public static double parseDouble(String data) {
+        try {
+            return Double.parseDouble(data);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+
+    public static Double parseDoubleU(String data) {
+        return Double.valueOf(parseDouble(data));
+    }
+
+    public static String getAssetsJson(Context context) {
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            //获取assets资源管理器
+            AssetManager assetManager = context.getAssets();
+            //通过管理器打开文件并读取
+            BufferedReader bf = new BufferedReader(new InputStreamReader(
+                    assetManager.open("networkConfig.json")));
+            String line;
+            while ((line = bf.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return stringBuilder.toString();
     }
 }

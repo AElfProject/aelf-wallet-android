@@ -10,6 +10,7 @@ public class Constant {
     public static final String ACTION_INVOKEREAD = "invokeRead";
     public static final String ACTION_API = "api";
     public static final String ACTION_DISCONNECT = "disconnect";
+    public static final String ACTION_GET_CONTRACT_METHODS = "getContractMethods";
 
 
 

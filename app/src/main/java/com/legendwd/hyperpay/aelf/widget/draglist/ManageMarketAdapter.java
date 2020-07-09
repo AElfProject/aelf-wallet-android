@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.legendwd.hyperpay.aelf.R;
-import com.legendwd.hyperpay.aelf.model.bean.MarketListBean;
+import com.legendwd.hyperpay.aelf.model.bean.MarketDataBean;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,9 +24,9 @@ import butterknife.ButterKnife;
 
 public class ManageMarketAdapter extends RecyclerView.Adapter<ManageMarketAdapter.MyViewHolder> implements ItemTouchMoveListener {
 
-    private List<MarketListBean.ListBean> mListBeans;
+    private List<MarketDataBean> mListBeans;
 
-    public ManageMarketAdapter(List<MarketListBean.ListBean> list) {
+    public ManageMarketAdapter(List<MarketDataBean> list) {
         this.mListBeans = list;
     }
 
@@ -38,7 +38,7 @@ public class ManageMarketAdapter extends RecyclerView.Adapter<ManageMarketAdapte
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        MarketListBean.ListBean listBean = mListBeans.get(position);
+        MarketDataBean listBean = mListBeans.get(position);
         holder.tx_currency.setText(listBean.getName());
         holder.iv_remove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +62,7 @@ public class ManageMarketAdapter extends RecyclerView.Adapter<ManageMarketAdapte
      *
      * @return
      */
-    public List<MarketListBean.ListBean> getListBeans() {
+    public List<MarketDataBean> getListBeans() {
         return mListBeans;
     }
 

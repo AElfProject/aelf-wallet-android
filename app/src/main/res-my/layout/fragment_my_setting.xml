@@ -210,4 +210,39 @@
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:background="#e0e0e0" />
+
+    <RelativeLayout
+        android:id="@+id/rel_network"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingTop="@dimen/dp_12"
+        android:paddingRight="20dp"
+        android:paddingBottom="@dimen/dp_12">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/switch_network"
+            android:textColor="#09162D"
+            android:textSize="@dimen/sp_15" />
+
+        <TextView
+            android:id="@+id/tv_rel_network"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="19dp"
+            android:drawableRight="@mipmap/arrow_right"
+            android:drawablePadding="6dp"
+            android:textColor="#787F87"
+            android:textSize="@dimen/sp_12"
+            tools:text="@string/by_chain" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#e0e0e0" />
 </LinearLayout>

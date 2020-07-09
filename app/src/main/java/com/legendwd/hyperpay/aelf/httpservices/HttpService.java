@@ -2,6 +2,7 @@ package com.legendwd.hyperpay.aelf.httpservices;
 
 import com.google.gson.JsonObject;
 import com.legendwd.hyperpay.aelf.business.discover.dapp.GameListBean;
+import com.legendwd.hyperpay.aelf.db.MarketCoindb;
 import com.legendwd.hyperpay.aelf.model.User;
 import com.legendwd.hyperpay.aelf.model.bean.AddressBookBean;
 import com.legendwd.hyperpay.aelf.model.bean.AssetsBean;
@@ -9,13 +10,12 @@ import com.legendwd.hyperpay.aelf.model.bean.AssetsListBean;
 import com.legendwd.hyperpay.aelf.model.bean.ChainAddressBean;
 import com.legendwd.hyperpay.aelf.model.bean.ChainBean;
 import com.legendwd.hyperpay.aelf.model.bean.ChooseChainsBean;
-import com.legendwd.hyperpay.aelf.model.bean.CoinDetailBean;
 import com.legendwd.hyperpay.aelf.model.bean.CurrenciesBean;
 import com.legendwd.hyperpay.aelf.model.bean.DiscoveryBean;
 import com.legendwd.hyperpay.aelf.model.bean.IdentityBean;
 import com.legendwd.hyperpay.aelf.model.bean.LangsBean;
+import com.legendwd.hyperpay.aelf.model.bean.MarketDataBean;
 import com.legendwd.hyperpay.aelf.model.bean.MarketLineBean;
-import com.legendwd.hyperpay.aelf.model.bean.MarketListBean;
 import com.legendwd.hyperpay.aelf.model.bean.MessageBean;
 import com.legendwd.hyperpay.aelf.model.bean.PublicMessageBean;
 import com.legendwd.hyperpay.aelf.model.bean.ResultBean;
@@ -32,8 +32,6 @@ import com.legendwd.hyperpay.aelf.model.param.AddressParam;
 import com.legendwd.hyperpay.aelf.model.param.BaseParam;
 import com.legendwd.hyperpay.aelf.model.param.ChooseChainParam;
 import com.legendwd.hyperpay.aelf.model.param.FeedbackParam;
-import com.legendwd.hyperpay.aelf.model.param.MarketLineParam;
-import com.legendwd.hyperpay.aelf.model.param.MarketParam;
 import com.legendwd.hyperpay.aelf.model.param.TestParam;
 import com.legendwd.hyperpay.aelf.model.param.TransactionParam;
 import com.legendwd.hyperpay.aelf.model.param.TransferBalanceParam;
@@ -56,11 +54,11 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 public interface HttpService {
     @GET("users/{user}/following")
     Observable<Response<List<User>>> getUserFollowingObservable(@Path("user") String user);
-
 
 
     /**
@@ -90,16 +88,14 @@ public interface HttpService {
     @POST("elf/coin_by_address")
     Observable<Response<ResultBean<AssetsListBean>>> getAssetsList(@Body AssetsListParams assetsListParams);
 
-    @POST("market/list")
-    Observable<Response<ResultBean<MarketListBean>>> getCoinList(@Body MarketParam param);
+//    @POST("market/list")
+//    Observable<Response<ResultBean<MarketListBean>>> getCoinList(@Body MarketParam param);
 
     /**
      * 获取自选币种详情
-     *
      */
-    @POST("market/my")
-    Observable<Response<ResultBean<MarketListBean>>> getMyCoinList(@Body JsonObject param);
-
+//    @POST("market/my")
+//    Observable<Response<ResultBean<MarketListBean>>> getMyCoinList(@Body JsonObject param);
     @POST("dapp/index")
     Observable<Response<ResultBean<DiscoveryBean>>> getDapp(@Query("lang") String lang, @Body JsonObject param);
 
@@ -157,19 +153,14 @@ public interface HttpService {
     Call<String> get_trans_game(@Query("transactionId") String transactionId);
 
 
-
-
-
-
     /**
      * kline数据
      *
      * @param param
      * @return
      */
-    @POST("market/trade_kline")
-    Observable<Response<ResultBean<MarketLineBean>>> getTradeLine(@Body MarketLineParam param);
-
+//    @POST("market/trade_kline")
+//    Observable<Response<ResultBean<MarketLineBean>>> getTradeLine(@Body MarketLineParam param);
     @POST("elf/address")
     Observable<Response<ResultBean<TransactionBean>>> getTransaction(@Body TransactionParam param);
 
@@ -256,13 +247,9 @@ public interface HttpService {
 
     /**
      * 获取币种详情
-     *
-     * @param param
-     * @return
      */
-    @POST("market/coin_detail")
-    Observable<Response<ResultBean<CoinDetailBean>>> getCoinDetail(@Body JsonObject param);
-
+//    @POST("market/coin_detail")
+//    Observable<Response<ResultBean<CoinDetailBean>>> getCoinDetail(@Body JsonObject param);
     @Multipart
     @POST("user/identity_edit")
     Observable<Response<ResultBean>> updateIdentityCover(@Part MultipartBody.Part imgs, @Part("address") RequestBody address, @Part("device") RequestBody device, @Part("udid") RequestBody udid, @Part("version") RequestBody version, @Part("img") RequestBody fileName, @Part("test") RequestBody test);
@@ -334,4 +321,14 @@ public interface HttpService {
      */
     @POST("elf/waiting_cross_trans")
     Observable<Response<ResultBean<WaitTransactionBean>>> waitCrossTrans(@Body JsonObject param);
+
+    @GET("coins/markets")
+    Observable<Response<List<MarketDataBean>>> getCoinList(@QueryMap Map<String, String> param);
+
+    @GET("coins/list")
+    Observable<Response<List<MarketCoindb>>> getMarketCoinList();
+
+    @GET("coins/{bi}/market_chart")
+    Observable<Response<MarketLineBean>> getTradeLine(@Path("bi") String id,
+                                                      @QueryMap Map<String, String> param);
 }

@@ -17,9 +17,9 @@ import com.google.gson.JsonObject;
 import com.legendwd.hyperpay.aelf.BuildConfig;
 import com.legendwd.hyperpay.aelf.MainActivity;
 import com.legendwd.hyperpay.aelf.R;
-import com.legendwd.hyperpay.aelf.base.ApiUrl;
 import com.legendwd.hyperpay.aelf.base.BaseFragment;
 import com.legendwd.hyperpay.aelf.business.my.fragments.UserAgreementFragment;
+import com.legendwd.hyperpay.aelf.config.ApiUrlConfig;
 import com.legendwd.hyperpay.aelf.dialogfragments.ToastDialog;
 import com.legendwd.hyperpay.aelf.listeners.HandleCallback;
 import com.legendwd.hyperpay.aelf.model.bean.ChainBean;
@@ -89,7 +89,7 @@ public class WalletKeystoreFragment extends BaseFragment implements IMyAccountVi
     @Override
     public void process() {
 
-        mDWebView.loadUrl(ApiUrl.AssetsUrl);
+        mDWebView.loadUrl(ApiUrlConfig.AssetsUrl);
 
         presenter = new MyAccountPresenter(this);
         //获取当前链信息

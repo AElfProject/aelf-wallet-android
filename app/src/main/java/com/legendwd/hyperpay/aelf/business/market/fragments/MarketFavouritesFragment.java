@@ -5,31 +5,22 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.gson.JsonObject;
 import com.legendwd.hyperpay.aelf.R;
 import com.legendwd.hyperpay.aelf.base.BaseAdapterModel;
 import com.legendwd.hyperpay.aelf.base.BaseFragment;
 import com.legendwd.hyperpay.aelf.business.market.MarketAdapter;
-import com.legendwd.hyperpay.aelf.httpservices.HttpService;
-import com.legendwd.hyperpay.aelf.httpservices.ResponseTransformer;
 import com.legendwd.hyperpay.aelf.model.MessageEvent;
-import com.legendwd.hyperpay.aelf.model.bean.CoinDetailBean;
-import com.legendwd.hyperpay.aelf.model.bean.MarketLineBean;
-import com.legendwd.hyperpay.aelf.model.bean.MarketListBean;
-import com.legendwd.hyperpay.aelf.model.bean.ResultBean;
-import com.legendwd.hyperpay.aelf.presenters.IMarketLinePresenter;
+import com.legendwd.hyperpay.aelf.model.bean.MarketDataBean;
+import com.legendwd.hyperpay.aelf.model.param.MarketParam;
 import com.legendwd.hyperpay.aelf.presenters.IMarketPresenter;
-import com.legendwd.hyperpay.aelf.presenters.impl.MarketLinePresenter;
 import com.legendwd.hyperpay.aelf.presenters.impl.MarketPresenter;
 import com.legendwd.hyperpay.aelf.util.FavouritesUtils;
-import com.legendwd.hyperpay.aelf.views.IMarketLineView;
 import com.legendwd.hyperpay.aelf.views.IMarketView;
-import com.legendwd.hyperpay.httputil.ServiceGenerator;
+import com.legendwd.hyperpay.lib.CacheUtil;
 import com.legendwd.hyperpay.lib.Constant;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -58,7 +49,7 @@ public class MarketFavouritesFragment extends BaseFragment implements IMarketVie
     @BindView(R.id.ll_market_star)
     LinearLayout ll_market_star;
     private MarketAdapter mMarketAdapter;
-    private List<MarketListBean.ListBean> mDataList = new ArrayList<>();
+    private List<MarketDataBean> mDataList = new ArrayList<>();
     private IMarketPresenter mPresenter;
 
 
@@ -115,14 +106,14 @@ public class MarketFavouritesFragment extends BaseFragment implements IMarketVie
             } else {
                 Bundle bundle = new Bundle();
                 int index = (Integer) o;
-                if(index >= mDataList.size()) {
+                if (index >= mDataList.size()) {
                     return;
                 }
-                MarketListBean.ListBean bean = mDataList.get((Integer) o);
+                MarketDataBean bean = mDataList.get((Integer) o);
                 bundle.putSerializable("bean", bean);
-                bundle.putString("name", bean.getName());
-                bundle.putString("price", bean.getLast_price());
-                bundle.putString("increase", bean.getIncrease());
+                bundle.putString("name", bean.getId());
+                bundle.putString("price", bean.getCurrentPrice() + "");
+                bundle.putString("increase", bean.getPriceChangePercentage24h() + "");
                 ((BaseFragment) getParentFragment()).startBrotherFragment(HomeMarketFragment.newInstance(bundle));
             }
         });
@@ -142,32 +133,32 @@ public class MarketFavouritesFragment extends BaseFragment implements IMarketVie
         favouritesData(FavouritesUtils.getFavourites());
     }
 
-    private void favouritesData(List<MarketListBean.ListBean> dataList) {
+    private void favouritesData(List<MarketDataBean> dataList) {
         ll_favourites.setVisibility(View.VISIBLE);
         ll_market_star.setVisibility(View.VISIBLE);
         mDataList.clear();
         if (dataList == null || dataList.size() == 0) {
             refresh.finishRefresh();
-            MarketListBean.ListBean bean = new MarketListBean.ListBean();
+            MarketDataBean bean = new MarketDataBean();
             bean.setItemType(BaseAdapterModel.ItemType.EMPTY);
             mDataList.add(bean);
             ll_favourites.setVisibility(View.GONE);
             ll_market_star.setVisibility(View.GONE);
-        }else {
+        } else {
             getMyCoinList(dataList);
         }
     }
 
-    private void getMyCoinList(List<MarketListBean.ListBean> dataList) {
+    private void getMyCoinList(List<MarketDataBean> dataList) {
         StringBuilder buffer = new StringBuilder();
-        for(MarketListBean.ListBean bean : dataList) {
-            buffer.append(bean.getName().toLowerCase());
+        for (MarketDataBean bean : dataList) {
+            buffer.append(bean.getId());
             buffer.append(",");
         }
-        buffer.deleteCharAt(buffer.length()-1);
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("customCoin", buffer.toString());
-        mPresenter.getMyCoinList(jsonObject);
+        MarketParam param = new MarketParam();
+        param.currency = CacheUtil.getInstance().getProperty(Constant.Sp.PRICING_CURRENCY_ID_DEFAULT, Constant.DEFAULT_CURRENCY);
+        param.coinName = buffer.toString();
+        mPresenter.getCoinList(param, "");
     }
 
     @Override
@@ -183,26 +174,23 @@ public class MarketFavouritesFragment extends BaseFragment implements IMarketVie
     }
 
     @Override
-    public void onCoinListSuccess(ResultBean<MarketListBean> resultBean, String type) {
-
+    public void onCoinListSuccess(List<MarketDataBean> resultBean, String type) {
+        refresh.finishRefresh();
+        if (resultBean == null) {
+            return;
+        }
+        mDataList.clear();
+        mDataList.addAll(resultBean);
+        mMarketAdapter.refreshView(mDataList);
     }
 
     @Override
     public void onCoinListError(int code, String msg, String type) {
-
+        refresh.finishRefresh();
     }
 
     @Override
-    public void onMyCoinListSuccess(ResultBean<MarketListBean> resultBean) {
-        refresh.finishRefresh();
-        if (resultBean == null || resultBean.getData() == null) {
-            return;
-        }
-        if(resultBean.getStatus() == 200) {
-            mDataList.clear();
-            mDataList.addAll(resultBean.getData().getList());
-            mMarketAdapter.refreshView(mDataList);
-        }
+    public void onMyCoinListSuccess(List<MarketDataBean> resultBean) {
     }
 
     @Override

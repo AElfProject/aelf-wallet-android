@@ -28,7 +28,8 @@
             android:layout_gravity="center_vertical|right"
             android:layout_marginRight="40dp"
             android:gravity="center_vertical"
-            android:text="@string/market_drag" />
+            android:text="@string/market_drag"
+            android:visibility="gone"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -38,7 +39,8 @@
             android:layout_gravity="center_vertical|right"
             android:layout_marginRight="85dp"
             android:gravity="center_vertical"
-            android:text="@string/market_top" />
+            android:text="@string/market_top"
+            android:visibility="gone"/>
     </RelativeLayout>
 
     <!--<cn.forward.androids.views.DragListView-->

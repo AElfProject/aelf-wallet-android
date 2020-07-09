@@ -4,16 +4,24 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Notification;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
+import android.text.TextUtils;
 
 import com.activeandroid.ActiveAndroid;
 import com.github.ont.connector.utils.SPWrapper;
+import com.legendwd.hyperpay.aelf.db.UpgradeHelper;
+import com.legendwd.hyperpay.aelf.db.greendao.DaoMaster;
+import com.legendwd.hyperpay.aelf.db.greendao.DaoSession;
 import com.legendwd.hyperpay.aelf.httpservices.MainService;
 import com.legendwd.hyperpay.aelf.model.MessageEvent;
+import com.legendwd.hyperpay.aelf.model.bean.NetWorkBean;
 import com.legendwd.hyperpay.aelf.util.AppBackgroundManager;
+import com.legendwd.hyperpay.aelf.util.JsonUtils;
 import com.legendwd.hyperpay.aelf.util.LanguageUtil;
+import com.legendwd.hyperpay.aelf.util.StringUtil;
 import com.legendwd.hyperpay.lib.AppConfig;
 import com.legendwd.hyperpay.lib.CacheUtil;
 import com.legendwd.hyperpay.lib.Constant;
@@ -45,6 +53,7 @@ public class AelfApplication extends MultiDexApplication {
 
     private static Context sContext;
     private static WeakReference<Activity> sTopActivity;
+    private static DaoSession mDaoSession;
 
     public static HashMap<String,String> PRIVATEKEY_DAPP = new HashMap();
 
@@ -66,7 +75,6 @@ public class AelfApplication extends MultiDexApplication {
         LanguageUtil.setLanguage(this);
 
         initUmeng();
-
 
         CrashReport.initCrashReport(getApplicationContext(), "176e87ee13", false);
 
@@ -157,8 +165,37 @@ public class AelfApplication extends MultiDexApplication {
                 QbSdk.initX5Environment(getApplicationContext(), cb);
             }
         });
+        initGreenDao();
+        intNetwork();
 
+    }
 
+    public static DaoSession getDaoSession() {
+        return mDaoSession;
+    }
+
+    private void initGreenDao() {
+        UpgradeHelper devOpenHelper = new UpgradeHelper(this, Constant.DB_NAME, null);
+        SQLiteDatabase database = devOpenHelper.getWritableDatabase();
+        DaoMaster daoMaster = new DaoMaster(database);
+        mDaoSession = daoMaster.newSession();
+    }
+
+    private void intNetwork() {
+        String url = CacheUtil.getInstance().getProperty(Constant.Sp.NETWORK_BASE_URL);
+        if(TextUtils.isEmpty(url)){
+            String json = StringUtil.getAssetsJson(this);
+            List<NetWorkBean> list = JsonUtils.jsonToList(json, NetWorkBean.class);
+            if(list != null && !list.isEmpty()) {
+                NetWorkBean bean = list.get(0);
+                String baseUrl = bean.getUrl();
+                String node = bean.getNode();
+                if(!TextUtils.isEmpty(node)){
+                    baseUrl += node;
+                }
+                CacheUtil.getInstance().setProperty(Constant.Sp.NETWORK_BASE_URL, baseUrl);
+            }
+        }
     }
 
     void initUmeng() {

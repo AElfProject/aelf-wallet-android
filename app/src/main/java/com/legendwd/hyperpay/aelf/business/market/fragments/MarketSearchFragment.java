@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -17,14 +18,14 @@ import com.legendwd.hyperpay.aelf.R;
 import com.legendwd.hyperpay.aelf.base.BaseAdapterModel;
 import com.legendwd.hyperpay.aelf.base.BaseFragment;
 import com.legendwd.hyperpay.aelf.business.market.adapters.MarketSearchAdapter;
+import com.legendwd.hyperpay.aelf.db.MarketCoindb;
+import com.legendwd.hyperpay.aelf.db.dao.MarketCoinDao;
 import com.legendwd.hyperpay.aelf.listeners.OnStarClickListener;
 import com.legendwd.hyperpay.aelf.model.MessageEvent;
-import com.legendwd.hyperpay.aelf.model.bean.MarketListBean;
-import com.legendwd.hyperpay.aelf.model.bean.ResultBean;
+import com.legendwd.hyperpay.aelf.model.bean.MarketDataBean;
 import com.legendwd.hyperpay.aelf.model.param.MarketParam;
 import com.legendwd.hyperpay.aelf.presenters.MarketSearchPresenter;
 import com.legendwd.hyperpay.aelf.util.FavouritesUtils;
-import com.legendwd.hyperpay.aelf.util.JsonUtils;
 import com.legendwd.hyperpay.aelf.views.IMarketView;
 import com.legendwd.hyperpay.aelf.widget.ClassicsFooter;
 import com.legendwd.hyperpay.lib.CacheUtil;
@@ -61,9 +62,9 @@ public class MarketSearchFragment extends BaseFragment implements IMarketView, O
     private MarketSearchPresenter mMarketPresenter;
     private String mSortType = "-1";
     private int mCurrentPage = 1;
-    private List<MarketListBean.ListBean> mBeanList = new ArrayList<>();
+    private List<MarketDataBean> mBeanList = new ArrayList<>();
     private MarketSearchAdapter mMarketAdapter;
-    protected List<MarketListBean.ListBean> mStarData;
+    protected List<MarketDataBean> mStarData;
 
     public static MarketSearchFragment newInstance() {
         Bundle bundle = new Bundle();
@@ -138,27 +139,37 @@ public class MarketSearchFragment extends BaseFragment implements IMarketView, O
     }
 
     private void getMarketList(String sort, String type) {
+        String name = mEditText.getText().toString().trim();
+        String coinId = "";
+        if (!TextUtils.isEmpty(name)) {
+            List<MarketCoindb> list = MarketCoinDao.queryList(name);
+            for (MarketCoindb coindb : list) {
+                coinId += coindb.getId() + ",";
+            }
+        }
+        getMarketData(coinId, type);
+    }
+
+    private void getMarketData(String name, String type) {
         MarketParam param = new MarketParam();
         param.currency = CacheUtil.getInstance().getProperty(Constant.Sp.PRICING_CURRENCY_ID_DEFAULT, Constant.DEFAULT_CURRENCY);
-        param.sort = sort;
         param.time = "1";
         param.p = String.valueOf(mCurrentPage);
         //关键字搜索
-        param.coinName = mEditText.getText().toString();
+        param.coinName = name;
         mMarketPresenter.getCoinList(param, type);
-
     }
 
     @Override
-    public void onCoinListSuccess(ResultBean<MarketListBean> resultBean, String type) {
+    public void onCoinListSuccess(List<MarketDataBean> resultBean, String type) {
         refresh.finishRefresh();
         refresh.finishLoadMore();
-        if (resultBean == null || resultBean.getData() == null && mBeanList != null) {
-            MarketListBean.ListBean bean = new MarketListBean.ListBean();
+        if (resultBean == null && mBeanList != null) {
+            MarketDataBean bean = new MarketDataBean();
             bean.setItemType(BaseAdapterModel.ItemType.EMPTY);
             mBeanList.add(bean);
         } else {
-            List<MarketListBean.ListBean> list = resultBean.getData().getList();
+            List<MarketDataBean> list = resultBean;
 
             if (TYPE_PULL_UP.equals(type)) {
                 if (list.size() < PAGE_COUNT) {
@@ -175,7 +186,7 @@ public class MarketSearchFragment extends BaseFragment implements IMarketView, O
             }
 
             if (mBeanList.size() == 0) {
-                MarketListBean.ListBean bean = new MarketListBean.ListBean();
+                MarketDataBean bean = new MarketDataBean();
                 bean.setItemType(BaseAdapterModel.ItemType.EMPTY);
                 mBeanList.add(bean);
             } else {
@@ -196,11 +207,11 @@ public class MarketSearchFragment extends BaseFragment implements IMarketView, O
                     refresh.autoRefresh();
                 } else {
                     Bundle bundle = new Bundle();
-                    MarketListBean.ListBean bean = mBeanList.get((Integer) o);
+                    MarketDataBean bean = mBeanList.get((Integer) o);
                     bundle.putSerializable("bean", bean);
-                    bundle.putString("name", bean.getName());
-                    bundle.putString("price", bean.getLast_price());
-                    bundle.putString("increase", bean.getIncrease());
+                    bundle.putString("name", bean.getId());
+                    bundle.putString("price", bean.getCurrentPrice() + "");
+                    bundle.putString("increase", bean.getPriceChangePercentage24h() + "");
                     ((BaseFragment) getPreFragment()).startBrotherFragment(HomeMarketFragment.newInstance(bundle));
                 }
             });
@@ -217,7 +228,7 @@ public class MarketSearchFragment extends BaseFragment implements IMarketView, O
     }
 
     @Override
-    public void onMyCoinListSuccess(ResultBean<MarketListBean> marketListBeanResultBean) {
+    public void onMyCoinListSuccess(List<MarketDataBean> marketListBeanResultBean) {
 
     }
 
@@ -239,9 +250,9 @@ public class MarketSearchFragment extends BaseFragment implements IMarketView, O
      * @param position
      */
     @Override
-    public void onStarPosition(MarketListBean.ListBean bean, int position, View view) {
+    public void onStarPosition(MarketDataBean bean, int position, View view) {
         try {
-            List<MarketListBean.ListBean> listBeans = FavouritesUtils.getFavourites();
+            List<MarketDataBean> listBeans = FavouritesUtils.getFavourites();
             if (!bean.isStar()) {
                 ((ImageView) view).setImageResource(R.mipmap.favor_solid);
                 listBeans.add(bean);
@@ -268,8 +279,8 @@ public class MarketSearchFragment extends BaseFragment implements IMarketView, O
      *
      * @param netDataList
      */
-    public void checkStarList(List<MarketListBean.ListBean> netDataList) {
-        List<MarketListBean.ListBean> mLocalData = FavouritesUtils.getFavourites();
+    public void checkStarList(List<MarketDataBean> netDataList) {
+        List<MarketDataBean> mLocalData = FavouritesUtils.getFavourites();
         /**
          * 本地网络数据对比
          */
@@ -277,7 +288,7 @@ public class MarketSearchFragment extends BaseFragment implements IMarketView, O
             for (int a = 0; a < mLocalData.size(); a++) { //本地name仓库
                 String name = mLocalData.get(a).getName();
                 for (int b = 0; b < netDataList.size(); b++) {
-                    MarketListBean.ListBean listBean = netDataList.get(b);
+                    MarketDataBean listBean = netDataList.get(b);
                     String netName = listBean.getName();
                     if (netName.equals(name)) { //网络数据仓库
                         listBean.setStar(true);

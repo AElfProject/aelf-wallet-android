@@ -15,8 +15,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.legendwd.hyperpay.aelf.R;
-import com.legendwd.hyperpay.aelf.base.ApiUrl;
 import com.legendwd.hyperpay.aelf.base.BaseFragment;
+import com.legendwd.hyperpay.aelf.config.ApiUrlConfig;
 import com.legendwd.hyperpay.aelf.dialogfragments.ToastDialog;
 import com.legendwd.hyperpay.aelf.listeners.HandleCallback;
 import com.legendwd.hyperpay.aelf.model.bean.ChainAddressBean;
@@ -118,7 +118,7 @@ public class TransactionRecordFragment extends BaseFragment implements View.OnCl
     }
 
     private void initWeb() {
-        mWvbridge.loadUrl(ApiUrl.AssetsUrl);
+        mWvbridge.loadUrl(ApiUrlConfig.AssetsUrl);
         mWvbridge.addJavascriptObject(new JsApi(new HandleCallback() {
             @Override
             public void onHandle(Object o) {

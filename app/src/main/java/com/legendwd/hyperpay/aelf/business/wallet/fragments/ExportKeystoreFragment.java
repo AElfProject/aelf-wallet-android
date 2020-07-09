@@ -5,8 +5,8 @@ import android.os.Bundle;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.google.gson.Gson;
 import com.legendwd.hyperpay.aelf.R;
-import com.legendwd.hyperpay.aelf.base.ApiUrl;
 import com.legendwd.hyperpay.aelf.base.BaseFragment;
+import com.legendwd.hyperpay.aelf.config.ApiUrlConfig;
 import com.legendwd.hyperpay.aelf.dialogfragments.ToastDialog;
 import com.legendwd.hyperpay.aelf.listeners.HandleCallback;
 import com.legendwd.hyperpay.aelf.model.bean.WalletBean;
@@ -44,7 +44,7 @@ public class ExportKeystoreFragment extends BaseFragment {
     @Override
     public void process() {
         initToolbarNav(mToolbar, R.string.backup_notes, true);
-        webview.loadUrl(ApiUrl.AssetsUrl);
+        webview.loadUrl(ApiUrlConfig.AssetsUrl);
         webview.addJavascriptObject(new JsApi(new HandleCallback() {
             @Override
             public void onHandle(Object o) {

@@ -10,8 +10,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.github.lzyzsd.jsbridge.CallBackFunction;
@@ -20,9 +18,9 @@ import com.google.gson.JsonObject;
 import com.legendwd.hyperpay.aelf.BuildConfig;
 import com.legendwd.hyperpay.aelf.MainActivity;
 import com.legendwd.hyperpay.aelf.R;
-import com.legendwd.hyperpay.aelf.base.ApiUrl;
 import com.legendwd.hyperpay.aelf.base.BaseFragment;
 import com.legendwd.hyperpay.aelf.business.my.fragments.UserAgreementFragment;
+import com.legendwd.hyperpay.aelf.config.ApiUrlConfig;
 import com.legendwd.hyperpay.aelf.dialogfragments.ToastDialog;
 import com.legendwd.hyperpay.aelf.listeners.HandleCallback;
 import com.legendwd.hyperpay.aelf.model.bean.ChainBean;
@@ -31,18 +29,15 @@ import com.legendwd.hyperpay.aelf.model.bean.WalletBean;
 import com.legendwd.hyperpay.aelf.model.param.UploadDataParam;
 import com.legendwd.hyperpay.aelf.presenters.IMyAccountPresenter;
 import com.legendwd.hyperpay.aelf.presenters.impl.MyAccountPresenter;
-import com.legendwd.hyperpay.aelf.util.BitmapUtil;
 import com.legendwd.hyperpay.aelf.util.DialogUtils;
 import com.legendwd.hyperpay.aelf.util.JsonUtils;
 import com.legendwd.hyperpay.aelf.util.LanguageUtil;
-import com.legendwd.hyperpay.aelf.util.StringUtil;
 import com.legendwd.hyperpay.aelf.util.zxing.CaptureActivity;
 import com.legendwd.hyperpay.aelf.views.IMyAccountView;
 import com.legendwd.hyperpay.aelf.widget.webview.DWebView;
 import com.legendwd.hyperpay.aelf.widget.webview.JsApi;
 import com.legendwd.hyperpay.lib.CacheUtil;
 import com.legendwd.hyperpay.lib.Constant;
-import com.legendwd.hyperpay.lib.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -122,12 +117,12 @@ public class ImportScanWalletFragment extends BaseFragment implements IMyAccount
         tvKeyImport.setText(R.string.createimport_import_wallet);
 
         String language = CacheUtil.getInstance().getProperty(Constant.Sp.SET_LANGUAGE);
-        if("en".equals(language)) {
+        if ("en".equals(language)) {
             ivQr.setImageResource(R.mipmap.click_en);
-        }else {
+        } else {
             ivQr.setImageResource(R.mipmap.click_cn);
         }
-        mDWebView.loadUrl(ApiUrl.AssetsUrl);
+        mDWebView.loadUrl(ApiUrlConfig.AssetsUrl);
         presenter = new MyAccountPresenter(this);
         //获取当前链信息
         presenter.getChainInfo();
@@ -204,9 +199,9 @@ public class ImportScanWalletFragment extends BaseFragment implements IMyAccount
                     tvAddress.setText(jsonObject.getString("address"));
                     ivQr.setImageResource(R.mipmap.click_result);
                     String name = jsonObject.getString("nickName");
-                    if(TextUtils.isEmpty(name)) {
+                    if (TextUtils.isEmpty(name)) {
                         tvName.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         tvName.setVisibility(View.VISIBLE);
                         tvName.setText(name);
                     }

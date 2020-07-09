@@ -1,6 +1,8 @@
 package com.legendwd.hyperpay.aelf.presenters.impl;
 
-import com.google.gson.JsonObject;
+import android.text.TextUtils;
+
+import com.legendwd.hyperpay.aelf.config.ApiUrlConfig;
 import com.legendwd.hyperpay.aelf.httpservices.HttpService;
 import com.legendwd.hyperpay.aelf.httpservices.ResponseTransformer;
 import com.legendwd.hyperpay.aelf.model.param.MarketParam;
@@ -11,20 +13,33 @@ import com.legendwd.hyperpay.httputil.ServiceGenerator;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MarketPresenter extends BasePresenter implements IMarketPresenter {
 
     IMarketView mMarketView;
 
-    public MarketPresenter( IMarketView marketView) {
+    public MarketPresenter(IMarketView marketView) {
         super((LifecycleProvider<ActivityEvent>) marketView);
         mMarketView = marketView;
     }
 
     @Override
     public void getCoinList(MarketParam param, String type) {
-        HttpService service = ServiceGenerator.createService(HttpService.class);
-
-        service.getCoinList(param)
+        HttpService service = ServiceGenerator.createServiceMarket(HttpService.class, ApiUrlConfig.MARKET_UTL);
+        Map<String, String> map = new HashMap<>();
+        map.put("vs_currency", param.currency);
+        if (!TextUtils.isEmpty(param.coinName)) {
+            map.put("ids", param.coinName);
+        }
+        map.put("order", "market_cap_desc");
+        if (!TextUtils.isEmpty(param.p)) {
+            map.put("per_page", "100");
+            map.put("page", param.p);
+        }
+        map.put("sparkline", "false");
+        service.getCoinList(map)
                 .compose(ResponseTransformer.handleResult(getProvider()))
                 .subscribe(marketListBeanResultBean -> mMarketView.onCoinListSuccess(marketListBeanResultBean, type)
                         , throwable -> mMarketView.onCoinListError(-1, throwable.getMessage(), type));
@@ -32,12 +47,12 @@ public class MarketPresenter extends BasePresenter implements IMarketPresenter {
     }
 
     @Override
-    public void getMyCoinList(JsonObject param) {
+    public void getMyCoinList(MarketParam param) {
 
-        HttpService service = ServiceGenerator.createService(HttpService.class);
-        service.getMyCoinList(param)
-                .compose(ResponseTransformer.handleResult(getProvider()))
-                .subscribe(marketListBeanResultBean -> mMarketView.onMyCoinListSuccess(marketListBeanResultBean)
-                        , throwable -> mMarketView.onMyCoinListError(-1, throwable.getMessage()));
+//        HttpService service = ServiceGenerator.createServiceMarket(HttpService.class, ApiUrlConfig.MARKET_UTL);
+//        service.getCoinList(param)
+//                .compose(ResponseTransformer.handleResult(getProvider()))
+//                .subscribe(marketListBeanResultBean -> mMarketView.onMyCoinListSuccess(marketListBeanResultBean)
+//                        , throwable -> mMarketView.onMyCoinListError(-1, throwable.getMessage()));
     }
 }

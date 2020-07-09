@@ -15,7 +15,8 @@ import com.legendwd.hyperpay.aelf.base.BaseAdapterModel;
 import com.legendwd.hyperpay.aelf.common.EmptyViewHolder;
 import com.legendwd.hyperpay.aelf.listeners.OnItemClickListener;
 import com.legendwd.hyperpay.aelf.listeners.OnStarClickListener;
-import com.legendwd.hyperpay.aelf.model.bean.MarketListBean;
+import com.legendwd.hyperpay.aelf.model.bean.MarketDataBean;
+import com.legendwd.hyperpay.aelf.util.StringUtil;
 import com.legendwd.hyperpay.lib.CacheUtil;
 import com.legendwd.hyperpay.lib.Constant;
 
@@ -23,15 +24,15 @@ import java.util.List;
 
 public class MarketSearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    List<MarketListBean.ListBean> mDatas;
+    List<MarketDataBean> mDatas;
     private OnItemClickListener mClickListener;
     private OnStarClickListener onStarClickListener;
 
-    public MarketSearchAdapter(List<MarketListBean.ListBean> datas) {
+    public MarketSearchAdapter(List<MarketDataBean> datas) {
         this.mDatas = datas;
     }
 
-    public void refreshView(List<MarketListBean.ListBean> datas) {
+    public void refreshView(List<MarketDataBean> datas) {
         this.mDatas = datas;
         notifyDataSetChanged();
     }
@@ -41,7 +42,7 @@ public class MarketSearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
      *
      * @return
      */
-    public List<MarketListBean.ListBean> getData() {
+    public List<MarketDataBean> getData() {
         return mDatas;
     }
 
@@ -63,7 +64,7 @@ public class MarketSearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-        MarketListBean.ListBean bean = mDatas.get(position);
+        MarketDataBean bean = mDatas.get(position);
         if (bean.getItemType() == BaseAdapterModel.ItemType.EMPTY) {
             EmptyViewHolder emptyViewHolder = (EmptyViewHolder) viewHolder;
             emptyViewHolder.tv_retry.setOnClickListener(new View.OnClickListener() {
@@ -93,8 +94,8 @@ public class MarketSearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             symbol = "$";
         }
 
-        marketViewHolder.mTvPrice.setText(symbol + bean.getLast_price());
-        float increase = Float.parseFloat(bean.getIncrease()) * 100;
+        marketViewHolder.mTvPrice.setText(symbol + bean.getCurrentPrice());
+        double increase = StringUtil.parseDouble(bean.getPriceChangePercentage24h());
         StringBuilder stringBuilder = new StringBuilder();
         if (increase >= 0) {
             stringBuilder.append("+")

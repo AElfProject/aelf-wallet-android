@@ -21,17 +21,42 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ServiceGenerator {
     //    public static final String API_BASE_URL = "http://aelf.phpdl.com/app/";   //线上环境
-    public static String API_BASE_URL = "https://hp-pre-wallet.aelf.io/app/";//预发布环境
+//    public static String API_BASE_URL = "http://1.119.195.50:11177/app/";//预发布环境
 
-    public static final String publicKey = "-----";
+    public static final String publicKey = "-----BEGIN PUBLIC KEY-----\n" +
+            "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCbX8O7jy5PUwXR5VfsiinxpU8T\n" +
+            "d4q7dCEan75oQeHOkohU3Ci0cqWzRhsV/KBvjR3VMXBblJYkaLjYW/vZwLwWZrua\n" +
+            "rOpv1fE3r8iLpGERbbuAsRPRYY0f+sEioMGhWvXsUuCZR66zAaib7ZOX8UNzLCl4\n" +
+            "eyFEq2CFch2olu2G/wIDAQAB\n" +
+            "-----END PUBLIC KEY-----";
 
     private static OkHttpClient.Builder sHttpClient;
 
-    private static Retrofit.Builder builder =
-            new Retrofit.Builder()
-                    .baseUrl(API_BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
+    private static OkHttpClient.Builder marketHttpClient;
+
+    private static Retrofit.Builder builder;
+
+    public static void setBuilder(String url) {
+        if (!url.endsWith("/")) {
+            url += "/";
+        }
+        ServiceGenerator.builder = new Retrofit.Builder()
+                .baseUrl(url + "app/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
+        ;
+    }
+
+    public static Retrofit.Builder getBuilder() {
+        if (builder == null) {
+            synchronized (ServiceGenerator.class) {
+                if (builder == null) {
+                    setBuilder(CacheUtil.getInstance().getProperty(Constant.Sp.NETWORK_BASE_URL));
+                }
+            }
+        }
+        return builder;
+    }
 
     public static <S> S createService(Class<S> serviceClass) {
         if (sHttpClient == null) {
@@ -81,7 +106,7 @@ public class ServiceGenerator {
             }
         }
 
-        Retrofit retrofit = builder.client(sHttpClient.build()).build();
+        Retrofit retrofit = getBuilder().client(sHttpClient.build()).build();
         return retrofit.create(serviceClass);
     }
 
@@ -144,6 +169,39 @@ public class ServiceGenerator {
                         .addConverterFactory(ScalarsConverterFactory.create())
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
         Retrofit retrofit = builder2.client(sHttpClient.build()).build();
+        return retrofit.create(serviceClass);
+    }
+
+    /**
+     * 更换baseUrl请求数据
+     *
+     * @param serviceClass
+     * @param url
+     */
+    public static <S> S createServiceMarket(Class<S> serviceClass, String url) {
+        if (marketHttpClient == null) {
+
+            synchronized (ServiceGenerator.class) {
+                if (marketHttpClient == null) {
+                    marketHttpClient = new OkHttpClient.Builder();
+                    Router.getService(IMainService.class);
+                    HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+                        @Override
+                        public void log(String message) {
+                            Logger.d(message);
+                        }
+                    });
+                    loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+                    marketHttpClient.addInterceptor(loggingInterceptor);
+                }
+            }
+        }
+        Retrofit.Builder builder2 =
+                new Retrofit.Builder()
+                        .baseUrl(url)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
+        Retrofit retrofit = builder2.client(marketHttpClient.build()).build();
         return retrofit.create(serviceClass);
     }
 

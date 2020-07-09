@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -23,19 +22,15 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.google.gson.JsonObject;
 import com.gyf.immersionbar.ImmersionBar;
 import com.legendwd.hyperpay.aelf.R;
 import com.legendwd.hyperpay.aelf.base.BaseFragment;
 import com.legendwd.hyperpay.aelf.business.market.adapters.HomeMarketAdapter;
 import com.legendwd.hyperpay.aelf.model.MessageEvent;
-import com.legendwd.hyperpay.aelf.model.bean.CoinDetailBean;
+import com.legendwd.hyperpay.aelf.model.bean.MarketDataBean;
 import com.legendwd.hyperpay.aelf.model.bean.MarketDetailBean;
 import com.legendwd.hyperpay.aelf.model.bean.MarketLineBean;
-import com.legendwd.hyperpay.aelf.model.bean.MarketListBean;
-import com.legendwd.hyperpay.aelf.model.bean.ResultBean;
 import com.legendwd.hyperpay.aelf.model.param.MarketLineParam;
 import com.legendwd.hyperpay.aelf.presenters.IMarketLinePresenter;
 import com.legendwd.hyperpay.aelf.presenters.impl.MarketLinePresenter;
@@ -44,6 +39,7 @@ import com.legendwd.hyperpay.aelf.util.JsonUtils;
 import com.legendwd.hyperpay.aelf.views.IMarketLineView;
 import com.legendwd.hyperpay.lib.CacheUtil;
 import com.legendwd.hyperpay.lib.Constant;
+import com.legendwd.hyperpay.lib.Logger;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -87,12 +83,12 @@ public class HomeMarketFragment extends BaseFragment implements IMarketLineView 
     private HomeMarketAdapter mHomeMarketAdapter;
     private IMarketLinePresenter presenter;
     private String time = "1";
-    private List<MarketLineBean.ListBean> mLine = new ArrayList<>();
+    private List<String[]> mLine = new ArrayList<>();
     private List<MarketDetailBean> mBeans = new ArrayList<>();
     private boolean isSrtar = false;
-    protected List<MarketListBean.ListBean> mStarData;
+    protected List<MarketDataBean> mStarData;
     protected int starEnable = 1;
-    protected MarketListBean.ListBean mDataBean;
+    protected MarketDataBean mDataBean;
 
     public static HomeMarketFragment newInstance(Bundle bundle) {
         HomeMarketFragment homeMarketFragment = new HomeMarketFragment();
@@ -108,17 +104,17 @@ public class HomeMarketFragment extends BaseFragment implements IMarketLineView 
         if (isDay.equals("1")) {
             sdf = new SimpleDateFormat("HH:mm");
         }
-        if (isDay.equals("2")) {
+        if (isDay.equals("7")) {
             sdf = new SimpleDateFormat("dd");
         }
-        if (isDay.equals("3")) {
+        if (isDay.equals("30")) {
             sdf = new SimpleDateFormat("MM-dd");
         }
         if (isDay.equals("4")) {
             sdf = new SimpleDateFormat("yyyy-MM");
         }
-        long l = Long.valueOf(timeStamp);
-        timeString = sdf.format(new Date(l * 1000));//单位秒
+        long time = Long.parseLong(timeStamp);
+        timeString = sdf.format(new Date(time));
         return timeString;
     }
 
@@ -142,7 +138,7 @@ public class HomeMarketFragment extends BaseFragment implements IMarketLineView 
 //        img_back.setImageResource(R.mipmap.back_white);
         String name = getArguments().getString("name");
 
-        mDataBean = (MarketListBean.ListBean) getArguments().getSerializable("bean");
+        mDataBean = (MarketDataBean) getArguments().getSerializable("bean");
 
         tv_title.setText(name);
 
@@ -164,12 +160,12 @@ public class HomeMarketFragment extends BaseFragment implements IMarketLineView 
      * 检测星星
      */
     private void checkStar(String name) {
-        MarketListBean.ListBean listBean = null;
+        MarketDataBean listBean = null;
         mStarData = FavouritesUtils.getFavourites();
 
         if (mStarData != null && mStarData.size() > 0) {
             for (int i = 0; i < mStarData.size(); i++) {
-                if (mStarData.get(i).getName().equals(name)) {
+                if (mStarData.get(i).getId().equals(name)) {
                     listBean = mStarData.get(i);
                     isSrtar = true;
                     starEnable = 2;
@@ -178,7 +174,7 @@ public class HomeMarketFragment extends BaseFragment implements IMarketLineView 
         }
 
         ivStar.setImageDrawable(getResources().getDrawable(isSrtar ? R.mipmap.favor_solid : R.mipmap.favour_outline));
-        MarketListBean.ListBean finalListBean = listBean;
+        MarketDataBean finalListBean = listBean;
         ivStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,7 +186,7 @@ public class HomeMarketFragment extends BaseFragment implements IMarketLineView 
                         mStarData.add(mDataBean);
                         mDataBean = null;
                     } else {
-                        mStarData = new ArrayList<MarketListBean.ListBean>();
+                        mStarData = new ArrayList<MarketDataBean>();
                         mStarData.add(mDataBean);
                         mDataBean = null;
                     }
@@ -209,9 +205,7 @@ public class HomeMarketFragment extends BaseFragment implements IMarketLineView 
     }
 
     private void getCoinDetail() {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("name", getArguments().getString("name"));
-        presenter.getCoinDetail(jsonObject);
+        presenter.getCoinDetail(getArguments().getString("name"));
     }
 
     private void getTradeLine(String time, String currency) {
@@ -238,20 +232,16 @@ public class HomeMarketFragment extends BaseFragment implements IMarketLineView 
     }
 
     @Override
-    public void onSuccess(ResultBean<MarketLineBean> bean) {
-
-        if (200 == bean.getStatus()) {
-            if (null == bean.getData().list || bean.getData().list.size() <= 0) {
-                return;
-            }
-
-            mLine = bean.getData().list;
-            LineData lineData = getLineData(bean.getData().list);
-            showChart(line_chart, lineData, Color.parseColor("#00000000"));
-            Description description = new Description();
-            description.setEnabled(false);
-            line_chart.setDescription(description);
+    public void onSuccess(MarketLineBean bean) {
+        if (bean == null) {
+            return;
         }
+        mLine = bean.getPrices();
+        LineData lineData = getLineData(bean.getPrices());
+        showChart(line_chart, lineData, Color.parseColor("#00000000"));
+        Description description = new Description();
+        description.setEnabled(false);
+        line_chart.setDescription(description);
 
     }
 
@@ -268,16 +258,18 @@ public class HomeMarketFragment extends BaseFragment implements IMarketLineView 
                 break;
 
             case R.id.tv_week:
-                time = "2";
+                time = "7";
                 break;
 
             case R.id.tv_month:
-                time = "3";
+                time = "30";
+                break;
+            default:
                 break;
         }
         refreshTimeView();
-
-        getTradeLine(time, "USD");
+        String currency = CacheUtil.getInstance().getProperty(Constant.Sp.PRICING_CURRENCY_ID_DEFAULT, "USD");
+        getTradeLine(time, currency);
     }
 
     private void refreshTimeView() {
@@ -297,12 +289,12 @@ public class HomeMarketFragment extends BaseFragment implements IMarketLineView 
                 tv_day.setTextColor(Color.WHITE);
                 break;
 
-            case "2":
+            case "7":
                 tv_week.setBackgroundResource(R.drawable.shape_button_purple);
                 tv_week.setTextColor(Color.WHITE);
                 break;
 
-            case "3":
+            case "30":
                 tv_month.setBackgroundResource(R.drawable.shape_button_purple);
                 tv_month.setTextColor(Color.WHITE);
                 break;
@@ -312,18 +304,18 @@ public class HomeMarketFragment extends BaseFragment implements IMarketLineView 
 
     @Override
     public void onError(int code, String msg) {
-
+        Logger.d(msg);
     }
 
     @Override
-    public void onCoinDetailSuccess(ResultBean<CoinDetailBean> bean) {
-        if (bean != null && bean.getData() != null) {
+    public void onCoinDetailSuccess(List<MarketDataBean> list) {
+        if (list != null && !list.isEmpty()) {
 //            float rate = Float.parseFloat(bean.getData().getGlobal_rate()) * 100;
 //            String result = String.format("%.2f", rate);
 //            tv_rate.setText(rate > 0 ? ("+" + result + "%")
 //                    : (result + "%"));
-
-            float increase = Float.parseFloat(getArguments().getString("increase")) * 100;
+            MarketDataBean bean = list.get(0);
+            float increase = Float.parseFloat(getArguments().getString("increase"));
             StringBuilder stringBuilder = new StringBuilder();
             if (increase >= 0) {
                 stringBuilder.append("+")
@@ -340,23 +332,23 @@ public class HomeMarketFragment extends BaseFragment implements IMarketLineView 
                 symbol = "$";
             }
             String valueS = getArguments().getString("price");
-            if(TextUtils.isEmpty(valueS)) {
+            if (TextUtils.isEmpty(valueS)) {
                 valueS = "0";
             }
             double value = Double.valueOf(valueS);
-            tv_market_value.setText(symbol + String.format("%.2f", value));
-            double cny = Double.valueOf(bean.getData().getUsd_cny());
-            if("$".equals(symbol)) {
-                tv_value.setText("￥" + String.format("%.2f", value * cny));
-            }else {
-                tv_value.setText("$" + String.format("%.2f", value / cny));
-            }
+            tv_market_value.setText(symbol +" "+ String.format("%.2f", value));
+//            double cny = Double.parseDouble(bean.getCurrentPrice());
+//            if ("$".equals(symbol)) {
+//                tv_value.setText("￥" + String.format("%.2f", value * cny));
+//            } else {
+//                tv_value.setText("$" + String.format("%.2f", value / cny));
+//            }
             mBeans.clear();
 
-            createMarketDetailBean(getString(R.string.market_value), bean.getData().getMarket_value());
-            createMarketDetailBean(getString(R.string.market_rank), "#" + bean.getData().getMarket_value_order());
-            createMarketDetailBean(getString(R.string.market_24), bean.getData().getVol_trans());
-            createMarketDetailBean(getString(R.string.market_supply), bean.getData().getSupply());
+            createMarketDetailBean(getString(R.string.market_value), symbol +" "+ bean.getMarketCap());
+            createMarketDetailBean(getString(R.string.market_rank), "#" + bean.getMarketCapRank());
+            createMarketDetailBean(getString(R.string.market_24), symbol+" "+bean.getMarketCapChange24h());
+            createMarketDetailBean(getString(R.string.market_supply), bean.getTotalSupply());
 
 
             if (mHomeMarketAdapter == null) {
@@ -403,7 +395,7 @@ public class HomeMarketFragment extends BaseFragment implements IMarketLineView 
         lineChart.setScaleEnabled(false);// 是否可以缩放
         lineChart.getAxisRight().setEnabled(true);
         lineChart.getAxisRight().setTextColor(getResources().getColor(R.color.blue_641eb0));
-        lineChart.getAxisRight().enableGridDashedLine(10f,10f, 0f);
+        lineChart.getAxisRight().enableGridDashedLine(10f, 10f, 0f);
 
         // 显示 Y轴 文字显示隐藏
 //        if(isShow){
@@ -464,11 +456,11 @@ public class HomeMarketFragment extends BaseFragment implements IMarketLineView 
 
             if (mLine.size() == 1) {
                 // 0 资产特殊处理
-                return getStrTime(mLine.get(0).createTime, time);
+                return getStrTime(mLine.get(0)[0], time);
             } else {
                 if (mLine.size() > 0) {
                     if (index <= mLine.size()) {
-                        return getStrTime(mLine.get(index).createTime, time);
+                        return getStrTime(mLine.get(index)[0], time);
                     }
                 }
             }
@@ -488,10 +480,10 @@ public class HomeMarketFragment extends BaseFragment implements IMarketLineView 
             if (value < 0) {
                 return "";
             } else {
-                if(value<1){
+                if (value < 1) {
                     return df2.format(value);
-                }else{
-                    return  value+"";
+                } else {
+                    return value + "";
                 }
 
             }
@@ -499,18 +491,15 @@ public class HomeMarketFragment extends BaseFragment implements IMarketLineView 
         lineChart.animateX(500); // 立即执行的动画,x轴
     }
 
-    private LineData getLineData(List<MarketLineBean.ListBean> yData) {
+    private LineData getLineData(List<String[]> yData) {
         // y轴的数据
         ArrayList<Entry> yValues = new ArrayList<Entry>();
         for (int i = 0; i < yData.size(); i++) {
             // float value = (float) (Math.random() * range) + 3;
             // yValues.add(new Entry(value, i));
-            if (yData.get(i) != null) {
-                if (yData.get(i).last != null) {
-
-                    yValues.add(new Entry(i, Float.valueOf(yData.get(i).last)));//不截取小数位，直接取数据，截取小数位可能导致折线图为一条直线
+            if (yData.get(i) != null && yData.get(i).length > 1) {
+                    yValues.add(new Entry(i, Float.valueOf(yData.get(i)[1])));//不截取小数位，直接取数据，截取小数位可能导致折线图为一条直线
 //                    yValues.add(new Entry(i,Float.valueOf(getLegalPriceStr2(yData.get(i).last))));
-                }
             }
 
         }

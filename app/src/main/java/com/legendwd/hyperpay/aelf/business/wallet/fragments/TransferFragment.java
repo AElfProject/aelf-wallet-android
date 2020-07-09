@@ -12,10 +12,10 @@ import android.widget.TextView;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.google.gson.Gson;
 import com.legendwd.hyperpay.aelf.R;
-import com.legendwd.hyperpay.aelf.base.ApiUrl;
 import com.legendwd.hyperpay.aelf.base.BaseFragment;
 import com.legendwd.hyperpay.aelf.business.assets.fragments.TransactionRecordFragment;
 import com.legendwd.hyperpay.aelf.business.my.fragments.AddressBookFragment;
+import com.legendwd.hyperpay.aelf.config.ApiUrlConfig;
 import com.legendwd.hyperpay.aelf.dialogfragments.ChainDialog;
 import com.legendwd.hyperpay.aelf.dialogfragments.SingleButtonDialog;
 import com.legendwd.hyperpay.aelf.dialogfragments.ToastDialog;
@@ -78,7 +78,6 @@ public class TransferFragment extends BaseFragment implements ITransferView, Cha
     LinearLayout linearbtnInfo;
 
 
-
     ToastDialog mToastDialog;
     private double mBalance;
     private double mfee;
@@ -113,7 +112,7 @@ public class TransferFragment extends BaseFragment implements ITransferView, Cha
     public void process() {
         mDataBean = new Gson().fromJson(getArguments().getString("bean"), ChainAddressBean.class);
 
-        mWvbridge.loadUrl(ApiUrl.AssetsUrl);
+        mWvbridge.loadUrl(ApiUrlConfig.AssetsUrl);
         mWvbridge.addJavascriptObject(new JsApi(new HandleCallback() {
             @Override
             public void onHandle(Object o) {
@@ -164,7 +163,7 @@ public class TransferFragment extends BaseFragment implements ITransferView, Cha
                 } catch (JSONException e) {
                     dismissDialog();
                     DialogUtils.showDialog(ToastDialog.class, getFragmentManager())
-                            .setToast(getString(R.string.transfer_fail)+ e.getMessage());
+                            .setToast(getString(R.string.transfer_fail) + e.getMessage());
                     e.printStackTrace();
                 }
             }
@@ -502,7 +501,7 @@ public class TransferFragment extends BaseFragment implements ITransferView, Cha
             if (transToChain) {
                 if (isValileChain()) {
                     postBalance(toChainId);
-                }else {
+                } else {
                     DialogUtils.showDialog(ToastDialog.class, getFragmentManager())
                             .setToast(getString(R.string.transfer_chain_tip1, fromChainId, toChainId, mSymbol));
                 }
@@ -526,15 +525,15 @@ public class TransferFragment extends BaseFragment implements ITransferView, Cha
             return false;
         }
         String tag = bean.getTransferCoins();
-        if(TextUtils.isEmpty(tag)){
+        if (TextUtils.isEmpty(tag)) {
             return false;
         }
-        if("*".equals(tag)){
+        if ("*".equals(tag)) {
             return true;
         }
         String[] values = tag.split(",");
-        for(String key : values) {
-            if(mSymbol.equals(key)){
+        for (String key : values) {
+            if (mSymbol.equals(key)) {
                 return true;
             }
         }

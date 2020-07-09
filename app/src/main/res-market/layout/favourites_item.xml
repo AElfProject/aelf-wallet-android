@@ -32,7 +32,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:src="@mipmap/drag_market" />
+            android:src="@mipmap/drag_market"
+            android:visibility="gone"/>
 
         <ImageView
             android:id="@+id/iv_top"
@@ -41,7 +42,8 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="30dp"
             android:layout_toLeftOf="@+id/iv_drag"
-            android:src="@mipmap/top_market" />
+            android:src="@mipmap/top_market"
+            android:visibility="gone"/>
     </RelativeLayout>
 
     <include

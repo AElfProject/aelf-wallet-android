@@ -1,6 +1,8 @@
 package com.legendwd.hyperpay.aelf.presenters;
 
-import com.google.gson.JsonObject;
+import android.text.TextUtils;
+
+import com.legendwd.hyperpay.aelf.config.ApiUrlConfig;
 import com.legendwd.hyperpay.aelf.httpservices.HttpService;
 import com.legendwd.hyperpay.aelf.httpservices.ResponseTransformer;
 import com.legendwd.hyperpay.aelf.model.param.MarketParam;
@@ -8,6 +10,9 @@ import com.legendwd.hyperpay.aelf.views.IMarketView;
 import com.legendwd.hyperpay.httputil.ServiceGenerator;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.android.ActivityEvent;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -23,9 +28,21 @@ public class MarketSearchPresenter extends BasePresenter implements IMarketPrese
 
     @Override
     public void getCoinList(MarketParam param, String type) {
-        HttpService service = ServiceGenerator.createService(HttpService.class);
-
-        service.getCoinList(param)
+        HttpService service = ServiceGenerator.createServiceMarket(HttpService.class, ApiUrlConfig.MARKET_UTL);
+        Map<String, String> map = new HashMap<>();
+        map.put("vs_currency", param.currency);
+        if (!TextUtils.isEmpty(param.coinName)) {
+            map.put("ids", param.coinName);
+        }
+        if (!TextUtils.isEmpty(param.sort)) {
+            map.put("order", param.sort);
+        }
+        if (!TextUtils.isEmpty(param.p)) {
+            map.put("per_page", "50");
+            map.put("page", param.p);
+        }
+        map.put("sparkline", "false");
+        service.getCoinList(map)
                 .compose(ResponseTransformer.handleResult(getProvider()))
                 .subscribe(marketListBeanResultBean -> mMarketView.onCoinListSuccess(marketListBeanResultBean, type)
                         , throwable -> mMarketView.onCoinListError(-1, throwable.getMessage(), type));
@@ -33,7 +50,7 @@ public class MarketSearchPresenter extends BasePresenter implements IMarketPrese
     }
 
     @Override
-    public void getMyCoinList(JsonObject jsonObject) {
+    public void getMyCoinList(MarketParam jsonObject) {
 
     }
 }

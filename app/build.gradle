@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao' // apply plugin
 
 android {
     compileSdkVersion 28
@@ -52,6 +53,14 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
+}
+
+//数据库版本以及Dao的相关设置
+greendao {
+    //数据库schema版本
+    schemaVersion 1
+    //设置DaoMaster DaoSession Dao包名，默认的是bean所在的包名
+    daoPackage 'com.legendwd.hyperpay.aelf.db.greendao'
 }
 
 dependencies {
@@ -112,4 +121,5 @@ dependencies {
     implementation 'com.github.1993hzw:Androids:1.2.3'
     implementation 'com.github.CodingEnding:PopupLayout:v1.0'
     implementation files('libs/core-3.3.3.jar')
+    implementation 'org.greenrobot:greendao:3.3.0' // add library
 }

@@ -12,7 +12,7 @@ import android.view.View;
 import com.legendwd.hyperpay.aelf.R;
 import com.legendwd.hyperpay.aelf.base.BaseFragment;
 import com.legendwd.hyperpay.aelf.model.MessageEvent;
-import com.legendwd.hyperpay.aelf.model.bean.MarketListBean;
+import com.legendwd.hyperpay.aelf.model.bean.MarketDataBean;
 import com.legendwd.hyperpay.aelf.util.FavouritesUtils;
 import com.legendwd.hyperpay.aelf.util.JsonUtils;
 import com.legendwd.hyperpay.aelf.widget.draglist.ManageMarketAdapter;
@@ -56,7 +56,7 @@ public class ManageFavouritesFragment extends BaseFragment{
 
     @Override
     public void process() {
-        List<MarketListBean.ListBean> listBeans = FavouritesUtils.getFavourites();
+        List<MarketDataBean> listBeans = FavouritesUtils.getFavourites();
         Log.d("====>", JsonUtils.objToJson(listBeans));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mManageMarketAdapter = new ManageMarketAdapter(listBeans);
@@ -73,7 +73,7 @@ public class ManageFavouritesFragment extends BaseFragment{
     public void onPause() {
         super.onPause();
         if (mManageMarketAdapter != null) {
-            List<MarketListBean.ListBean> mManageMarketAdapterListBeans = mManageMarketAdapter.getListBeans();
+            List<MarketDataBean> mManageMarketAdapterListBeans = mManageMarketAdapter.getListBeans();
             FavouritesUtils.setFavourites(mManageMarketAdapterListBeans);
             EventBus.getDefault().postSticky(new MessageEvent(Constant.Event.REFRSH_STAR));
         }
