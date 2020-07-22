@@ -344,9 +344,6 @@ public class TransferFragment extends BaseFragment implements ITransferView, Cha
                 receiveNode = chooseChainsBean.getNode();
                 toBean = chooseChainsBean;
             }
-            if (mSymbol.equals(chooseChainsBean.getSymbol())) {
-                symbolBean = chooseChainsBean;
-            }
         }
         if (mLoadDialog != null && !mLoadDialog.isShowing()) {
             mLoadDialog.show();
@@ -396,8 +393,8 @@ public class TransferFragment extends BaseFragment implements ITransferView, Cha
             }
             bean.setFromNode(sendUrl);
             bean.setToNode(receiveUrl);
-            bean.setMainChainId(toBean.getIssueid());
-            bean.setIssueChainId(symbolBean.getIssueid());
+            bean.setMainChainId(mDataBean.getChain_id());
+            bean.setIssueChainId(mDataBean.getIssue_chain_id());
             bean.setMemo(et_note.getText().toString());
             bean.setFromChain(fromBean.getName());
             bean.setFromTokenContractAddres(fromBean.getContract_address());

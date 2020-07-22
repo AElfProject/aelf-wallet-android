@@ -26,6 +26,7 @@ import com.legendwd.hyperpay.aelf.model.bean.TransferBalanceBean;
 import com.legendwd.hyperpay.aelf.model.param.TransferBalanceParam;
 import com.legendwd.hyperpay.aelf.presenters.ITransferPresenter;
 import com.legendwd.hyperpay.aelf.presenters.impl.TransferPresenter;
+import com.legendwd.hyperpay.aelf.util.StringUtil;
 import com.legendwd.hyperpay.aelf.views.ITransferView;
 import com.legendwd.hyperpay.lib.CacheUtil;
 import com.legendwd.hyperpay.lib.Constant;
@@ -169,7 +170,8 @@ public class TransferReceiveFragment extends BaseFragment implements ITransferVi
         } else {
             mTvBalance.setText(balance);
 
-            String pre = "≈" + String.format(" %.2f", Double.valueOf(balance) * Double.valueOf(price)) + " ";
+            double value = Double.parseDouble(balance) * Double.parseDouble(price);
+            String pre = "≈" + StringUtil.formatDataNoZero(2, value);
             SpannableString priceString = new SpannableString(pre + CacheUtil.getInstance().getProperty(Constant.Sp.PRICING_CURRENCY_ID_DEFAULT));
             RelativeSizeSpan relativeSizeSpan = new RelativeSizeSpan(0.5f);
             priceString.setSpan(relativeSizeSpan, pre.length(), priceString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

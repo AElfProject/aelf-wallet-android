@@ -32,7 +32,7 @@ public class TransferPresenter extends BasePresenter implements ITransferPresent
 
     private ITransferView iView;
 
-    public TransferPresenter( ITransferView view) {
+    public TransferPresenter(ITransferView view) {
         super((LifecycleProvider<ActivityEvent>) view);
         this.iView = view;
     }
@@ -51,7 +51,6 @@ public class TransferPresenter extends BasePresenter implements ITransferPresent
         ChooseChainParam chooseChainParam = new ChooseChainParam();
         chooseChainParam.test = "test";
         String wallet_address = CacheUtil.getInstance().getProperty(Constant.Sp.WALLET_ADDRESS);
-        //"2c6Fc9MTHsEVarQq33SaWe1r2CE3U5RUpum22Ak3KatFtJKZAt"
         chooseChainParam.address = wallet_address;
         chooseChainParam.currency = "RMB";
         chooseChainParam.type = "0";
@@ -89,7 +88,7 @@ public class TransferPresenter extends BasePresenter implements ITransferPresent
         HttpService service = ServiceGenerator.createService(HttpService.class);
         Observable<Response<ResultBean<List<ChooseChainsBean>>>> observable = service.getCrossChains(baseParam);
         observable.compose(ResponseTransformer.handleResult(getProvider()))
-                .subscribe(r -> iView.onChainsSuccessForDapp(id,r)
-                        , e -> iView.onChainsErrorForDapp(id,-1, e.getMessage()));
+                .subscribe(r -> iView.onChainsSuccessForDapp(id, r)
+                        , e -> iView.onChainsErrorForDapp(id, -1, e.getMessage()));
     }
 }

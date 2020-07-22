@@ -464,8 +464,8 @@ AELF Wallet为去中心化钱包，不存储用户的钱包助记词，导入的
     <string name="enter_wallet_password">输入钱包密码</string>
 
 
-    <string name="switch_network">网络配置</string>
-    <string name="default_address">可选网络</string>
+    <string name="switch_network">网络切换</string>
+    <string name="default_address">默认网络</string>
     <string name="custom_address">自定义网络</string>
     <string name="network_tip">请输入网络地址</string>
     <string name="network_tip_error">网络地址格式有误，请重新输入</string>

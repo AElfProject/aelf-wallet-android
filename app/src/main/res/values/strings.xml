@@ -466,8 +466,8 @@ Enter your mnemonic words or scan QR code to import your wallet. \nAfter scannin
         Using biometrics can be applied to unlock apps and verify payments</string>
 
     <string name="switch_network">Switch Network</string>
-    <string name="default_address">Default address</string>
-    <string name="custom_address">Custom address</string>
+    <string name="default_address">Default Network</string>
+    <string name="custom_address">Custom Network</string>
     <string name="network_tip">请输入网络地址</string>
     <string name="network_tip_error">网络地址格式有误，请重新输入</string>
     <string name="network_tip_sucess">网络切换成功</string>

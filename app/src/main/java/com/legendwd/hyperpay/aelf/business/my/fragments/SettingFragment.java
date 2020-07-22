@@ -95,7 +95,13 @@ public class SettingFragment extends BaseFragment {
         if (index >= 0) {
             String json = StringUtil.getAssetsJson(getContext());
             List<NetWorkBean> list = JsonUtils.jsonToList(json, NetWorkBean.class);
-            tv_rel_network.setText(list.get(index).getName());
+
+            String lang = LanguageUtil.readLanguage();
+            if (TextUtils.equals(LanguageUtil.LANG_CN, lang)) {
+                tv_rel_network.setText(list.get(index).getName());
+            } else {
+                tv_rel_network.setText(list.get(index).getNameEn());
+            }
         } else {
             tv_rel_network.setText(CacheUtil.getInstance().getProperty(Constant.Sp.NETWORK_BASE_URL));
         }

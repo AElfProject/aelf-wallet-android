@@ -20,7 +20,7 @@ import java.util.List;
 
 public class AssetsAdapter extends HeaderAdapter<ChainAddressBean> {
 
-    java.text.DecimalFormat df = new java.text.DecimalFormat("######0.00");
+    java.text.DecimalFormat df = new java.text.DecimalFormat("######0.##");
     private OnItemClickListener mClickListener;
 
     public AssetsAdapter(List datas, HandleCallback handleCallback) {

@@ -4,14 +4,12 @@ import com.legendwd.hyperpay.aelf.base.BaseAdapterModel;
 import com.legendwd.hyperpay.aelf.util.StringUtil;
 import com.legendwd.hyperpay.lib.Constant;
 
-import java.util.Comparator;
-
 /**
  * @author Colin
  * @date 2019/9/26.
  * description：
  */
-public class ChainAddressBean  extends BaseAdapterModel {
+public class ChainAddressBean extends BaseAdapterModel {
     private String address;
     private String contractAddress;
     private String symbol;
@@ -23,6 +21,15 @@ public class ChainAddressBean  extends BaseAdapterModel {
     private String color;
     private int decimals;
     private String balance_0;
+    private String issue_chain_id;
+
+    public String getIssue_chain_id() {
+        return issue_chain_id;
+    }
+
+    public void setIssue_chain_id(String issue_chain_id) {
+        this.issue_chain_id = issue_chain_id;
+    }
 
     public int getDecimals() {
         return decimals;
@@ -128,7 +135,7 @@ public class ChainAddressBean  extends BaseAdapterModel {
     }
 
 
-    public  class Rate {
+    public class Rate {
         /**
          * price : 0.000
          * increace : 0

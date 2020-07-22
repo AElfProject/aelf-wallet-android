@@ -1,6 +1,5 @@
 package com.legendwd.hyperpay.aelf.business.wallet.fragments;
 
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -96,13 +95,13 @@ public class TransferChildAdapter extends RecyclerView.Adapter<RecyclerView.View
                     viewHolder.tv_state.setTextColor(viewHolder.tv_state.getResources().getColor(R.color.color_FF4946));
                 } else if ("0".equals(bean.status)) {
                     viewHolder.tv_state.setTextColor(viewHolder.tv_state.getResources().getColor(R.color.color_F9B74B));
-                } else if("1".equals(bean.status)){
+                } else if ("1".equals(bean.status)) {
                     if ("receive".equals(bean.category)) {
                         viewHolder.tv_state.setTextColor(viewHolder.tv_state.getResources().getColor(R.color.color_316FF6));
-                    }else {
+                    } else {
                         viewHolder.tv_state.setTextColor(viewHolder.tv_state.getResources().getColor(R.color.blue_641eb0));
                     }
-                }else {
+                } else {
                     viewHolder.tv_state.setTextColor(viewHolder.tv_state.getResources().getColor(R.color.color_F9B74B));
                 }
 
@@ -113,9 +112,9 @@ public class TransferChildAdapter extends RecyclerView.Adapter<RecyclerView.View
                     viewHolder.tv_money.setText("****");
                 } else {
                     String amount = bean.getAmount();
-                    viewHolder.tv_amount.setText(amount);
+                    viewHolder.tv_amount.setText(StringUtil.formatDataNoZero(2, amount));
 
-                    double money = Double.valueOf(amount) * Double.valueOf(bean.rate.price);
+                    double money = Double.parseDouble(amount) * Double.parseDouble(bean.rate.price);
                     viewHolder.tv_money.setText("≈ " + StringUtil.formatDataNoZero(2, money)
                             + " " + CacheUtil.getInstance().getProperty(Constant.Sp.PRICING_CURRENCY_ID_DEFAULT));
                 }

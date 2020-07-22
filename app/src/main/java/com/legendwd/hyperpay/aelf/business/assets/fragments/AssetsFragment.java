@@ -39,7 +39,6 @@ import com.legendwd.hyperpay.aelf.dialogfragments.ConfirmDialog;
 import com.legendwd.hyperpay.aelf.listeners.HandleCallback;
 import com.legendwd.hyperpay.aelf.listeners.OnItemClickListener;
 import com.legendwd.hyperpay.aelf.model.MessageEvent;
-import com.legendwd.hyperpay.aelf.model.bean.AssetsBean;
 import com.legendwd.hyperpay.aelf.model.bean.AssetsListBean;
 import com.legendwd.hyperpay.aelf.model.bean.ChainAddressBean;
 import com.legendwd.hyperpay.aelf.model.bean.CurrenciesBean;
@@ -127,7 +126,7 @@ public class AssetsFragment extends BaseFragment implements IAssetsView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Context context = getContext();
-        if(context == null) {
+        if (context == null) {
             return;
         }
         popupInitData();
@@ -262,7 +261,7 @@ public class AssetsFragment extends BaseFragment implements IAssetsView {
      */
     private void popupInitData() {
         Context context = getContext();
-        if(context == null) {
+        if (context == null) {
             return;
         }
         view = View.inflate(context, R.layout.choose_popup_chain, null);
@@ -332,7 +331,7 @@ public class AssetsFragment extends BaseFragment implements IAssetsView {
                 mPopupLayout.dismiss();
                 chainAddressBean = data;
                 mAssetsPresenter.getAssetsList(coinAddress);
-                if(mLoadDialog == null) {
+                if (mLoadDialog == null) {
                     mLoadDialog = new LoadDialog(context, false);
                 }
                 mLoadDialog.show();
@@ -353,7 +352,7 @@ public class AssetsFragment extends BaseFragment implements IAssetsView {
             mOnchainMoneyTv.setText(chainAddressBean.getBalance());
             double money = Double.parseDouble(chainAddressBean.getBalance()) * Double.parseDouble(chainAddressBean.getRate().getPrice());
             String currency = CacheUtil.getInstance().getProperty(Constant.Sp.PRICING_CURRENCY_ID_DEFAULT, "CNY");
-            String moneyString = String.format(" %.2f", money);
+            String moneyString = StringUtil.formatDataNoZero(8, money);
             mOnchainCompanyTv.setText(moneyString + " " + currency);
         }
         mPopupChainTitleTv.setText(getString(R.string.current_chain, chainAddressBean.getChain_id()));
@@ -481,7 +480,7 @@ public class AssetsFragment extends BaseFragment implements IAssetsView {
                 }
             }
             updateAssets(list);
-        }else {
+        } else {
             updateNoneData();
         }
     }
@@ -502,15 +501,15 @@ public class AssetsFragment extends BaseFragment implements IAssetsView {
         mDataList.addAll(list);
 
         Comparator<ChainAddressBean> mAssetComparator = (o1, o2) -> {
-            if(Double.parseDouble(o1.getBalance())-Double.parseDouble(o2.getBalance()) > 0){
+            if (Double.parseDouble(o1.getBalance()) - Double.parseDouble(o2.getBalance()) > 0) {
                 return -1;
-            }else if(Double.parseDouble(o1.getBalance())-Double.parseDouble(o2.getBalance()) < 0){
-                return  1;
+            } else if (Double.parseDouble(o1.getBalance()) - Double.parseDouble(o2.getBalance()) < 0) {
+                return 1;
             }
             return 0;
         };
 
-        Collections.sort(mDataList,mAssetComparator);
+        Collections.sort(mDataList, mAssetComparator);
         mAdapter.update(mDataList);
         referUi();
     }
@@ -524,7 +523,7 @@ public class AssetsFragment extends BaseFragment implements IAssetsView {
         boolean isMode = CacheUtil.getInstance().getProperty(Constant.Sp.PRIVATE_MODE, false);
         if (isMode) {
             tvAssets.setText("****");
-        }else {
+        } else {
 
         }
     }
