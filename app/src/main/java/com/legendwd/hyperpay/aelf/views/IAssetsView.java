@@ -3,6 +3,7 @@ package com.legendwd.hyperpay.aelf.views;
 import com.legendwd.hyperpay.aelf.model.bean.AssetsListBean;
 import com.legendwd.hyperpay.aelf.model.bean.ChainAddressBean;
 import com.legendwd.hyperpay.aelf.model.bean.CurrenciesBean;
+import com.legendwd.hyperpay.aelf.model.bean.MarketDataBean;
 import com.legendwd.hyperpay.aelf.model.bean.PublicMessageBean;
 import com.legendwd.hyperpay.aelf.model.bean.ResultBean;
 import com.legendwd.hyperpay.aelf.model.bean.UnreadBean;
@@ -36,4 +37,8 @@ public interface IAssetsView {
     void onWaitCrossTransSuccess(ResultBean<WaitTransactionBean> resultBean);
 
     void onWaitCrossTransError(int i, String message);
+
+    void onCoinListSuccess(List<MarketDataBean> marketListBeanResultBean, String type);
+
+    void onCoinListError(int i, String message, String type);
 }

@@ -15,6 +15,7 @@ import com.legendwd.hyperpay.aelf.R;
 import com.legendwd.hyperpay.aelf.listeners.OnItemClickListener;
 import com.legendwd.hyperpay.aelf.model.bean.TransactionNoticeBean;
 import com.legendwd.hyperpay.aelf.util.StringUtil;
+import com.legendwd.hyperpay.lib.Constant;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -76,18 +77,19 @@ public class NoticeRecordAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 viewHolder.tvAction.setTextColor(viewHolder.tvAction.getResources().getColor(R.color.color_FF4946));
             } else if ("0".equals(bean.getStatus())) {
                 viewHolder.tvAction.setTextColor(viewHolder.tvAction.getResources().getColor(R.color.color_F9B74B));
-            } else if ("1".equals(bean.getStatus())){
+            } else if ("1".equals(bean.getStatus())) {
                 if ("receive".equals(bean.getCategory())) {
                     viewHolder.tvAction.setTextColor(viewHolder.tvAction.getResources().getColor(R.color.color_316FF6));
-                }else {
+                } else {
                     viewHolder.tvAction.setTextColor(viewHolder.tvAction.getResources().getColor(R.color.blue_641eb0));
                 }
-            }else {
+            } else {
                 viewHolder.tvAction.setTextColor(viewHolder.tvAction.getResources().getColor(R.color.color_F9B74B));
             }
 
             viewHolder.tvTime.setText(mDateFormat.format(new Date(Long.parseLong(bean.getTime()) * 1000)));
-            viewHolder.tvAmount.setText(bean.getSymbol().toUpperCase() + ": " + String.format("%.4f", Float.parseFloat(bean.getAmount())));
+            viewHolder.tvAmount.setText(bean.getSymbol().toUpperCase() + ": "
+                    + StringUtil.formatDataNoZero(Constant.DEFAULT_DECIMALS, bean.getAmount()));
 
             viewHolder.itemView.setBackgroundColor("0".equals(bean.getIsRead()) ? Color.parseColor("#F3F5F9") : Color.TRANSPARENT);
 

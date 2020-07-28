@@ -1,6 +1,9 @@
 package com.legendwd.hyperpay.aelf.presenters.impl;
 
+import android.text.TextUtils;
+
 import com.google.gson.JsonObject;
+import com.legendwd.hyperpay.aelf.config.ApiUrlConfig;
 import com.legendwd.hyperpay.aelf.httpservices.HttpService;
 import com.legendwd.hyperpay.aelf.httpservices.ResponseTransformer;
 import com.legendwd.hyperpay.aelf.model.bean.AssetsListBean;
@@ -11,6 +14,7 @@ import com.legendwd.hyperpay.aelf.model.bean.UnreadBean;
 import com.legendwd.hyperpay.aelf.model.param.AddressParam;
 import com.legendwd.hyperpay.aelf.model.param.BaseParam;
 import com.legendwd.hyperpay.aelf.model.param.ChooseChainParam;
+import com.legendwd.hyperpay.aelf.model.param.MarketParam;
 import com.legendwd.hyperpay.aelf.model.params.AssetsListParams;
 import com.legendwd.hyperpay.aelf.presenters.BasePresenter;
 import com.legendwd.hyperpay.aelf.presenters.IAssetsPresenter;
@@ -21,7 +25,9 @@ import com.legendwd.hyperpay.lib.Constant;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.Response;
@@ -45,6 +51,29 @@ public class AssetsPresenter extends BasePresenter implements IAssetsPresenter {
         observable.compose(ResponseTransformer.handleResult(getProvider()))
                 .subscribe(r -> mIAssetsView.onAssetsSuccess(r)
                         , e -> mIAssetsView.onAssetsError(-1, e.getMessage()));
+    }
+
+    @Override
+    public void getCoinList(MarketParam param, String type) {
+        HttpService service = ServiceGenerator.createServiceMarket(HttpService.class, ApiUrlConfig.MARKET_UTL);
+        Map<String, String> map = new HashMap<>();
+        map.put("vs_currency", param.currency);
+        if (!TextUtils.isEmpty(param.coinName)) {
+            map.put("ids", param.coinName);
+        }
+        if (!TextUtils.isEmpty(param.sort)) {
+            map.put("order", param.sort);
+        }
+        if (!TextUtils.isEmpty(param.p)) {
+            map.put("per_page", "50");
+            map.put("page", param.p);
+        }
+        map.put("sparkline", "false");
+        service.getCoinList(map)
+                .compose(ResponseTransformer.handleResult(getProvider()))
+                .subscribe(marketListBeanResultBean -> mIAssetsView.onCoinListSuccess(marketListBeanResultBean, type)
+                        , throwable -> mIAssetsView.onCoinListError(-1, throwable.getMessage(), type));
+
     }
 
     @Override
@@ -81,7 +110,7 @@ public class AssetsPresenter extends BasePresenter implements IAssetsPresenter {
         ChooseChainParam chooseChainParam = new ChooseChainParam();
         String address = CacheUtil.getInstance().getProperty(Constant.Sp.WALLET_ADDRESS);
         chooseChainParam.address = address;
-        chooseChainParam.type = bAsset ? "1": "0";
+        chooseChainParam.type = bAsset ? "1" : "0";
         HttpService service = ServiceGenerator.createService(HttpService.class);
         Observable<Response<ResultBean<List<ChainAddressBean>>>> observable = service.getConcurrent_Address(chooseChainParam);
         observable.compose(ResponseTransformer.handleResult(getProvider()))

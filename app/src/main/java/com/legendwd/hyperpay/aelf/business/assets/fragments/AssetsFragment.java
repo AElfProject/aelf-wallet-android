@@ -35,6 +35,8 @@ import com.legendwd.hyperpay.aelf.business.wallet.adapters.ChooseChainAdapter;
 import com.legendwd.hyperpay.aelf.business.wallet.fragments.ChooseChainFragment;
 import com.legendwd.hyperpay.aelf.business.wallet.fragments.TransferReceiveFragment;
 import com.legendwd.hyperpay.aelf.business.wallet.fragments.WaitTransferFragment;
+import com.legendwd.hyperpay.aelf.db.MarketCoindb;
+import com.legendwd.hyperpay.aelf.db.dao.MarketCoinDao;
 import com.legendwd.hyperpay.aelf.dialogfragments.ConfirmDialog;
 import com.legendwd.hyperpay.aelf.listeners.HandleCallback;
 import com.legendwd.hyperpay.aelf.listeners.OnItemClickListener;
@@ -42,12 +44,14 @@ import com.legendwd.hyperpay.aelf.model.MessageEvent;
 import com.legendwd.hyperpay.aelf.model.bean.AssetsListBean;
 import com.legendwd.hyperpay.aelf.model.bean.ChainAddressBean;
 import com.legendwd.hyperpay.aelf.model.bean.CurrenciesBean;
+import com.legendwd.hyperpay.aelf.model.bean.MarketDataBean;
 import com.legendwd.hyperpay.aelf.model.bean.PublicMessageBean;
 import com.legendwd.hyperpay.aelf.model.bean.ResultBean;
 import com.legendwd.hyperpay.aelf.model.bean.UnreadBean;
 import com.legendwd.hyperpay.aelf.model.bean.WaitTransactionBean;
 import com.legendwd.hyperpay.aelf.model.param.AddressParam;
 import com.legendwd.hyperpay.aelf.model.param.BaseParam;
+import com.legendwd.hyperpay.aelf.model.param.MarketParam;
 import com.legendwd.hyperpay.aelf.presenters.impl.AssetsPresenter;
 import com.legendwd.hyperpay.aelf.util.DialogUtils;
 import com.legendwd.hyperpay.aelf.util.StringUtil;
@@ -383,7 +387,7 @@ public class AssetsFragment extends BaseFragment implements IAssetsView {
                     total += Double.parseDouble(bean.getBalance()) * Double.parseDouble(bean.getRate().getPrice());
                 }
             }
-            String pre = StringUtil.formatDataNoZero(8, total) + " ";
+            String pre = StringUtil.formatDataNoZero(2, total) + " ";
             SpannableString price = new SpannableString(pre + CacheUtil.getInstance().getProperty(Constant.Sp.PRICING_CURRENCY_ID_DEFAULT));
             RelativeSizeSpan relativeSizeSpan = new RelativeSizeSpan(0.5f);
             price.setSpan(relativeSizeSpan, pre.length(), price.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -499,7 +503,6 @@ public class AssetsFragment extends BaseFragment implements IAssetsView {
     private void updateAssets(List<ChainAddressBean> list) {
         mDataList.clear();
         mDataList.addAll(list);
-
         Comparator<ChainAddressBean> mAssetComparator = (o1, o2) -> {
             if (Double.parseDouble(o1.getBalance()) - Double.parseDouble(o2.getBalance()) > 0) {
                 return -1;
@@ -508,10 +511,34 @@ public class AssetsFragment extends BaseFragment implements IAssetsView {
             }
             return 0;
         };
-
         Collections.sort(mDataList, mAssetComparator);
-        mAdapter.update(mDataList);
-        referUi();
+        List<String> symbelList = new ArrayList<>();
+        for (ChainAddressBean bean : mDataList) {
+            symbelList.add(bean.getSymbol().toLowerCase());
+        }
+        List<MarketCoindb> coindbList = MarketCoinDao.queryData(symbelList);
+        if (coindbList.isEmpty()) {
+            mAdapter.update(mDataList);
+            referUi();
+        } else {
+            StringBuilder builder = new StringBuilder();
+            for (MarketCoindb db : coindbList) {
+                builder.append(db.getId());
+                builder.append(",");
+            }
+            builder.deleteCharAt(builder.length() - 1);
+            getMarketData(builder.toString(), "");
+        }
+    }
+
+    private void getMarketData(String name, String type) {
+        MarketParam param = new MarketParam();
+        param.currency = CacheUtil.getInstance().getProperty(Constant.Sp.PRICING_CURRENCY_ID_DEFAULT, Constant.DEFAULT_CURRENCY);
+        param.time = "1";
+        param.p = "1";
+        //关键字搜索
+        param.coinName = name;
+        mAssetsPresenter.getCoinList(param, type);
     }
 
     @Override
@@ -661,6 +688,26 @@ public class AssetsFragment extends BaseFragment implements IAssetsView {
 
     @Override
     public void onWaitCrossTransError(int i, String message) {
+
+    }
+
+    @Override
+    public void onCoinListSuccess(List<MarketDataBean> marketListBeanResultBean, String type) {
+        for (MarketDataBean bean : marketListBeanResultBean) {
+            for (ChainAddressBean data : mDataList) {
+                if (bean.getSymbol().equalsIgnoreCase(data.getSymbol())) {
+                    ChainAddressBean.Rate rate = data.getRate();
+                    rate.setPrice(bean.getCurrentPrice());
+                    data.setRate(rate);
+                }
+            }
+        }
+        mAdapter.update(mDataList);
+        referUi();
+    }
+
+    @Override
+    public void onCoinListError(int i, String message, String type) {
 
     }
 

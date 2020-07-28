@@ -16,6 +16,8 @@ public class Constant {
     public final static String DEFAULT_CHAIN_ID = "AELF";
     public final static String DEFAULT_PREFIX = "ELF_";
 
+    public final static String MARKET_PRICE = "PRICE_";
+
     public final static String IP_MATCHER = "(\\d+\\.\\d+\\.\\d+\\.\\d+):(\\d+)";
     public final static String URL_MATCHER = "^(https?|http)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
 

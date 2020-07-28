@@ -25,6 +25,14 @@ public class MarketCoinDao {
         }
     }
 
+    public static List<MarketCoindb> queryData(List<String> list) {
+        MarketCoindbDao dbDao = AelfApplication.getDaoSession().getMarketCoindbDao();
+        return dbDao.queryBuilder()
+                .where(MarketCoindbDao.Properties.Symbol.in(list))
+                .build()
+                .list();
+    }
+
     public static List<MarketCoindb> queryList(String name) {
         MarketCoindbDao dbDao = AelfApplication.getDaoSession().getMarketCoindbDao();
         return dbDao.queryBuilder()

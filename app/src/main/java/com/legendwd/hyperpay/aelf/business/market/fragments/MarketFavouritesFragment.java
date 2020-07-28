@@ -136,8 +136,8 @@ public class MarketFavouritesFragment extends BaseFragment implements IMarketVie
     private void favouritesData(List<MarketDataBean> dataList) {
         ll_favourites.setVisibility(View.VISIBLE);
         ll_market_star.setVisibility(View.VISIBLE);
-        mDataList.clear();
         if (dataList == null || dataList.size() == 0) {
+            mDataList.clear();
             refresh.finishRefresh();
             MarketDataBean bean = new MarketDataBean();
             bean.setItemType(BaseAdapterModel.ItemType.EMPTY);
@@ -167,7 +167,6 @@ public class MarketFavouritesFragment extends BaseFragment implements IMarketVie
 
         switch (event.getMessage()) {
             case Constant.Event.REFRSH_STAR:
-//                Log.d("=====", "REFRSH_STAR:");
                 referData();
                 break;
         }

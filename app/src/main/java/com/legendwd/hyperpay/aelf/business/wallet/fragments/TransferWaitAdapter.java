@@ -76,13 +76,12 @@ public class TransferWaitAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 viewHolder.tv_from.setText(bean.symbol.toUpperCase());
                 viewHolder.tv_chain.setText(String.format(viewHolder.tv_from.getResources()
                         .getString(R.string.from_to), bean.from_chain, bean.to_chain));
-//                viewHolder.iv_transaction.setBackgroundResource(R.mipmap.transfer);
                 viewHolder.tv_copy_from.setText(StringUtil.formatAddress(bean.from_address));
                 viewHolder.tv_copy_to.setText(StringUtil.formatAddress(bean.to_address));
-                if(!TextUtils.isEmpty(bean.memo)) {
+                if (!TextUtils.isEmpty(bean.memo)) {
                     viewHolder.tv_memo.setText(bean.memo);
                 }
-                viewHolder.tv_copy_txid.setText(StringUtil.formatAddress(bean.txid));
+                viewHolder.tv_copy_txid.setText(bean.txid);
 
                 viewHolder.tv_copy_from.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -117,7 +116,7 @@ public class TransferWaitAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                date.setTime(Long.valueOf(bean.time) * 1000);//java里面应该是按毫秒
+                date.setTime(Long.valueOf(bean.time) * 1000);
                 viewHolder.tv_time.setText(sdf.format(date));
 
                 boolean isMode = CacheUtil.getInstance().getProperty(Constant.Sp.PRIVATE_MODE, false);

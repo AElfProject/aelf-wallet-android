@@ -19,7 +19,7 @@ public class ChainAddressBean extends BaseAdapterModel {
     private String type;
     private Rate rate;
     private String color;
-    private int decimals;
+    private int decimals = Constant.DEFAULT_DECIMALS;
     private String balance_0;
     private String issue_chain_id;
 

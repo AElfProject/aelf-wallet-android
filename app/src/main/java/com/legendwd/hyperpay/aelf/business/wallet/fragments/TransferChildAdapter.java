@@ -2,6 +2,7 @@ package com.legendwd.hyperpay.aelf.business.wallet.fragments;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,7 +115,11 @@ public class TransferChildAdapter extends RecyclerView.Adapter<RecyclerView.View
                     String amount = bean.getAmount();
                     viewHolder.tv_amount.setText(StringUtil.formatDataNoZero(2, amount));
 
-                    double money = Double.parseDouble(amount) * Double.parseDouble(bean.rate.price);
+                    String price = CacheUtil.getInstance().getProperty(Constant.MARKET_PRICE + bean.symbol);
+                    if (TextUtils.isEmpty(price)) {
+                        price = "0.0";
+                    }
+                    double money = Double.parseDouble(amount) * Double.parseDouble(price);
                     viewHolder.tv_money.setText("≈ " + StringUtil.formatDataNoZero(2, money)
                             + " " + CacheUtil.getInstance().getProperty(Constant.Sp.PRICING_CURRENCY_ID_DEFAULT));
                 }

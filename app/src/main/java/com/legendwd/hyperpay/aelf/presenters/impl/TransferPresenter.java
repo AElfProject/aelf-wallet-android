@@ -49,10 +49,8 @@ public class TransferPresenter extends BasePresenter implements ITransferPresent
     @Override
     public void getConcurrentAddress() {
         ChooseChainParam chooseChainParam = new ChooseChainParam();
-        chooseChainParam.test = "test";
         String wallet_address = CacheUtil.getInstance().getProperty(Constant.Sp.WALLET_ADDRESS);
         chooseChainParam.address = wallet_address;
-        chooseChainParam.currency = "RMB";
         chooseChainParam.type = "0";
         HttpService service = ServiceGenerator.createService(HttpService.class);
         Observable<Response<ResultBean<List<ChainAddressBean>>>> observable = service.getConcurrent_Address(chooseChainParam);

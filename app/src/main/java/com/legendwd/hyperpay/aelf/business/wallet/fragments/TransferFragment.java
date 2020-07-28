@@ -192,6 +192,8 @@ public class TransferFragment extends BaseFragment implements ITransferView, Cha
 
         presenter.getCrossChains();
 
+        presenter.getConcurrentAddress();
+
         mLoadDialog = new LoadDialog(getContext(), false);
 
         linearbtnInfo.setOnClickListener(v -> DialogUtils.showDialog(SingleButtonDialog.class, getFragmentManager())
@@ -345,14 +347,17 @@ public class TransferFragment extends BaseFragment implements ITransferView, Cha
                 toBean = chooseChainsBean;
             }
         }
+        if (mAddressList.isEmpty()) {
+            return;
+        }
         if (mLoadDialog != null && !mLoadDialog.isShowing()) {
             mLoadDialog.show();
         }
         if (!transToChain) {
             TransferBean bean = new TransferBean();
             bean.setPrivateKey(key);
-            bean.setAmount(StringUtil.multiplyDataString(Constant.DEFAULT_DECIMALS, et_amount.getText().toString()));
-            bean.setToAddress(toAddress);//"2JwqyZ5B9yA55gJGG5vyS32T7pd1Kc7XFQ7TNQujLeFJFiRguS"
+            bean.setAmount(StringUtil.multiplyDataString(mDataBean.getDecimals(), et_amount.getText().toString()));
+            bean.setToAddress(toAddress);
             bean.setSymbol(mSymbol);
             bean.setMemo(et_note.getText().toString());
             String send;
@@ -376,8 +381,8 @@ public class TransferFragment extends BaseFragment implements ITransferView, Cha
         } else {
             TransferBean bean = new TransferBean();
             bean.setPrivateKey(key);
-            bean.setAmount(StringUtil.multiplyDataString(Constant.DEFAULT_DECIMALS, et_amount.getText().toString()));
-            bean.setToAddress(toAddress);//"2JwqyZ5B9yA55gJGG5vyS32T7pd1Kc7XFQ7TNQujLeFJFiRguS"
+            bean.setAmount(StringUtil.multiplyDataString(mDataBean.getDecimals(), et_amount.getText().toString()));
+            bean.setToAddress(toAddress);
             bean.setSymbol(mSymbol);
             String sendUrl;
             if (!TextUtils.isEmpty(senNode) && senNode.endsWith("/")) {
@@ -393,8 +398,8 @@ public class TransferFragment extends BaseFragment implements ITransferView, Cha
             }
             bean.setFromNode(sendUrl);
             bean.setToNode(receiveUrl);
-            bean.setMainChainId(mDataBean.getChain_id());
-            bean.setIssueChainId(mDataBean.getIssue_chain_id());
+            bean.setMainChainId(mAddressList.get(0).getChain_id());
+            bean.setIssueChainId(mAddressList.get(0).getIssue_chain_id());
             bean.setMemo(et_note.getText().toString());
             bean.setFromChain(fromBean.getName());
             bean.setFromTokenContractAddres(fromBean.getContract_address());
@@ -434,7 +439,7 @@ public class TransferFragment extends BaseFragment implements ITransferView, Cha
                         .setToast(R.string.please_enter_transfer_amount);
                 return;
             }
-            double amountValue = StringUtil.multiplyDataDouble(Constant.DEFAULT_DECIMALS, amount);
+            double amountValue = StringUtil.multiplyDataDouble(mDataBean.getDecimals(), amount);
 
             if (amountValue < 1) {
                 DialogUtils.showDialog(ToastDialog.class, getFragmentManager())
@@ -583,7 +588,7 @@ public class TransferFragment extends BaseFragment implements ITransferView, Cha
             List<ChainAddressBean> list = resultBean.getData();
             mAddressList.clear();
             for (ChainAddressBean bean : list) {
-                if ("main".equals(bean.getType())) {
+                if (bean.getSymbol().equals(mDataBean.getSymbol())) {
                     mAddressList.add(bean);
                 }
             }

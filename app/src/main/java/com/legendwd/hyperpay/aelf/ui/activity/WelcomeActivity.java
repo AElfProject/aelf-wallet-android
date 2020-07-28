@@ -10,15 +10,18 @@ import com.gyf.immersionbar.ImmersionBar;
 import com.legendwd.hyperpay.aelf.MainActivity;
 import com.legendwd.hyperpay.aelf.R;
 import com.legendwd.hyperpay.aelf.base.BaseActivity;
-import com.legendwd.hyperpay.aelf.business.discover.dapp.GameWebActivity;
 import com.legendwd.hyperpay.aelf.business.wallet.CreateImportWalletActivity;
+import com.legendwd.hyperpay.aelf.db.MarketCoindb;
+import com.legendwd.hyperpay.aelf.db.dao.MarketCoinDao;
 import com.legendwd.hyperpay.aelf.model.bean.CurrenciesBean;
 import com.legendwd.hyperpay.aelf.model.bean.ResultBean;
 import com.legendwd.hyperpay.aelf.model.param.BaseParam;
 import com.legendwd.hyperpay.aelf.model.param.UploadDataParam;
+import com.legendwd.hyperpay.aelf.presenters.IMarketHomePresenter;
 import com.legendwd.hyperpay.aelf.presenters.IWelcomePresenter;
+import com.legendwd.hyperpay.aelf.presenters.impl.MarketHomePresenter;
 import com.legendwd.hyperpay.aelf.presenters.impl.WelcomePresenter;
-import com.legendwd.hyperpay.aelf.util.LanguageUtil;
+import com.legendwd.hyperpay.aelf.views.IMarketHomeView;
 import com.legendwd.hyperpay.aelf.views.IWelcomeView;
 import com.legendwd.hyperpay.lib.CacheUtil;
 import com.legendwd.hyperpay.lib.Constant;
@@ -26,7 +29,7 @@ import com.legendwd.hyperpay.lib.Constant;
 import java.util.List;
 
 
-public class WelcomeActivity extends BaseActivity implements IWelcomeView {
+public class WelcomeActivity extends BaseActivity implements IWelcomeView, IMarketHomeView {
     private IWelcomePresenter presenter;
 
     private boolean mFlagNet = false;
@@ -48,7 +51,6 @@ public class WelcomeActivity extends BaseActivity implements IWelcomeView {
 
         presenter = new WelcomePresenter(this);
 
-
         uploadData();
 
         if (TextUtils.isEmpty(defaultCurrency)) {
@@ -62,6 +64,8 @@ public class WelcomeActivity extends BaseActivity implements IWelcomeView {
                 }
             }, 1500);
         }
+        IMarketHomePresenter presenter = new MarketHomePresenter(this);
+        presenter.getMarketCoinList();
 
     }
 
@@ -174,6 +178,17 @@ public class WelcomeActivity extends BaseActivity implements IWelcomeView {
 
     @Override
     public void onUploadDataFail(int code, String msg) {
+
+    }
+
+    @Override
+    public void onCoinListSuccess(List<MarketCoindb> list) {
+        MarketCoinDao.deleteAll();
+        MarketCoinDao.save(list);
+    }
+
+    @Override
+    public void onCoinListError(int code, String msg) {
 
     }
 }

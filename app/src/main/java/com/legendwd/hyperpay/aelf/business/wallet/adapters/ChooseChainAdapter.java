@@ -105,7 +105,7 @@ public class ChooseChainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             marketViewHolder.tx_chain_money.setText(bean.getBalance());
             double money = Double.parseDouble(bean.getBalance()) * Double.parseDouble(bean.getRate().getPrice());
             String currency = CacheUtil.getInstance().getProperty(Constant.Sp.PRICING_CURRENCY_ID_DEFAULT, "CNY");
-            String moneyString = StringUtil.formatDataNoZero(Constant.DEFAULT_DECIMALS, money);
+            String moneyString = StringUtil.formatDataNoZero(bean.getDecimals(), money);
             marketViewHolder.tx_chain_company.setText(moneyString + " " + currency);
         }
         int roundRadius = 10; // 10dp 圆角半径
