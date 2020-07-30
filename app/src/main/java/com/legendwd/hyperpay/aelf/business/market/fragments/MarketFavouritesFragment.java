@@ -142,6 +142,7 @@ public class MarketFavouritesFragment extends BaseFragment implements IMarketVie
             MarketDataBean bean = new MarketDataBean();
             bean.setItemType(BaseAdapterModel.ItemType.EMPTY);
             mDataList.add(bean);
+            mMarketAdapter.refreshView(mDataList);
             ll_favourites.setVisibility(View.GONE);
             ll_market_star.setVisibility(View.GONE);
         } else {

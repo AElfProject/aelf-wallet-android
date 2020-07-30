@@ -455,6 +455,7 @@ public class AssetsFragment extends BaseFragment implements IAssetsView {
             @Override
             public void onItemClick(Object o) {
                 if (o instanceof ChainAddressBean) {
+                    CacheUtil.getInstance().setProperty(Constant.MARKET_PRICE + ((ChainAddressBean) o).getSymbol(), ((ChainAddressBean) o).getRate().getPrice());
                     Bundle bundle = new Bundle();
                     bundle.putString("bean", new Gson().toJson(o));
                     if (mBoolAssets) {

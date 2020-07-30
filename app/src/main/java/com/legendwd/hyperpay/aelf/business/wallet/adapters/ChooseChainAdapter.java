@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,7 +104,11 @@ public class ChooseChainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             marketViewHolder.tx_chain_company.setText("****");
         } else {
             marketViewHolder.tx_chain_money.setText(bean.getBalance());
-            double money = Double.parseDouble(bean.getBalance()) * Double.parseDouble(bean.getRate().getPrice());
+            String price = CacheUtil.getInstance().getProperty(Constant.MARKET_PRICE + bean.getSymbol());
+            if (TextUtils.isEmpty(price)) {
+                price = "0.0";
+            }
+            double money = Double.parseDouble(bean.getBalance()) * Double.parseDouble(price);
             String currency = CacheUtil.getInstance().getProperty(Constant.Sp.PRICING_CURRENCY_ID_DEFAULT, "CNY");
             String moneyString = StringUtil.formatDataNoZero(bean.getDecimals(), money);
             marketViewHolder.tx_chain_company.setText(moneyString + " " + currency);

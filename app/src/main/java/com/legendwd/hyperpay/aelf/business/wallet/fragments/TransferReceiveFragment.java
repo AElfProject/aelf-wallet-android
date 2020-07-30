@@ -69,7 +69,6 @@ public class TransferReceiveFragment extends BaseFragment implements ITransferVi
     public void process() {
 
         mDataBean = new Gson().fromJson(getArguments().getString("bean"), ChainAddressBean.class);
-        CacheUtil.getInstance().setProperty(Constant.MARKET_PRICE + mDataBean.getSymbol(), mDataBean.getRate().getPrice());
         setCurrentBalance(mDataBean.getBalance(), mDataBean.getRate().getPrice());
 
         initToolbarNav(mToolbar, mDataBean.getChain_id() + "-" + mDataBean.getSymbol(), true);
