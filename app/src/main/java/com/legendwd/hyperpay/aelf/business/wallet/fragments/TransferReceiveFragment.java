@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.widget.ImageView;
@@ -67,8 +68,12 @@ public class TransferReceiveFragment extends BaseFragment implements ITransferVi
 
     @Override
     public void process() {
-
         mDataBean = new Gson().fromJson(getArguments().getString("bean"), ChainAddressBean.class);
+        String price = CacheUtil.getInstance().getProperty(Constant.MARKET_PRICE + mDataBean.getSymbol());
+        if (TextUtils.isEmpty(price)) {
+            price = "0.0";
+        }
+        mDataBean.getRate().setPrice(price);
         setCurrentBalance(mDataBean.getBalance(), mDataBean.getRate().getPrice());
 
         initToolbarNav(mToolbar, mDataBean.getChain_id() + "-" + mDataBean.getSymbol(), true);
