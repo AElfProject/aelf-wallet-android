@@ -37,5 +37,6 @@ AElf 是一个区块链系统，旨在通过使用侧链和灵活的设计实现
 - [x] 运行环境 Android studio 3.0,支持最低sdk 16
 - [x] 打包所需keystore请见app/build.gradle signingConfigs
 - [x] 项目运行后，访问接口需要 PubKey 加密，在项目的 ServiceGenerator 中配置。如有必要，你可以通过 issue 来申请一个 PubKey。
+- [x] 支持服务接口配置，配置文件参考\app\src\main\assets\networkConfig.json
 
 
