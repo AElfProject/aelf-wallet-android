@@ -105,8 +105,10 @@ public class NetworkConfigFragment extends BaseFragment {
                 break;
             case R.id.tv_next:
                 int index = CacheUtil.getInstance().getProperty(Constant.Sp.NETWORK_SELECT_KEY, 0);
-                if (mSelectIndex != index) {
+                if (mSelectIndex != index || mSelectIndex == -1) {
                     changeNet(mSelectIndex);
+                }else {
+                    pop();
                 }
                 break;
             default:

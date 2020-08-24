@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AELF Wallet</string>
+    <string name="app_name">aelf Wallet</string>
     <string name="tab_market">市场</string>
     <string name="tab_propety">资产</string>
     <string name="tab_discovery">发现</string>

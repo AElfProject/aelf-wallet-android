@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AELF Wallet</string>
+    <string name="app_name">aelf Wallet</string>
 
     <string name="lang_simplified_chinese_show">简体中文</string>
     <string name="lang_traditional_chinese_show">繁体中文</string>
@@ -468,7 +468,7 @@ Enter your mnemonic words or scan QR code to import your wallet. \nAfter scannin
     <string name="switch_network">Switch Network</string>
     <string name="default_address">Default Network</string>
     <string name="custom_address">Custom Network</string>
-    <string name="network_tip">请输入网络地址</string>
-    <string name="network_tip_error">网络地址格式有误，请重新输入</string>
+    <string name="network_tip">Please enter a custom address</string>
+    <string name="network_tip_error">Input errors, please re-enter</string>
     <string name="network_tip_sucess">网络切换成功</string>
 </resources>

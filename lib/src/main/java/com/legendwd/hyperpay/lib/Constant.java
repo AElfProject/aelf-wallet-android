@@ -72,6 +72,8 @@ public class Constant {
 
         String NETWORK_BASE_URL = "network_base_url";
 
+        String NETWORK_LAST_URL = "network_last_url";
+
     }
 
     public interface RequestCode {

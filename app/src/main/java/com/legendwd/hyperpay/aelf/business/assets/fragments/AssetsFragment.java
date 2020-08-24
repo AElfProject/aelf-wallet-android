@@ -341,6 +341,7 @@ public class AssetsFragment extends BaseFragment implements IAssetsView {
                 mLoadDialog.show();
             }
         });
+        mPopupChainTitleTv.setText(getString(R.string.current_chain, ServiceGenerator.getChainId()));
     }
 
     private void updatePopData() {
@@ -485,6 +486,11 @@ public class AssetsFragment extends BaseFragment implements IAssetsView {
                 }
             }
             updateAssets(list);
+            String lastUrl = CacheUtil.getInstance().getProperty(Constant.Sp.NETWORK_LAST_URL);
+            String baseUrl = CacheUtil.getInstance().getProperty(Constant.Sp.NETWORK_BASE_URL);
+            if(!baseUrl.equals(lastUrl)) {
+                CacheUtil.getInstance().setProperty(Constant.Sp.NETWORK_LAST_URL, baseUrl);
+            }
         } else {
             updateNoneData();
         }
@@ -551,8 +557,16 @@ public class AssetsFragment extends BaseFragment implements IAssetsView {
         boolean isMode = CacheUtil.getInstance().getProperty(Constant.Sp.PRIVATE_MODE, false);
         if (isMode) {
             tvAssets.setText("****");
-        } else {
-
+        }
+        String lastUrl = CacheUtil.getInstance().getProperty(Constant.Sp.NETWORK_LAST_URL);
+        String baseUrl = CacheUtil.getInstance().getProperty(Constant.Sp.NETWORK_BASE_URL);
+        if(!baseUrl.equals(lastUrl)){
+            CacheUtil.getInstance().setProperty(Constant.Sp.NETWORK_LAST_URL, baseUrl);
+            mDataList.clear();
+            mAdapter.update(mDataList);
+            if(!isMode) {
+                tvAssets.setText("0");
+            }
         }
     }
 
@@ -654,6 +668,12 @@ public class AssetsFragment extends BaseFragment implements IAssetsView {
             }
 
         }
+
+        String lastUrl = CacheUtil.getInstance().getProperty(Constant.Sp.NETWORK_LAST_URL);
+        String baseUrl = CacheUtil.getInstance().getProperty(Constant.Sp.NETWORK_BASE_URL);
+        if(!baseUrl.equals(lastUrl)) {
+            CacheUtil.getInstance().setProperty(Constant.Sp.NETWORK_LAST_URL, baseUrl);
+        }
     }
 
     @Override
@@ -662,6 +682,23 @@ public class AssetsFragment extends BaseFragment implements IAssetsView {
             refresh.finishRefresh();
         } else {
             refresh_choose_search.finishRefresh();
+        }
+
+        boolean isMode = CacheUtil.getInstance().getProperty(Constant.Sp.PRIVATE_MODE, false);
+        if (isMode) {
+            tvAssets.setText("****");
+        }
+        String lastUrl = CacheUtil.getInstance().getProperty(Constant.Sp.NETWORK_LAST_URL);
+        String baseUrl = CacheUtil.getInstance().getProperty(Constant.Sp.NETWORK_BASE_URL);
+        if(!baseUrl.equals(lastUrl)){
+            CacheUtil.getInstance().setProperty(Constant.Sp.NETWORK_LAST_URL, baseUrl);
+            mPopList.clear();
+            mDataList.clear();
+            mAdapter.update(mDataList);
+            mChooseChainAdapter.refreshView(mPopList);
+            if(!isMode) {
+                tvAssets.setText("0");
+            }
         }
     }
 
