@@ -12,22 +12,16 @@ import com.legendwd.hyperpay.aelf.base.BaseFragment;
 import com.legendwd.hyperpay.aelf.business.discover.adapter.GamesChildAdapter;
 import com.legendwd.hyperpay.aelf.business.discover.dapp.Dapp;
 import com.legendwd.hyperpay.aelf.business.discover.dapp.GameListBean;
-import com.legendwd.hyperpay.aelf.dialogfragments.ToastDialog;
 import com.legendwd.hyperpay.aelf.listeners.OnItemClickListener;
 import com.legendwd.hyperpay.aelf.model.MessageEvent;
 import com.legendwd.hyperpay.aelf.model.bean.ChooseChainsBean;
-import com.legendwd.hyperpay.aelf.model.bean.DiscoveryBean;
+import com.legendwd.hyperpay.aelf.model.bean.DappListBean;
 import com.legendwd.hyperpay.aelf.model.bean.ResultBean;
-import com.legendwd.hyperpay.aelf.model.bean.TransactionBean;
 import com.legendwd.hyperpay.aelf.presenters.impl.DiscoveryPresenter;
-import com.legendwd.hyperpay.aelf.util.DialogUtils;
 import com.legendwd.hyperpay.aelf.views.IDiscoveryView;
 import com.legendwd.hyperpay.aelf.widget.LinearSpacingItemDecoration;
 import com.legendwd.hyperpay.lib.Constant;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +40,7 @@ public class DappGamesFragment extends BaseFragment implements IDiscoveryView {
     private ArrayList<Dapp> mDataList = new ArrayList<>();
     private static int PAGE_COUNT = 10;
     public int mCurrentPage = 1;
-    public int mCat = 0;
+    public String mCat = "0";
     private static final String TYPE_PULL_UP = "TYPE_PULL_UP";
     private static final String TYPE_PULL_DOWN = "TYPE_PULL_DOWN";
 
@@ -81,26 +75,31 @@ public class DappGamesFragment extends BaseFragment implements IDiscoveryView {
      *
      * @param cat 分类1=>"游戏",2=>"交易",3=>“工具”，4=>"其他"
      */
-    public void refreshData(int cat,String refreshType) {
-        if(cat != -1){
+    public void refreshData(String cat, String refreshType) {
+        String index = "0";
+        if ("-1".equals(cat)) {
+            mCat = "0";
+            index = "1";
+        } else {
             mCat = cat;
         }
-        if(refreshType.equalsIgnoreCase(TYPE_PULL_DOWN)){
+        if (refreshType.equalsIgnoreCase(TYPE_PULL_DOWN)) {
             mCurrentPage = 1;
-        }else if(refreshType.equalsIgnoreCase(TYPE_PULL_UP)){
+        } else if (refreshType.equalsIgnoreCase(TYPE_PULL_UP)) {
             mCurrentPage++;
         }
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("p", mCurrentPage+"");
-        jsonObject.addProperty("cat", mCat+"");
-        mDiscoveryPresenter.getGameList(jsonObject,refreshType);
+        jsonObject.addProperty("p", mCurrentPage + "");
+        jsonObject.addProperty("cat", mCat);
+        jsonObject.addProperty("isindex", index);
+        mDiscoveryPresenter.getGameList(jsonObject, refreshType);
     }
 
     /**
      * 刷新数据集
      */
     public void refreshData(String refreshType) {
-        refreshData(-1,refreshType);
+        refreshData(mCat, refreshType);
     }
 
     @Override
@@ -119,9 +118,9 @@ public class DappGamesFragment extends BaseFragment implements IDiscoveryView {
         return false;
     }
 
-    private void refreshView(ArrayList<Dapp> dapps,String refreshType) {
+    private void refreshView(ArrayList<Dapp> dapps, String refreshType) {
 
-        if(dapps==null){
+        if (dapps == null) {
             return;
         }
         if (TYPE_PULL_UP.equals(refreshType)) {
@@ -143,7 +142,7 @@ public class DappGamesFragment extends BaseFragment implements IDiscoveryView {
                 @Override
                 public void onItemClick(Object o) {
                     refresh.autoRefresh();
-                    refreshData(mCat,refreshType);
+                    refreshData(mCat, refreshType);
                 }
             });
             recyclerView.setAdapter(mGamesChildAdapter);
@@ -165,12 +164,12 @@ public class DappGamesFragment extends BaseFragment implements IDiscoveryView {
 
 
     @Override
-    public void onGameListSuccess(GameListBean gameListBean,String refreshType ) {
+    public void onGameListSuccess(GameListBean gameListBean, String refreshType) {
         if (null != refresh) {
             refresh.finishRefresh();
             refresh.finishLoadMore();
         }
-        refreshView(gameListBean.dapps,refreshType);
+        refreshView(gameListBean.dapps, refreshType);
     }
 
     @Override
@@ -179,8 +178,8 @@ public class DappGamesFragment extends BaseFragment implements IDiscoveryView {
             refresh.finishRefresh();
             refresh.finishLoadMore();
         }
-        DialogUtils.showDialog(ToastDialog.class, getFragmentManager())
-                .setToast(msg);
+//        DialogUtils.showDialog(ToastDialog.class, getFragmentManager())
+//                .setToast(msg);
     }
 
     @Override
@@ -194,7 +193,6 @@ public class DappGamesFragment extends BaseFragment implements IDiscoveryView {
     }
 
 
-
     @Override
     public void onChainsSuccess(ResultBean<List<ChooseChainsBean>> resultBean) {
 
@@ -206,7 +204,7 @@ public class DappGamesFragment extends BaseFragment implements IDiscoveryView {
     }
 
     @Override
-    public void onDappSuccess(DiscoveryBean discoveryBean) {
+    public void onDappSuccess(DappListBean discoveryBean) {
 
     }
 

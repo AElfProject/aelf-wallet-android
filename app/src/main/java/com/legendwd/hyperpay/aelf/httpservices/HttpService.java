@@ -11,7 +11,7 @@ import com.legendwd.hyperpay.aelf.model.bean.ChainAddressBean;
 import com.legendwd.hyperpay.aelf.model.bean.ChainBean;
 import com.legendwd.hyperpay.aelf.model.bean.ChooseChainsBean;
 import com.legendwd.hyperpay.aelf.model.bean.CurrenciesBean;
-import com.legendwd.hyperpay.aelf.model.bean.DiscoveryBean;
+import com.legendwd.hyperpay.aelf.model.bean.DappListBean;
 import com.legendwd.hyperpay.aelf.model.bean.IdentityBean;
 import com.legendwd.hyperpay.aelf.model.bean.LangsBean;
 import com.legendwd.hyperpay.aelf.model.bean.MarketDataBean;
@@ -97,7 +97,7 @@ public interface HttpService {
 //    @POST("market/my")
 //    Observable<Response<ResultBean<MarketListBean>>> getMyCoinList(@Body JsonObject param);
     @POST("dapp/index")
-    Observable<Response<ResultBean<DiscoveryBean>>> getDapp(@Query("lang") String lang, @Body JsonObject param);
+    Observable<Response<ResultBean<DappListBean>>> getDapp(@Body JsonObject param);
 
 
     @POST("dapp/games")

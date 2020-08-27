@@ -6,7 +6,6 @@ import com.legendwd.hyperpay.aelf.business.discover.dapp.GameListBean;
 import com.legendwd.hyperpay.aelf.httpservices.HttpService;
 import com.legendwd.hyperpay.aelf.httpservices.ResponseTransformer;
 import com.legendwd.hyperpay.aelf.model.bean.ChooseChainsBean;
-import com.legendwd.hyperpay.aelf.model.bean.DiscoveryBean;
 import com.legendwd.hyperpay.aelf.model.bean.ResultBean;
 import com.legendwd.hyperpay.aelf.model.param.BaseParam;
 import com.legendwd.hyperpay.aelf.presenters.BasePresenter;
@@ -42,8 +41,7 @@ public class DiscoveryPresenter extends BasePresenter implements IDiscoveryPrese
         jsonObject.addProperty("device", "Android");
         jsonObject.addProperty("udid", CacheUtil.getInstance().getProperty(Constant.Sp.UDID));
         jsonObject.addProperty("version", BuildConfig.VERSION_NAME);
-        jsonObject.addProperty("test", "1");
-        service.getDapp("en", jsonObject)
+        service.getDapp(jsonObject)
                 .compose(ResponseTransformer.handleResult(getProvider()))
                 .subscribe(discoveryBeanResultBean -> mDiscoveryView.onDappSuccess(discoveryBeanResultBean.getData()), new Consumer<Throwable>() {
                     @Override

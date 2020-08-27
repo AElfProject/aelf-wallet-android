@@ -1,7 +1,6 @@
 package com.legendwd.hyperpay.aelf.business.discover.adapter;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -18,7 +17,7 @@ import com.google.gson.Gson;
 import com.legendwd.hyperpay.aelf.R;
 import com.legendwd.hyperpay.aelf.business.discover.cyano.Constant;
 import com.legendwd.hyperpay.aelf.business.discover.dapp.GameWebActivity;
-import com.legendwd.hyperpay.aelf.model.bean.DiscoveryBean;
+import com.legendwd.hyperpay.aelf.model.bean.DappBean;
 
 import java.util.List;
 
@@ -32,10 +31,10 @@ import me.yokeyword.fragmentation.SupportFragment;
 public class DappExchangeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private SupportFragment mFragment;
-    private List<DiscoveryBean.DappBean> mDatas;
+    private List<DappBean> mDatas;
 
 
-    public DappExchangeAdapter(SupportFragment context, List<DiscoveryBean.DappBean> dataList) {
+    public DappExchangeAdapter(SupportFragment context, List<DappBean> dataList) {
         this.mDatas = dataList;
         this.mFragment = context;
     }
@@ -54,14 +53,14 @@ public class DappExchangeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (mDatas == null || mDatas.size() <= 0) {
             return;
         }
-        DiscoveryBean.DappBean groupBean = mDatas.get(position);
+        DappBean groupBean = mDatas.get(position);
         viewHolder.title.setText(groupBean.getName());
-        if(!TextUtils.isEmpty(groupBean.getDesc())){
+        if (!TextUtils.isEmpty(groupBean.getDesc())) {
             viewHolder.tv_dec.setText(groupBean.getDesc());
-        }else{
+        } else {
             viewHolder.tv_dec.setText("");
         }
-        RoundedCorners roundedCorners= new RoundedCorners(20);
+        RoundedCorners roundedCorners = new RoundedCorners(20);
         RequestOptions options = RequestOptions.bitmapTransform(roundedCorners);
         Glide.with(mFragment).load(groupBean.getLogo()).apply(options).into(viewHolder.iv_logo);
         holder.itemView.setOnClickListener(v -> {

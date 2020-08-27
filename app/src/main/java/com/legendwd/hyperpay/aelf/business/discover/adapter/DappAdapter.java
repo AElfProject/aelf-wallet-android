@@ -6,10 +6,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,12 +18,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.github.ont.connector.utils.CommonUtil;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.legendwd.hyperpay.aelf.R;
 import com.legendwd.hyperpay.aelf.base.BaseFragment;
 import com.legendwd.hyperpay.aelf.business.discover.DappGameListFragment;
-import com.legendwd.hyperpay.aelf.model.bean.DiscoveryBean;
+import com.legendwd.hyperpay.aelf.model.bean.BannerBean;
+import com.legendwd.hyperpay.aelf.model.bean.DappBean;
+import com.legendwd.hyperpay.aelf.model.bean.DappGroupBean;
+import com.legendwd.hyperpay.aelf.model.bean.DappListBean;
 import com.legendwd.hyperpay.aelf.util.ScreenUtils;
 import com.legendwd.hyperpay.aelf.widget.GridSpacingItemDecoration;
 import com.legendwd.hyperpay.aelf.widget.webview.WebviewFragment;
@@ -48,17 +49,17 @@ public class DappAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_APPLY = 4;
     private BaseFragment mFragment;
     private LayoutInflater layoutInflater;
-    private DiscoveryBean mDiscoveryBean;
+    private DappListBean mDappListBean;
 
     private DappRecommendItemAdapter mDappRecommedItemAdapter;
     private DappExchangeAdapter mDappExchangeAdapter;
-    private List<DiscoveryBean.DappBean> mExList;
-    private List<DiscoveryBean.DappBean> mReList;
+    private List<DappGroupBean> mExList;
+    private List<DappBean> mReList;
 
-    public DappAdapter(BaseFragment fragment, DiscoveryBean discoveryBean) {
+    public DappAdapter(BaseFragment fragment, DappListBean dappListBean) {
         this.mFragment = fragment;
         layoutInflater = LayoutInflater.from(fragment.getContext());
-        mDiscoveryBean = discoveryBean;
+        mDappListBean = dappListBean;
     }
 
     @Override
@@ -72,7 +73,7 @@ public class DappAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolder = new RecommendedViewHolder(layoutInflater.inflate(R.layout.item_dicover_recommend, parent, false));
                 break;
             case TYPE_EXCHANGE:
-                viewHolder = new ExchangeViewHolder(layoutInflater.inflate(R.layout.item_dicover_exchange, parent, false));
+                viewHolder = new ExchangeViewHolder(layoutInflater.inflate(R.layout.item_dicover_group, parent, false));
                 break;
             case TYPE_APPLY:
                 viewHolder = new ApplyViewHolder(layoutInflater.inflate(R.layout.item_dicover_apply, parent, false));
@@ -88,12 +89,12 @@ public class DappAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return TYPE_BANNER;
         } else if (position == 1) {
             return TYPE_RECOMMENDED;
-        } else if(position == 2){
+        } else if (position == 2) {
             return TYPE_EXCHANGE;
-        } else if(position == 3){
-            return  TYPE_APPLY;
-        }else {
-            return  -1;
+        } else if (position == 3) {
+            return TYPE_APPLY;
+        } else {
+            return -1;
         }
     }
 
@@ -106,13 +107,13 @@ public class DappAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             bannerViewHolder.banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
 
 
-            int bannerWidth = ScreenUtils.getScreenWidth(mFragment.getContext())- CommonUtil.dp2Px(mFragment.getContext(),40);
+            int bannerWidth = ScreenUtils.getScreenWidth(mFragment.getContext()) - CommonUtil.dp2Px(mFragment.getContext(), 40);
 
-            int bannerHeight = bannerWidth *30 /100;
+            int bannerHeight = bannerWidth * 30 / 100;
 
             bannerViewHolder.banner.setLayoutParams(
                     new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,bannerHeight
+                            LinearLayout.LayoutParams.MATCH_PARENT, bannerHeight
 
                     ));
 
@@ -120,8 +121,8 @@ public class DappAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             //设置图片加载器
             bannerViewHolder.banner.setImageLoader(new GlideImageLoader());
 
-            List<String> imgList = new ArrayList<>(mDiscoveryBean.getBanner().size());
-            for (DiscoveryBean.BannerBean bannerBean : mDiscoveryBean.getBanner()) {
+            List<String> imgList = new ArrayList<>(mDappListBean.getBanner().size());
+            for (BannerBean bannerBean : mDappListBean.getBanner()) {
                 imgList.add(bannerBean.getImg());
             }
 
@@ -145,14 +146,14 @@ public class DappAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 @Override
                 public void OnBannerClick(int position) {
                     Bundle bundle = new Bundle();
-                    bundle.putString(Constant.BundleKey.KEY_WEBVIEW_TITLE, mDiscoveryBean.getBanner().get(position).getTitle());
-                    bundle.putString(Constant.BundleKey.KEY_WEBVIEW_URl, mDiscoveryBean.getBanner().get(position).getUrl());
+                    bundle.putString(Constant.BundleKey.KEY_WEBVIEW_TITLE, mDappListBean.getBanner().get(position).getTitle());
+                    bundle.putString(Constant.BundleKey.KEY_WEBVIEW_URl, mDappListBean.getBanner().get(position).getUrl());
                     mFragment.startBrotherFragment(WebviewFragment.newInstance(bundle));
                 }
             });
 
         } else if (holder instanceof RecommendedViewHolder) {
-            mReList = mDiscoveryBean.getDapp();
+            mReList = mDappListBean.getDapp();
             mDappRecommedItemAdapter = new DappRecommendItemAdapter(mFragment, mReList);
             ((RecommendedViewHolder) holder).recyclerView.addItemDecoration(new GridSpacingItemDecoration(4, ScreenUtils.dip2px(mFragment.getContext(), 25), false));
             ((RecommendedViewHolder) holder).recyclerView.setLayoutManager(new GridLayoutManager(mFragment.getContext(), 4));
@@ -160,21 +161,18 @@ public class DappAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ((RecommendedViewHolder) holder).tv_more.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mFragment.startBrotherFragment(DappGameListFragment.newInstance());
+                    Bundle bundle = new Bundle();
+                    bundle.putString(Constant.BundleKey.DAPP_GROUP_NAME, mFragment.getString(R.string.recommended));
+                    bundle.putString(Constant.BundleKey.DAPP_GROUP_CAT, "-1");
+                    mFragment.startBrotherFragment(DappGameListFragment.newInstance(bundle));
                 }
             });
         } else if (holder instanceof ExchangeViewHolder) {
-            mExList = mDiscoveryBean.getTool();
-            mDappExchangeAdapter = new DappExchangeAdapter(mFragment, mExList);
+            mExList = mDappListBean.getList();
+            DappGroupItemAdapter adapter = new DappGroupItemAdapter(mFragment, mExList);
             ExchangeViewHolder exchangeViewHolder = (ExchangeViewHolder) holder;
             exchangeViewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(mFragment.getContext()));
-            exchangeViewHolder.recyclerView.setAdapter(mDappExchangeAdapter);
-            exchangeViewHolder.tx_game_more.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mFragment.startBrotherFragment(DappGameListFragment.newInstance());
-                }
-            });
+            exchangeViewHolder.recyclerView.setAdapter(adapter);
         } else if (holder instanceof ApplyViewHolder) {
             ApplyViewHolder applyViewHolder = (ApplyViewHolder) holder;
             applyViewHolder.tx_apply.setOnClickListener(new View.OnClickListener() {
@@ -182,7 +180,9 @@ public class DappAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
                     bundle.putString(Constant.BundleKey.KEY_WEBVIEW_TITLE, mFragment.getString(R.string.dapp_apply));
-                    bundle.putString(Constant.BundleKey.KEY_WEBVIEW_URl, "http://aelfaelf1616.mikecrm.com/Z8EMGWN");
+                    String url = mDappListBean.getDappLink();
+                    bundle.putString(Constant.BundleKey.KEY_WEBVIEW_URl,
+                            TextUtils.isEmpty(url) ? "http://aelfaelf1616.mikecrm.com/Z8EMGWN" : url);
                     mFragment.startBrotherFragment(WebviewFragment.newInstance(bundle));
                 }
             });
@@ -198,7 +198,7 @@ public class DappAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         @Override
         public void displayImage(Context context, Object path, ImageView imageView) {
             //Glide 加载图片简单用法
-            RoundedCorners roundedCorners= new RoundedCorners(20);
+            RoundedCorners roundedCorners = new RoundedCorners(20);
             RequestOptions options = RequestOptions.bitmapTransform(roundedCorners);
             Glide.with(context).load(path).apply(options.placeholder(R.mipmap.img_hyper_dragon)).into(imageView);
         }
@@ -227,7 +227,6 @@ public class DappAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView tv_more;
 
 
-
         public RecommendedViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -237,8 +236,6 @@ public class DappAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     class ExchangeViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.recyclerView)
         RecyclerView recyclerView;
-        @BindView(R.id.tx_game_more)
-        TextView tx_game_more;
 
         public ExchangeViewHolder(@NonNull View itemView) {
             super(itemView);

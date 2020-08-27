@@ -20,7 +20,7 @@ import com.legendwd.hyperpay.aelf.business.discover.dapp.Dapp;
 import com.legendwd.hyperpay.aelf.business.discover.dapp.GameListBean;
 import com.legendwd.hyperpay.aelf.business.discover.dapp.SearchType;
 import com.legendwd.hyperpay.aelf.model.bean.ChooseChainsBean;
-import com.legendwd.hyperpay.aelf.model.bean.DiscoveryBean;
+import com.legendwd.hyperpay.aelf.model.bean.DappListBean;
 import com.legendwd.hyperpay.aelf.model.bean.ResultBean;
 import com.legendwd.hyperpay.aelf.presenters.impl.DiscoveryPresenter;
 import com.legendwd.hyperpay.aelf.views.IDiscoveryView;
@@ -73,7 +73,9 @@ public class DappSearchFragment extends BaseFragment implements IDiscoveryView {
         refresh.setRefreshHeader(new ClassicsHeader(getContext()));
         refresh.setEnableLoadMore(false);
         refresh.setEnableRefresh(true);
-        mDiscoveryPresenter.getGameList(new JsonObject(),"TYPE_PULL_DOWN");
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("popular", 1);
+        mDiscoveryPresenter.getGameList(jsonObject, "TYPE_PULL_DOWN");
         initClick();
         cacheSearchData();
     }
@@ -148,7 +150,7 @@ public class DappSearchFragment extends BaseFragment implements IDiscoveryView {
     }
 
     @Override
-    public void onGameListSuccess(GameListBean gameListBean,String refreshType) {
+    public void onGameListSuccess(GameListBean gameListBean, String refreshType) {
         if (gameListBean == null) return;
         CacheUtil.getInstance().setProperty(Constant.Sp.Dapp_List_Cache, new Gson().toJson(gameListBean));
         setAdapter(gameListBean);
@@ -170,7 +172,6 @@ public class DappSearchFragment extends BaseFragment implements IDiscoveryView {
     }
 
 
-
     @Override
     public void onChainsSuccess(ResultBean<List<ChooseChainsBean>> resultBean) {
 
@@ -182,7 +183,7 @@ public class DappSearchFragment extends BaseFragment implements IDiscoveryView {
     }
 
     @Override
-    public void onDappSuccess(DiscoveryBean discoveryBean) {
+    public void onDappSuccess(DappListBean discoveryBean) {
 
     }
 
@@ -202,7 +203,7 @@ public class DappSearchFragment extends BaseFragment implements IDiscoveryView {
         String json = CacheUtil.getInstance().getProperty(Constant.Sp.Dapp_List_Cache);
         GameListBean gameListBean = new Gson().fromJson(json, GameListBean.class);
         if (TextUtils.isEmpty(input)) {
-            if (gameListBean!=null){
+            if (gameListBean != null) {
                 return gameListBean.dapps;
             }
             return null;

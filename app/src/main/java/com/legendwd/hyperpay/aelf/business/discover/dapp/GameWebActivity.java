@@ -46,7 +46,8 @@ import com.legendwd.hyperpay.aelf.dialogfragments.ToastDialog;
 import com.legendwd.hyperpay.aelf.listeners.OnTextCorrectCallback;
 import com.legendwd.hyperpay.aelf.model.bean.ChainAddressBean;
 import com.legendwd.hyperpay.aelf.model.bean.ChooseChainsBean;
-import com.legendwd.hyperpay.aelf.model.bean.DiscoveryBean;
+import com.legendwd.hyperpay.aelf.model.bean.DappBean;
+import com.legendwd.hyperpay.aelf.model.bean.DappListBean;
 import com.legendwd.hyperpay.aelf.model.bean.ResultBean;
 import com.legendwd.hyperpay.aelf.model.bean.TransferBalanceBean;
 import com.legendwd.hyperpay.aelf.presenters.impl.DiscoveryPresenter;
@@ -139,7 +140,7 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             mUrl = extras.getString(Constant.KEY);
-            DiscoveryBean.DappBean dapp = new Gson().fromJson(extras.getString("bean"), DiscoveryBean.DappBean.class);
+            DappBean dapp = new Gson().fromJson(extras.getString("bean"), DappBean.class);
             mTitle = dapp.getName();
             tv_title.setText(mTitle);
         }
@@ -201,7 +202,7 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             mUrl = extras.getString(Constant.KEY);
-            DiscoveryBean.DappBean dapp = new Gson().fromJson(extras.getString("bean"), DiscoveryBean.DappBean.class);
+            DappBean dapp = new Gson().fromJson(extras.getString("bean"), DappBean.class);
             tv_title.setText(dapp.getName());
         }
 //        mWebView.loadUrl("http://54.249.197.246:9876/dapp.html");
@@ -785,7 +786,7 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
     }
 
     @Override
-    public void onDappSuccess(DiscoveryBean discoveryBean) {
+    public void onDappSuccess(DappListBean discoveryBean) {
 
     }
 

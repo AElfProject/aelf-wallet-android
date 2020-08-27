@@ -2,13 +2,13 @@ package com.legendwd.hyperpay.aelf.views;
 
 import com.legendwd.hyperpay.aelf.business.discover.dapp.GameListBean;
 import com.legendwd.hyperpay.aelf.model.bean.ChooseChainsBean;
-import com.legendwd.hyperpay.aelf.model.bean.DiscoveryBean;
+import com.legendwd.hyperpay.aelf.model.bean.DappListBean;
 import com.legendwd.hyperpay.aelf.model.bean.ResultBean;
 
 import java.util.List;
 
 public interface IDiscoveryView {
-    void onDappSuccess(DiscoveryBean discoveryBean);
+    void onDappSuccess(DappListBean discoveryBean);
 
     void onDappError(int code, String msg);
 

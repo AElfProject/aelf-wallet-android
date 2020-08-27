@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.legendwd.hyperpay.aelf.R;
 import com.legendwd.hyperpay.aelf.base.BaseFragment;
 import com.legendwd.hyperpay.aelf.business.wallet.adapters.TransferReceivePagerAdapter;
+import com.legendwd.hyperpay.lib.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +37,7 @@ public class DappGameListFragment extends BaseFragment {
     private String[] mTabTitles;
 
 
-    public static DappGameListFragment newInstance() {
-        Bundle bundle = new Bundle();
+    public static DappGameListFragment newInstance(Bundle bundle) {
         DappGameListFragment chooseChainFragment = new DappGameListFragment();
         chooseChainFragment.setArguments(bundle);
         return chooseChainFragment;
@@ -50,32 +50,27 @@ public class DappGameListFragment extends BaseFragment {
 
     @Override
     public void process() {
-        mTabTitles = new String[]{getString(R.string.all), getResources().getString(R.string.ganme), getResources().getString(R.string.other)};
-        tb_dapp_layout.addTab(tb_dapp_layout.newTab());
+        String title = getArguments().getString(Constant.BundleKey.DAPP_GROUP_NAME);
+        String dappCat = getArguments().getString(Constant.BundleKey.DAPP_GROUP_CAT);
+        mTabTitles = new String[]{getString(R.string.all), title};
         tb_dapp_layout.addTab(tb_dapp_layout.newTab());
         tb_dapp_layout.addTab(tb_dapp_layout.newTab());
         List<Fragment> list = new ArrayList<>();
         list.add(DappGamesFragment.newInstance());
         list.add(DappGamesFragment.newInstance());
-        list.add(DappGamesFragment.newInstance());
         TransferReceivePagerAdapter transferReceivePagerAdapter = new TransferReceivePagerAdapter(getChildFragmentManager(), list, mTabTitles);
         view_dapp_pager.setAdapter(transferReceivePagerAdapter);
         tb_dapp_layout.setupWithViewPager(view_dapp_pager);
-        view_dapp_pager.setOffscreenPageLimit(2);
         tb_dapp_layout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 DappGamesFragment dappGamesFragment = (DappGamesFragment) list.get(tab.getPosition());
                 if (dappGamesFragment != null) {
-                    int cat = 0;
-                    if(tab.getPosition()==0){
-                        cat = 0;
-                    }else if(tab.getPosition()==1){
-                        cat = 1;
-                    }else if(tab.getPosition()==2){
-                        cat = 4;
+                    String cat = dappCat;
+                    if (tab.getPosition() == 0) {
+                        cat = "0";
                     }
-                    dappGamesFragment.refreshData(cat,"TYPE_PULL_DOWN");
+                    dappGamesFragment.refreshData(cat, "TYPE_PULL_DOWN");
                 }
             }
 

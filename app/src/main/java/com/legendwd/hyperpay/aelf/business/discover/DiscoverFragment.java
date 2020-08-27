@@ -14,7 +14,7 @@ import com.legendwd.hyperpay.aelf.base.BaseFragment;
 import com.legendwd.hyperpay.aelf.business.discover.adapter.DappAdapter;
 import com.legendwd.hyperpay.aelf.business.discover.dapp.GameListBean;
 import com.legendwd.hyperpay.aelf.model.bean.ChooseChainsBean;
-import com.legendwd.hyperpay.aelf.model.bean.DiscoveryBean;
+import com.legendwd.hyperpay.aelf.model.bean.DappListBean;
 import com.legendwd.hyperpay.aelf.model.bean.ResultBean;
 import com.legendwd.hyperpay.aelf.presenters.impl.DiscoveryPresenter;
 import com.legendwd.hyperpay.aelf.views.IDiscoveryView;
@@ -35,7 +35,7 @@ public class DiscoverFragment extends BaseFragment implements IDiscoveryView {
     TextView et_search;
     private DiscoveryPresenter mDiscoveryPresenter;
     private DappAdapter mAdapter;
-    private DiscoveryBean mDiscoveryBean;
+    private DappListBean mDappListBean;
 
     public static DiscoverFragment newInstance() {
         Bundle args = new Bundle();
@@ -85,7 +85,7 @@ public class DiscoverFragment extends BaseFragment implements IDiscoveryView {
 //        }
     }
 
-//    @OnClick(R.id.iv_scan)
+    //    @OnClick(R.id.iv_scan)
 //    void onClickScan() {
 //        Intent intent = new Intent(_mActivity, CaptureActivity.class);
 //        intent.putExtra(Constant.IntentKey.Scan_Zxing, Constant.IntentValue.SCAN_DISCOVERY);
@@ -95,23 +95,25 @@ public class DiscoverFragment extends BaseFragment implements IDiscoveryView {
     protected boolean enableSwipeBack() {
         return false;
     }
+
     @Override
-    public void onDappSuccess(DiscoveryBean discoveryBean) {
+    public void onDappSuccess(DappListBean dappListBean) {
         refresh.finishRefresh();
-        if (discoveryBean != null) {
-            mDiscoveryBean = discoveryBean;
+        if (dappListBean != null) {
+            mDappListBean = dappListBean;
             recyclerView.setLayoutManager(new LinearLayoutManager(_mActivity));
-            mAdapter = new DappAdapter(this, mDiscoveryBean);
+            mAdapter = new DappAdapter(this, mDappListBean);
             recyclerView.setAdapter(mAdapter);
         }
     }
+
     @Override
     public void onDappError(int code, String msg) {
         refresh.finishRefresh();
     }
 
     @Override
-    public void onGameListSuccess(GameListBean gameListBean,String refreshType ) {
+    public void onGameListSuccess(GameListBean gameListBean, String refreshType) {
 
     }
 

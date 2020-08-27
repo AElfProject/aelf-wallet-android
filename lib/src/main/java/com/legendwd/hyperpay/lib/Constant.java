@@ -110,6 +110,8 @@ public class Constant {
         String CHAIN_ID = "chain_id";
 
         String TransData = "trans_data";
+        String DAPP_GROUP_NAME = "dapp_group_name";
+        String DAPP_GROUP_CAT = "dapp_group_cat";
     }
 
     public interface BundleValue {

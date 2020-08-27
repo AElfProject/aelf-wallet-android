@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 import com.legendwd.hyperpay.aelf.R;
 import com.legendwd.hyperpay.aelf.business.discover.cyano.Constant;
 import com.legendwd.hyperpay.aelf.business.discover.dapp.GameWebActivity;
-import com.legendwd.hyperpay.aelf.model.bean.DiscoveryBean;
+import com.legendwd.hyperpay.aelf.model.bean.DappBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +32,9 @@ public class DappRecommendItemAdapter extends RecyclerView.Adapter<RecyclerView.
 
 
     private SupportFragment mFragment;
-    private List<DiscoveryBean.DappBean> dataList = new ArrayList<>();
+    private List<DappBean> dataList = new ArrayList<>();
 
-    public DappRecommendItemAdapter(SupportFragment context, List<DiscoveryBean.DappBean> dataList) {
+    public DappRecommendItemAdapter(SupportFragment context, List<DappBean> dataList) {
         this.dataList = dataList;
         this.mFragment = context;
     }
@@ -50,11 +50,11 @@ public class DappRecommendItemAdapter extends RecyclerView.Adapter<RecyclerView.
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
 
-        DiscoveryBean.DappBean dapp = dataList.get(position);
+        DappBean dapp = dataList.get(position);
 
         if (null != dapp) {
             viewHolder.tv_name.setText(dapp.getName());
-            RoundedCorners roundedCorners= new RoundedCorners(20);
+            RoundedCorners roundedCorners = new RoundedCorners(20);
             RequestOptions options = RequestOptions.bitmapTransform(roundedCorners);
             Glide.with(mFragment).load(dapp.getLogo()).apply(options).into(viewHolder.iv_logo);
             holder.itemView.setOnClickListener(v -> {
