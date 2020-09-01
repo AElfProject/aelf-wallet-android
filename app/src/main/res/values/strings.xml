@@ -146,7 +146,7 @@
     <string name="customised">Customised</string>
     <string name="transfer_amount">Transfer Amount</string>
     <string name="receiver_chain_id">Receiver Chain ID</string>
-    <string name="receiver_address">Receiver's Address - Wallet Address</string>
+    <string name="receiver_address">Receiver\'s Address - Wallet Address</string>
     <string name="notes_optional">Notes (Optional)</string>
 
 
@@ -238,7 +238,7 @@
     <string name="pwd_not_correct">Incorrect Password</string>
     <string name="pwd_correct">Correct Password</string>
     <string name="please_back_up_your_wallet">Please backup your wallet!</string>
-    <string name="backup_note">You haven't backed up your mnemonic phrase. Please backup now! The mnemonic phrase is used for recovering your assets in case you forget your password, accidentally delete the wallet or lose your phone.</string>
+    <string name="backup_note">You haven&quot;t backed up your mnemonic phrase. Please backup now! The mnemonic phrase is used for recovering your assets in case you forget your password, accidentally delete the wallet or lose your phone.</string>
     <string name="security_warning">Security Warning</string>
     <string name="confirm_delete">Confirm to delete?</string>
     <string name="confirm_ok">Confirm</string>
@@ -280,7 +280,7 @@
     <string name="how_wallet">1.How to create/import wallet?</string>
     <string name="how_wallet_detail">1. If you don’t have a wallet yet, follow the steps below to create one.\n
         Step 1: Tab “Create Wallet” and follow the instructions\n
-        Step 2: After creating your wallet successfully, you'll get your mnemonic phrase, which is a human readable format of private keys without encryption. Anyone who has it can access your wallet. To keep your wallet secure, we advise you to write the mnemonic phrase down on paper or store it on U-disk or hard disk.\n
+        Step 2: After creating your wallet successfully, you\'ll get your mnemonic phrase, which is a human readable format of private keys without encryption. Anyone who has it can access your wallet. To keep your wallet secure, we advise you to write the mnemonic phrase down on paper or store it on U-disk or hard disk.\n
         2. If you already have a wallet, follow the steps below to import wallet.\n
         Step 1: Tab “Import Wallet”\n
         Step 2: Enter your mnemonic phrase or scan QR code to import your wallet.\n
@@ -291,13 +291,9 @@
     <string name="forget_password">3.What if I forget my password?</string>
     <string name="forget_password_detail">If you forget your transaction password, you can import your wallet again via mnemonic phrase and set a new password.</string>
     <string name="how_use_wallet">4.How to use wallet to transfer/receive tokens?</string>
-    <string name="how_use_wallet_detail">You can choose a token in your asset list and click “Transfer” or “Receive”.\nTransfer: you can enter the receiver’s address by scanning the QR code on your phone or entering the address manually.\nReceive: you can receive tokens by scanning the QR code face to face, or share your QR code or receiver's address to the sender.</string>
+    <string name="how_use_wallet_detail">You can choose a token in your asset list and click “Transfer” or “Receive”.\nTransfer: you can enter the receiver’s address by scanning the QR code on your phone or entering the address manually.\nReceive: you can receive tokens by scanning the QR code face to face, or share your QR code or receiver&quot;s address to the sender.</string>
     <string name="how_backup_mnemonic">6.How to backup Mnemonic phrase, Keystore, Private Key and QR Code?</string>
-    <string name="how_backup_mnemonic_detail">Mnemonic phrase is a human readable format of private keys without encryption. Anyone who has it can access your wallet. Please note that:\n
-        a) After you've created your wallet, backup your mnemonic phrase immediately. We recommend you to write down the mnemonic phrase on paper and keep it safe. Please do NOT take screenshots!\n
-        b) Make sure you backed up correctly and keep your mnemonic phrase safe. Do NOT send your mnemonic phrase to anyone!\n
-        As a decentralized wallet, aelf Wallet does not store users’ wallet mnemonic phrase. It is only stored on users' original devices through encryption. Follow the steps below to backup your mnemonic phrase.\n
-        “My Account”——Profile photo——Select "Export Mnemonic Phrase/Keystore/Private Key/QR Code"——Enter transaction password——Backup (please keep it safe)</string>
+    <string name="how_backup_mnemonic_detail">Mnemonic phrase is a human readable format of private keys without encryption. Anyone who has it can access your wallet. Please note that:\na) After you&quot;ve created your wallet, backup your mnemonic phrase immediately. We recommend you to write down the mnemonic phrase on paper and keep it safe. Please do NOT take screenshots!\nb) Make sure you backed up correctly and keep your mnemonic phrase safe. Do NOT send your mnemonic phrase to anyone!\nAs a decentralized wallet, aelf Wallet does not store users’ wallet mnemonic phrase. It is only stored on users&quot; original devices through encryption. Follow the steps below to backup your mnemonic phrase.\n“My Account”——Profile photo——Select “Export Mnemonic Phrase/Keystore/Private Key/QR Code”——Enter transaction password——Backup (please keep it safe)</string>
     <string name="submit_feedback">Submit Feedback</string>
     <string name="hint_title">Subject</string>
     <string name="email_address">Email Address</string>
@@ -436,7 +432,7 @@
 
     <string name="transferfragment_tip01">How to operate cross-chain transfers?</string>
     <string name="transferfragment_tip03">5.How to operate cross-chain transfers?</string>
-    <string name="transferfragment_tip02">For cross-chain transfers, you need to change the suffix to the receiver's address to the specified chain ID.\n
+    <string name="transferfragment_tip02">For cross-chain transfers, you need to change the suffix to the receiver\'s address to the specified chain ID.\n
         For example:\n
         If the address is ELF_addressA_AELF, and you need to transfer the token to the account of tDVV chain, then you have to change the address to ELF_addressA_tDVV and follow the instructions to complete the transfer.</string>
 
