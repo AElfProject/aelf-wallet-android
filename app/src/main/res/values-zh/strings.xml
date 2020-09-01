@@ -9,7 +9,7 @@
     <string name="createimport_create_wallet">创建身份</string>
     <string name="createimport_import_wallet">恢复身份</string>
     <string name="createimport_import_wallet_advanced">恢复身份（高级）</string>
-    <string name="createimport_how_to_use">如何使用AElf 钱包 ？</string>
+    <string name="createimport_how_to_use">如何使用 aelf 钱包 ？</string>
 
 
     <string name="lang_simplified_chinese_show">简体中文</string>
@@ -48,16 +48,16 @@
     <string name="correct_keystore">请输入正确的 Keystore</string>
 
 
-    <string name="importing_aelf_wallet">导入AELF钱包</string>
-    <string name="create_aelf_wallet">创建AElf钱包</string>
+    <string name="importing_aelf_wallet">导入 aelf 钱包</string>
+    <string name="create_aelf_wallet">创建 aelf 钱包</string>
 
     <string name="notification_tip">备份助记词可用于恢复钱包资产，防止由于忘记密码、应用删除、手机丢失等情况导致资产损失。
-      \n\n我们强烈建议您在四周无人，且没有摄像头的安全环境下把助记词抄写在纸上，并妥善保管至隔离网络的安全地方，禁止将助记词在联网环境下分享和存储。</string>
+        \n\n我们强烈建议您在四周无人，且没有摄像头的安全环境下把助记词抄写在纸上，并妥善保管至隔离网络的安全地方，禁止将助记词在联网环境下分享和存储。</string>
 
     <string name="notification_start_backup">开始备份</string>
 
     <string name="mnemonic_tip">助记词用于导入钱包或重置钱包密码，如果有人获取了您的助记词将直接获取您的资产！请用纸笔抄写下助记词并存放在安全的地方。
-      \n\n请您仔细按顺序抄写下方12个助记词，我们将在下一步验证。</string>
+        \n\n请您仔细按顺序抄写下方12个助记词，我们将在下一步验证。</string>
 
 
     <string name="for_tutorial_purpose">在钱包使用指南中，A链仅显示ELF一种资产。</string>
@@ -73,9 +73,9 @@
 
     <string name="create_remember_your_password">请牢记您的密码。</string>
     <string name="please_back_up">请及时备份钱包！</string>
-    <string name="create_remember_info">密码用于加密保护您的私钥与交易，因此密码的安全强度十分重要。AElf钱包将不会保存您的钱包密码也无法帮您找回。请务必牢记您的密码。</string>
+    <string name="create_remember_info">密码用于加密保护您的私钥与交易，因此密码的安全强度十分重要。aelf 钱包将不会保存您的钱包密码也无法帮您找回。请务必牢记您的密码。</string>
     <string name="backup_tip">备份助记词可用于恢复钱包资产，防止由于忘记密码、应用删除、手机丢失等情况导致资产损失。
-      我们强烈建议您在四周无人，且没有摄像头的安全环境下把助记词抄写在纸上，并妥善保管至隔离网络的安全地方，禁止将助记词在联网环境下分享和存储。</string>
+        我们强烈建议您在四周无人，且没有摄像头的安全环境下把助记词抄写在纸上，并妥善保管至隔离网络的安全地方，禁止将助记词在联网环境下分享和存储。</string>
 
 
     <string name="password_hint">密码提示</string>
@@ -119,7 +119,7 @@
     <string name="popular_assets">资产（链名称 - Token名称）</string>
     <string name="hint_enter_token_name">输入币种名称</string>
 
-    <string name="welcome_to">欢迎使用AElf钱包！</string>
+    <string name="welcome_to">欢迎使用 aelf 钱包！</string>
     <string name="welcome_learn_tutorial">查看</string>
     <string name="welcome_skip_tutorial">跳过</string>
     <string name="total_assets_new">当前身份下总资产</string>
@@ -143,7 +143,7 @@
     <string name="mnemonic_not_correct">助记词不正确</string>
     <string name="e_password">请输入密码</string>
     <string name="password_not_match">密码不匹配</string>
-    <string name="aelf_wallet">AELF 钱包</string>
+    <string name="aelf_wallet">aelf 钱包</string>
     <string name="customised">自定义</string>
     <string name="transfer_amount">转账数量</string>
     <string name="receiver_chain_id">Receiver Chain ID</string>
@@ -171,9 +171,9 @@
     <string name="keystore">Keystore</string>
     <string name="keystore_backup">备份Keystore</string>
     <string name="off_line_keeping">离线保存</string>
-    <string name="off_line_keeping_notes">请将keystore安全离线保存。请勿将您的keystore通过邮件、相册和社交软件等公共网络告诉任何人或进行保存。</string>
-    <string name="keystore_backup_notes">请您务必妥善保管Keystore。若您的手机遗失、被盗或损坏，keystore可用于找回您的资产。</string>
-    <string name="keystore_notes">获得keystore意味着获得您所有的钱包资产。</string>
+    <string name="off_line_keeping_notes">请将Keystore安全离线保存。请勿将您的Keystore通过邮件、相册和社交软件等公共网络告诉任何人或进行保存。</string>
+    <string name="keystore_backup_notes">请您务必妥善保管Keystore。若您的手机遗失、被盗或损坏，Keystore可用于找回您的资产。</string>
+    <string name="keystore_notes">获得Keystore意味着获得您所有的钱包资产。</string>
     <string name="export_qr_code">导出二维码</string>
     <string name="sort_by">排序</string>
     <string name="camera">相机</string>
@@ -260,7 +260,7 @@
     <string name="security_reminder">安全提示</string>
     <string name="security_reminder_message">请检查您移动设备生物识别功能的安全等级。在大额转账中，请手动输入您的密码。\n\n请勿在共享的移动设备中开启生物识别功能。</string>
     <string name="disclaimer">免责声明</string>
-    <string name="disclaimer_message">不同移动设备的生物识别功能的安全等级均不同，我们建议您在使用时提高警惕.对于因生物识别功能而造成的威胁或损失，AElf钱包概不负责。</string>
+    <string name="disclaimer_message">不同移动设备的生物识别功能的安全等级均不同，我们建议您在使用时提高警惕.对于因生物识别功能而造成的威胁或损失，aelf 钱包概不负责。</string>
     <string name="touch_id">指纹识别</string>
     <string name="touch_success">识别成功</string>
     <string name="touch_fail">识别失败</string>
@@ -274,7 +274,7 @@
     <string name="please_setting_lock_pwd">请先设置锁屏密码</string>
     <string name="atleast_one_finger">请先在手机中设置一个指纹</string>
     <string name="pwd_not_match">密码不匹配</string>
-    <string name="off_line_keeping_keystore">请将keystore安全离线保存。请勿将您的keystore通过邮件、相册和社交软件等公共网络告诉任何人或进行保存。</string>
+    <string name="off_line_keeping_keystore">请将Keystore安全离线保存。请勿将您的keystore通过邮件、相册和社交软件等公共网络告诉任何人或进行保存。</string>
     <string name="load_fail">load fail</string>
     <string name="pwd_rules">请输入12-36位密码，且同时包含大小写字母、字符和数字</string>
     <string name="pwd_rule">密码不符合规则</string>
@@ -307,32 +307,32 @@
 
     <string name="how_wallet">1、如何创建/导入钱包？</string>
     <string name="how_wallet_detail">情况1：没有钱包\n
-第一步：创建钱包\n
-点击“创建身份”，创建钱包。\n
-第二步：创建成功验证助记词\n
-设置密码后系统会生成钱包和助记词，助记词的英文是未经任何加密措施保护的私钥，一旦有人得到了你的助记词，那就等同于掌握了你的钱包，为安全起见，请抄写在纸上或储存在U盘硬盘进行物理隔离。
-\n\n情况2：已有钱包\n
-第一步：点击“导入身份”进入导入钱包页面。\n
-第二步：填写助记词或扫面二维码进行导入\n
-输入已有的助记词或扫描二维码进行导入，扫描二维码后还要输入密码才能导入成功。导入的同时还能修改密码。导入成功，进入钱包首页。</string>
+        第一步：创建钱包\n
+        点击“创建身份”，创建钱包。\n
+        第二步：创建成功验证助记词\n
+        设置密码后系统会生成钱包和助记词，助记词的英文是未经任何加密措施保护的私钥，一旦有人得到了你的助记词，那就等同于掌握了你的钱包，为安全起见，请抄写在纸上或储存在U盘硬盘进行物理隔离。
+        \n\n情况2：已有钱包\n
+        第一步：点击“导入身份”进入导入钱包页面。\n
+        第二步：填写助记词或扫面二维码进行导入\n
+        输入已有的助记词或扫描二维码进行导入，扫描二维码后还要输入密码才能导入成功。导入的同时还能修改密码。导入成功，进入钱包首页。</string>
     <string name="search_tokens">2、如何添加和搜索代币？</string>
     <string name="search_tokens_detail">当在资产列表中想看到更多的币种，通过点击资产页面的“+”来选择更多的币种，默认会显示一部分主流币种，如需要更多，可进行搜索后添加。</string>
     <string name="forget_password">3、忘记交易密码怎么办？</string>
     <string name="forget_password_detail">如果忘记交易密码，可以选择恢复身份，导入自己备份的助记词，重新设置交易密码。</string>
     <string name="how_use_wallet">4、如何使用钱包转账/收款？</string>
     <string name="how_use_wallet_detail">可在钱包首页中选择某一种数字代币，进入详情页面后，点击“转账”、“收款”功能进行操作；\n
-转账：用户可通过扫码（可从相册中选取二维码）或手动填写的方式填入收款地址。\n
-收款：可通过面对面出示二维码来进行收款，也可将二维码分享给对方或将收款地址复制给对方进行收款。</string>
+        转账：用户可通过扫码（可从相册中选取二维码）或手动填写的方式填入收款地址。\n
+        收款：可通过面对面出示二维码来进行收款，也可将二维码分享给对方或将收款地址复制给对方进行收款。</string>
     <string name="how_backup_mnemonic">6、如何备份助记词、Keystore、私钥、二维码？</string>
     <string name="how_backup_mnemonic_detail">助记词是未经任何加密措施保护的私钥，一旦有人得到了你的助记词，那就等同于掌控了你的钱包，在使用助记词时候需要注意以下几点：\n
-途径一：\n
-（1）创建钱包之后，一定要及时备份助记词。\n
-备份助记词时，要尽量采用物理介质备份，比如手抄在一张纸上，然后收藏好这张纸。尽可能不要使用截屏！\n
-（2）要确保备份的助记词准确，多次校对助记词是否正确。\n
-一定要妥善保管好你所备份的助记词，一是不要被盗，二是要做好防丟措施。切记千万不要把助记词发给任何人！\n\n
-途径二：\n
-AELF Wallet为去中心化钱包，不存储用户的钱包助记词，导入的助记词通过加密只存储在用户自己原先登录的设备上，根据以下的操作可以进行再次备份。\n
-“我的”界面—身份管理—选择导出助记词/Keystore/私钥/二维码—输入交易密码—备份（妥善保管好）。</string>
+        途径一：\n
+        （1）创建钱包之后，一定要及时备份助记词。\n
+        备份助记词时，要尽量采用物理介质备份，比如手抄在一张纸上，然后收藏好这张纸。尽可能不要使用截屏！\n
+        （2）要确保备份的助记词准确，多次校对助记词是否正确。\n
+        一定要妥善保管好你所备份的助记词，一是不要被盗，二是要做好防丟措施。切记千万不要把助记词发给任何人！\n\n
+        途径二：\n
+        aelf Wallet 为去中心化钱包，不存储用户的钱包助记词，导入的助记词通过加密只存储在用户自己原先登录的设备上，根据以下的操作可以进行再次备份。\n
+        “我的”界面—身份管理—选择导出助记词/Keystore/私钥/二维码—输入交易密码—备份（妥善保管好）。</string>
     <string name="empty_data">没有数据</string>
     <string name="retry">再试一次</string>
     <string name="add_assets">添加资产</string>
@@ -350,7 +350,7 @@ AELF Wallet为去中心化钱包，不存储用户的钱包助记词，导入的
     <string name="packing">打包中...</string>
     <string name="transfer_fail">转账失败</string>
     <string name="next_click_logout">再点一次退出</string>
-    <string name="not_elf_address">无效的 AELF 地址</string>
+    <string name="not_elf_address">无效的 aelf 地址</string>
 
     <string name="save_success">保存成功</string>
     <string name="permisson_denied">拒绝访问</string>
@@ -359,7 +359,7 @@ AELF Wallet为去中心化钱包，不存储用户的钱包助记词，导入的
     <string name="preocessing">处理中...</string>
     <string name="same_addr_from_to">收付款地址不能相同</string>
     <string name="pwd_len_least_12">请设置12-36位登录密码</string>
-    <string name="aelf_community">AElf社区</string>
+    <string name="aelf_community">aelf 社区</string>
     <string name="backup_desc">备份说明</string>
     <string name="qr_code">二维码</string>
     <string name="create_fail">创建失败</string>
@@ -391,7 +391,7 @@ AELF Wallet为去中心化钱包，不存储用户的钱包助记词，导入的
 
 
     <string name="unable_to_find_dapp">暂无法找到DApp</string>
-    <string name="go_to_dapp">打开DApp :</string>
+    <string name="go_to_dapp">打开DApp：</string>
     <string name="dapp_hot_search">热门搜索</string>
 
     <string name="cross_chain_dialog">检测到跨链交易，请选择接收链：</string>
@@ -433,7 +433,7 @@ AELF Wallet为去中心化钱包，不存储用户的钱包助记词，导入的
     <string name="transgamedialog_text06">加入白名单</string>
     <string name="transgamedialog_text07">在钱包应用关闭前，DApp可自动完成白名单操作，无需再进行弹窗确认。</string>
     <string name="transfer_chain_tip">不支持链 ID：%1$s</string>
-    <string name="transfer_chain_tip1">链%1$s到链%2$s转账%3$s改造中，请期待AELF发布新版升级</string>
+    <string name="transfer_chain_tip1">链%1$s到链%2$s转账%3$s改造中，请期待 aelf 发布新版升级</string>
 
     <string name="transferfragment_tip01">如何进行跨链转账？</string>
     <string name="transferfragment_tip03">5、如何进行跨链转账？</string>
@@ -456,10 +456,10 @@ AELF Wallet为去中心化钱包，不存储用户的钱包助记词，导入的
     <string name="touch_id_note">请验证已有指纹</string>
     <string name="input_password">输入密码</string>
     <string name="touch_id_cancle">确定要关闭生物识别吗？关闭后，每次支付都需要输入密码</string>
-    <string name="empty_keystore">二维码中不包含keystore文件</string>
+    <string name="empty_keystore">二维码中不包含Keystore文件</string>
     <string name="touch_id_allow">是否允许使用生物识别</string>
     <string name="dapp_search">搜索</string>
-    <string name="touch_id_title_1">您要允许\“AELF Wallet\”使用生物识别吗？使用生物识别可应用于解锁应用和验证支付</string>
+    <string name="touch_id_title_1">您要允许\“aelf Wallet\”使用生物识别吗？使用生物识别可应用于解锁应用和验证支付</string>
     <string name="please_verify_fingerprint">请验证指纹</string>
     <string name="enter_wallet_password">输入钱包密码</string>
 

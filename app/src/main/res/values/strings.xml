@@ -12,14 +12,14 @@
     <string name="createimport_import_wallet">Import Wallet</string>
     <string name="createimport_import_wallet_advanced">Import Wallet(Advanced)</string>
     <string name="copy_address">Copy Address</string>
-    <string name="createimport_how_to_use">How to use AELF Wallet?</string>
+    <string name="createimport_how_to_use">How to use aelf Wallet?</string>
     <string name="my_account">Identity Management</string>
     <string name="identity_management">Identity Management</string>
     <string name="address_book">Address Book</string>
     <string name="notifications">Notifications</string>
     <string name="settings">Settings</string>
     <string name="help">Help &#38; Feedback</string>
-    <string name="terms_of_service">Terms of service</string>
+    <string name="terms_of_service">Terms of Service</string>
     <string name="about_us">About Us</string>
     <string name="balance">Balance</string>
 
@@ -28,8 +28,8 @@
     <string name="tab_discovery">Discover</string>
     <string name="tab_profile">My</string>
     <string name="create_account">Create Account</string>
-    <string name="create_account_hint_username">enter your  wallet name</string>
-    <string name="hint_password">Please set a password with 12&#8211;36 characters.</string>
+    <string name="create_account_hint_username">Please enter wallet name</string>
+    <string name="hint_password">Please enter a password between 12-36 characters, containing upper and lower case letters, characters and numbers.</string>
     <string name="hint_password_confirm">Please confirm your password</string>
     <string name="hint_password_hints">Password hints (Optional)</string>
     <string name="import_wallet_hint_seperate_each_mnemonic">Input mnemonic</string>
@@ -39,26 +39,23 @@
     <string name="import_keystore_tip">Keystore is file format for private keys[JSON].\n\n
         Copy and paste the Keystore content to input field,
         or scan the QR Code generated with Keystore’s information to import. </string>
-    <string name="import_scan_keystore_tip">Keystore is file format for private keys[JSON].
-        Click to scan Keystore QR code to import wallet</string>
-    <string name="import_wallet_hint_seperate_each_keystore">Input keystore</string>
-    <string name="input_keystore_password">input keystore’s password</string>
+    <string name="import_scan_keystore_tip">Keystore is the file format for private keys (JSON). Scan the Keystore QR code to import wallet</string>
+    <string name="import_wallet_hint_seperate_each_keystore">Input Keystore</string>
+    <string name="input_keystore_password">Enter Keystore password</string>
     <string name="incorrect_keystore_format">Incorrect Keystore format</string>
     <string name="correct_keystore">Please enter the correct Keystore</string>
 
-    <string name="importing_aelf_wallet">Importing AELF Wallet</string>
-    <string name="create_aelf_wallet">creating AELF Wallet</string>
+    <string name="importing_aelf_wallet">Importing aelf Wallet</string>
+    <string name="create_aelf_wallet">creating aelf Wallet</string>
 
-    <string name="notification_tip">Mnemonic words can be used to recover your assets when you forget password, delete the app
-    or lose your phone.
+    <string name="notification_tip">Mnemonic phrase can be used to recover your assets when you forget password, delete the app
+        or lose your phone.
 
-    \n\nWe highly recommend you write the Mnemonic words (Backup Phrase) on paper and keep it in a safe place, anyone get can access or spend
-    your assets. Please don’t save them on any cloud drive or share via the internet.</string>
+        \n\nWe highly recommend that you write down the mnemonic phrase (Backup Phrase) on paper and keep it in a safe place, because anyone who gets it can access your assets.</string>
     <string name="notification_start_backup">Start Backup</string>
-    <string name="mnemonic_tip">Mnemonic words can be used to import wallet or reset wallet password. If someone gets your
-mnemonic words, he gets all your assets directly! Please write in the Mnemonic words on paper and keep it in a safe place.\n\n
+    <string name="mnemonic_tip">Mnemonic phrase can be used to import wallet or reset wallet password. Anyone who has your mnemonic phrase can access all your assets directly, so please write it down on paper and keep it in a safe place.\n\n
 
-Please write down the 12 Mnemonic words in order carefully, we will verify this in the next step.</string>
+        Please write down your 12-word mnemonic phrase in the right order, we will verify it in the next step.</string>
 
 
     <string name="for_tutorial_purpose">For tutorial purpose, you can only see ELF assets in A Chain</string>
@@ -68,20 +65,17 @@ Please write down the 12 Mnemonic words in order carefully, we will verify this 
     <string name="mnemonic_screenshot">Don’t Screenshot</string>
     <string name="mnemonic_title">Mnemonic Phrase Backup</string>
     <string name="mnemonic_confirm_title">Confirm Mnemonic Phrase</string>
-    <string name="mnemonic_confirm_tip">Please choose Mnemonic Phrase in correct
-    order to confirm your mnemonic phrase backup in the previous step is correct.</string>
+    <string name="mnemonic_confirm_tip">Please choose your mnemonic phrase in correct order to confirm your backup.</string>
     <string name="dialog_screenshot_tip">We highly recommend you write the
-    Mnemonic words (Backup Phrase) on paper and keep it in a safe place, anyone get it can access or spend your assets.</string>
+        Mnemonic phrase (Backup Phrase) on paper and keep it in a safe place, anyone get it can access or spend your assets.</string>
 
 
     <string name="create_remember_your_password">Please remember your password</string>
-    <string name="please_back_up">Please back up your wallet!</string>
-    <string name="create_remember_info">Password is used to encrypt and protect your
-    private keys and transactions so the strength of the password is very important. AELF Wallet will not save your wallet password and get it back. So please
-    remember your password.</string>
-    <string name="backup_tip">Mnemonic words can be used to recover your assets when you forget password, delete the app
-or lose your phone.\n\nWe highly recommend you write the Mnemonic words (Backup Phrase) on paper and keep it in a safe place, anyone get can access or spend
-your assets. Please don’t save them on any cloud drive or share via the internet.</string>
+    <string name="please_back_up">Please backup your wallet!</string>
+    <string name="create_remember_info"> Your password is used to encrypt and protect your private key and transactions, so the strength of the password is very important. aelf Wallet does not keep your password and cannot help you retrieve it. Please remember your password and keep it safe.</string>
+    <string name="backup_tip">Mnemonic phrase can be used to recover your assets when you forget password, delete the app
+        or lose your phone.\n\nWe highly recommend you write the Mnemonic phrase (Backup Phrase) on paper and keep it in a safe place, anyone get can access or spend
+        your assets. Please don’t save them on any cloud drive or share via the internet.</string>
 
     <string name="password_hint">Password Hint</string>
     <string name="export_mnemonic_phrase">Export Mnemonic Phrase</string>
@@ -89,11 +83,11 @@ your assets. Please don’t save them on any cloud drive or share via the intern
     <string name="export_private_key">Export Private Key</string>
     <string name="logout">Logout</string>
     <string name="private_mode">Private Mode</string>
-    <string name="private_mode_detail">When turn on private mode, the assets and amount in wallet will be hidden.</string>
+    <string name="private_mode_detail">When turned on, assets and balance in your wallet will be hidden</string>
     <string name="password_free_payment">Password - free Payment</string>
     <string name="auto_receipt">Auto Receipt</string>
     <string name="language">Language</string>
-    <string name="pricing_currency">Pricing Currency</string>
+    <string name="pricing_currency">Currency</string>
     <string name="currency">Currency</string>
     <string name="price">Price</string>
     <string name="change">Change</string>
@@ -104,11 +98,11 @@ your assets. Please don’t save them on any cloud drive or share via the intern
     <string name="asset_display">Asset Display</string>
     <string name="by_chain">By Chain</string>
     <string name="discover">Discover</string>
-    <string name="search_or_input_dapp_address">Enter chain ID to search or add</string>
+    <string name="search_or_input_dapp_address">Enter chain ID </string>
     <string name="search_dapp_name">Enter DApp name</string>
     <string name="exchange">Tools</string>
     <string name="recommended">Recommended</string>
-    <string name="dapp_apply">DApp listing application</string>
+    <string name="dapp_apply">Apply for DApp listing</string>
     <string name="more">More</string>
     <string name="share">Share</string>
     <string name="save">Save</string>
@@ -117,21 +111,21 @@ your assets. Please don’t save them on any cloud drive or share via the intern
     <string name="done">Done</string>
     <string name="later">Later</string>
     <string name="welcome_tip">We prepared an easy tutorial for you to
-    learn quicker.</string>
+        learn quicker.</string>
     <string name="strong">Strong</string>
     <string name="week">Week</string>
     <string name="middle">Middle</string>
     <string name="popular_assets">Assets(Chain Name - Token Name)</string>
     <string name="hint_enter_token_name">Enter Token Name</string>
 
-    <string name="welcome_to">Welcome to AELF Wallet!</string>
+    <string name="welcome_to">Welcome to aelf Wallet!</string>
     <string name="welcome_learn_tutorial">Learn Tutorial</string>
     <string name="welcome_skip_tutorial">Skip Tutorial</string>
-    <string name="total_assets_new">Total Assets in Current Account</string>
+    <string name="total_assets_new">Total Assets in Current Identity</string>
     <string name="assets_view">Assets View</string>
     <string name="clear">Clear</string>
     <string name="system_message">System Messages</string>
-    <string name="trasncation_notice">Transaction Notice</string>
+    <string name="trasncation_notice">Transactions</string>
     <string name="assets_notice">Assets from Chain 1 has arrived, please confirm.</string>
     <string name="confirm">Confirm</string>
     <string name="transaction_record">Transaction Record</string>
@@ -143,16 +137,16 @@ your assets. Please don’t save them on any cloud drive or share via the intern
     <string name="loading">Loading ...</string>
     <string name="all">All</string>
     <string name="wallet_name_null">Wallet name is null</string>
-    <string name="please_enter_wallet_name">Please enter a wallet name</string>
+    <string name="please_enter_wallet_name">Please enter wallet name</string>
     <string name="mnemonic_name_null">Mnemonic name is null</string>
     <string name="mnemonic_not_correct">Mnemonic not correct</string>
-    <string name="e_password">Please input password</string>
-    <string name="password_not_match">Passwords do not match</string>
-    <string name="aelf_wallet">AELF Wallet</string>
+    <string name="e_password">Please enter password</string>
+    <string name="password_not_match">Passphrase do not match</string>
+    <string name="aelf_wallet">aelf Wallet</string>
     <string name="customised">Customised</string>
     <string name="transfer_amount">Transfer Amount</string>
     <string name="receiver_chain_id">Receiver Chain ID</string>
-    <string name="receiver_address">Receiver Address - Wallet Address</string>
+    <string name="receiver_address">Receiver's Address - Wallet Address</string>
     <string name="notes_optional">Notes (Optional)</string>
 
 
@@ -166,18 +160,18 @@ your assets. Please don’t save them on any cloud drive or share via the intern
     <string name="new_contact">New Address</string>
     <string name="edit_contact">Edit Address</string>
     <string name="mnemonic_phrase">Mnemonic Phrase</string>
-    <string name="having_your_mnemonic">Having your mnemonic phrase means having all your wallet assets.</string>
+    <string name="having_your_mnemonic">Anyone who has your mnemonic phrase can access your assets directly.</string>
     <string name="mnemonic_phrase_backup">Mnemonic Phrase Backup</string>
-    <string name="phrase_backup_notes">Please write down the mnemonic words in order on paper carefully. If your phone is lost, stolen or damaged, mnemonic words can be used to recover your assets.</string>
+    <string name="phrase_backup_notes">Please write down the mnemonic phrase in order on paper carefully. If your phone is lost, stolen or damaged, mnemonic phrase can be used to recover your assets.</string>
     <string name="off_line_saving">Off-line Saving</string>
-    <string name="off_line_saving_notes">Keep the mnemonic words in a secure place off-line. Please do not share or save the mnemonic words in a public network, such as email, photo albums, social apps and such.</string>
+    <string name="off_line_saving_notes">Save your mnemonic phrase offline and keep it safe. Do not store or tell anyone about your Keystore via any public network, including email, photos, or social media.</string>
     <string name="backup_notes">Backup Notes</string>
     <string name="keystore">Keystore</string>
     <string name="keystore_backup">Keystore Backup</string>
     <string name="off_line_keeping">Off-line Keeping</string>
-    <string name="off_line_keeping_notes">Keep the keystore in a secure place off-line. Please do not share or save the mnemonic words in a public network, such as email, photo albums, social apps and such.</string>
-    <string name="keystore_backup_notes">Please be sure to keep your Keystore in a safe place. If your phone is lost, stolen or damaged, the keystore can be used to retrieve your assets.</string>
-    <string name="keystore_notes">Having keystore means having all your wallet assets.</string>
+    <string name="off_line_keeping_notes">Save your Keystore offline and keep it safe. Do not store or tell anyone about your Keystore via any public network, including email, photos, or social media.</string>
+    <string name="keystore_backup_notes">Please be sure to keep your Keystore in a safe place. If your phone is lost, stolen or damaged, the Keystore can be used to retrieve your assets.</string>
+    <string name="keystore_notes">Anyone who has your Keystore can access your assets directly.</string>
     <string name="export_qr_code">Export QR Code</string>
     <string name="sort_by">Sort By</string>
     <string name="camera">Camera</string>
@@ -212,8 +206,8 @@ your assets. Please don’t save them on any cloud drive or share via the intern
     <string name="private_keys">Private Keys</string>
     <string name="private_key_notes">Having your private keys means having all your wallet assets.</string>
     <string name="private_key_backup">Private Key Backup</string>
-    <string name="private_key_backup_notes">Please write down the private key on paper carefully. If your phone is lost, stolen or damaged, private key could recover your assets.</string>
-    <string name="off_line_keeping_private_key">Keep the Private Key in a secure place off-line. Please do not share or save the Private Key in a public network, such as email, photo albums, social apps and such.</string>
+    <string name="private_key_backup_notes">Please write down your private key on paper carefully. If your phone is lost, stolen, or damaged, the private key can be used to recover your assets.</string>
+    <string name="off_line_keeping_private_key">Save your private key offline and keep it safe. Do not store or tell anyone about your Keystore via any public network, including email, photos, or social media.</string>
     <string name="default_hint">Default</string>
     <string name="by_token">By Token</string>
     <string name="lang_simplified_chinese">Simplified Chinese</string>
@@ -222,16 +216,16 @@ your assets. Please don’t save them on any cloud drive or share via the intern
     <string name="default_">Default</string>
     <string name="dont_use_netword">Do not use network transmission</string>
     <string name="password_management_tool">Password Management Tool</string>
-    <string name="please_dont_save_mailbox">Please do not save to mailbox, notepad, network disk, chat tools, etc. This may put your assets in danger</string>
+    <string name="please_dont_save_mailbox">Please do not save it to your email, notepad, cloud drive, chat tools, etc. which may put your assets at risk.</string>
     <string name="password_management_tools_recommended">Password management tools are recommended</string>
     <string name="dont_transfer_by_network_tools">Do not transfer through network tools, once obtained by hackers will cause irreparable loss of assets.
-    Offline devices are recommended to be transmitted by scanning qr code.</string>
+        Offline devices are recommended to be transmitted by scanning qr code.</string>
     <string name="more_details">More details</string>
-    <string name="mnemonics_not_correct">The mnemonic order is incorrect</string>
+    <string name="mnemonics_not_correct">Incorrect order</string>
     <string name="photo">Photo</string>
 
     <string name="qr_recognise_error">The picture does not contain a QR code!</string>
-    <string name="messages">Messages</string>
+    <string name="messages">Notifications</string>
     <string name="user_agreement">User Agreement</string>
     <string name="biometric_identification">Biometric Identification</string>
     <string name="face_id_or_touch_id">Face ID or Touch ID</string>
@@ -239,12 +233,12 @@ your assets. Please don’t save them on any cloud drive or share via the intern
     <string name="send_address_tv">Transfer Address:</string>
     <string name="from">From</string>
     <string name="to">To</string>
-    <string name="pwd_len_12">The password should be with 12 characters.</string>
-    <string name="backup_wallet">Back up wallet</string>
+    <string name="pwd_len_12">12-36 characters password</string>
+    <string name="backup_wallet">Backup wallet</string>
     <string name="pwd_not_correct">Incorrect Password</string>
     <string name="pwd_correct">Correct Password</string>
-    <string name="please_back_up_your_wallet">Please back up your wallet!</string>
-    <string name="backup_note">You have not backed up your mnemonic phrases. Please bacup now! Mnemonics can be used to recover your assets in case you forget the password, accidentally delete the wallet or lose your phone.</string>
+    <string name="please_back_up_your_wallet">Please backup your wallet!</string>
+    <string name="backup_note">You haven't backed up your mnemonic phrase. Please backup now! The mnemonic phrase is used for recovering your assets in case you forget your password, accidentally delete the wallet or lose your phone.</string>
     <string name="security_warning">Security Warning</string>
     <string name="confirm_delete">Confirm to delete?</string>
     <string name="confirm_ok">Confirm</string>
@@ -278,58 +272,60 @@ your assets. Please don’t save them on any cloud drive or share via the intern
     <string name="not_support">not support</string>
     <string name="please_setting_lock_pwd">Please set the password for lock first.</string>
     <string name="atleast_one_finger">Please set up a fingerprint on your phone first</string>
-    <string name="pwd_not_match">Passwords do not match</string>
-    <string name="off_line_keeping_keystore">Keep the keystore in a secure place off-line. Please do not share or save the mnemonic words in a public network, such as email, photo albums, social apps and such.</string>
+    <string name="pwd_not_match">Passphrase do not match</string>
+    <string name="off_line_keeping_keystore">Keep the Keystore in a secure place off-line. Please do not share or save the mnemonic phrase in a public network, such as email, photo albums, social apps and such.</string>
     <string name="load_fail">load fail</string>
-    <string name="pwd_rules">Please enter the 12&#8211;36 character password, containing upper and lower case letters, characters and numbers.</string>
+    <string name="pwd_rules">Please enter a password between 12-36 characters, containing upper and lower case letters, characters and numbers.</string>
     <string name="pwd_rule">The password did not conform with the rules.</string>
     <string name="how_wallet">1.How to create/import wallet?</string>
-    <string name="how_wallet_detail">Ÿ You don’t have a wallet.\n
-Step 1: Create a wallet\n
-Click “Create”.\n
-Step 2: Create successfully and get your Mnemonic Words\n
-You will get a wallet and mnemonic words after setting the password. Mnemonic words are a human readable format of private keys without encryption. Anyone who has the mnemonic words can access your wallet. For your wallet security, it is recommended that you should write them down on papers or store them on U-disk or hard disk for physical isolation.
-\n\n
-Ÿ You have a wallet.\n
-Step 1: Click “Import”\n
-Step 2: Enter your mnemonic words or scan QR code to import\n
-Enter your mnemonic words or scan QR code to import your wallet. \nAfter scanning, you also need to enter your password to complete. When importing your wallet, you can also modify your password.</string>
+    <string name="how_wallet_detail">1. If you don’t have a wallet yet, follow the steps below to create one.\n
+        Step 1: Tab “Create Wallet” and follow the instructions\n
+        Step 2: After creating your wallet successfully, you'll get your mnemonic phrase, which is a human readable format of private keys without encryption. Anyone who has it can access your wallet. To keep your wallet secure, we advise you to write the mnemonic phrase down on paper or store it on U-disk or hard disk.\n
+        2. If you already have a wallet, follow the steps below to import wallet.\n
+        Step 1: Tab “Import Wallet”\n
+        Step 2: Enter your mnemonic phrase or scan QR code to import your wallet.\n
+        After scanning, you also need to enter your password. You can also reset your password when importing your wallet.</string>
+
     <string name="search_tokens">2.How to add or search tokens?</string>
-    <string name="search_tokens_detail">When you want more tokens in your asset list, click “+” to add tokens. Part of the major tokens will be displayed by default. You can search the tokens you need and add them to the list.</string>
+    <string name="search_tokens_detail">If you want to add more tokens in your asset list, click“+” to add tokens. Some of the mainstream tokens will appear here by default. You can search tokens and add them to the list.</string>
     <string name="forget_password">3.What if I forget my password?</string>
-    <string name="forget_password_detail">If you forget your trade password, you can import your wallet again by mnemonic words and set your new password.</string>
+    <string name="forget_password_detail">If you forget your transaction password, you can import your wallet again via mnemonic phrase and set a new password.</string>
     <string name="how_use_wallet">4.How to use wallet to transfer/receive tokens?</string>
-    <string name="how_use_wallet_detail">You can choose a token in your asset list and click “transfer” or “receive”. \nTransfer: you can input the recipient’s address by scanning (selecting QR code from your album is available) or entering the address. \nReceive: you can receive tokens by scanning QR code face to face, or share your QR code to your counterparty, or copy your receipt address to your counterparty.</string>
-    <string name="how_backup_mnemonic">6.How to back up Mnemonic Words, Keystore, Private Key and QR Code?</string>
-    <string name="how_backup_mnemonic_detail">Mnemonic words are a human readable format of private keys without encryption. Anyone who has the mnemonic words can access your wallet. The following should be noted when using mnemonic words: \nApproach One: \na) After creating a wallet, please back up your mnemonic words immediately. \nIt is recommended to back up your mnemonic words on physical medium, such as writing them down on papers and keep the papers well. Please do NOT take screenshots! \nb) Please guarantee the accuracy of the backup. \nPlease keep your mnemonic words well against being stolen or lost. Do NOT send your mnemonic words to anyone! \n\nApproach Two: \nBeing a decentralized wallet, AELF Wallet does not store users’ wallet mnemonic words. Mnemonic words are only stored on the original device through encryption. You back up your mnemonic words by following the instructions. \n“My Account”——Profile photo——Select exporting mnemonic words/Keystore/Private Key/QR Code——Enter trade password——Back up (please keep it well)</string>
+    <string name="how_use_wallet_detail">You can choose a token in your asset list and click “Transfer” or “Receive”.\nTransfer: you can enter the receiver’s address by scanning the QR code on your phone or entering the address manually.\nReceive: you can receive tokens by scanning the QR code face to face, or share your QR code or receiver's address to the sender.</string>
+    <string name="how_backup_mnemonic">6.How to backup Mnemonic phrase, Keystore, Private Key and QR Code?</string>
+    <string name="how_backup_mnemonic_detail">Mnemonic phrase is a human readable format of private keys without encryption. Anyone who has it can access your wallet. Please note that:\n
+        a) After you've created your wallet, backup your mnemonic phrase immediately. We recommend you to write down the mnemonic phrase on paper and keep it safe. Please do NOT take screenshots!\n
+        b) Make sure you backed up correctly and keep your mnemonic phrase safe. Do NOT send your mnemonic phrase to anyone!\n
+        As a decentralized wallet, aelf Wallet does not store users’ wallet mnemonic phrase. It is only stored on users' original devices through encryption. Follow the steps below to backup your mnemonic phrase.\n
+        “My Account”——Profile photo——Select "Export Mnemonic Phrase/Keystore/Private Key/QR Code"——Enter transaction password——Backup (please keep it safe)</string>
     <string name="submit_feedback">Submit Feedback</string>
-    <string name="hint_title">Title</string>
+    <string name="hint_title">Subject</string>
     <string name="email_address">Email Address</string>
     <string name="submit">Submit</string>
     <string name="copy_keystore">Copy Keystore</string>
     <string name="copy_private_key">Copy Private Key</string>
-    <string name="feedback_title_null">Please enter Feedback title</string>
+    <string name="feedback_title_null">Please enter Feedback Subject</string>
     <string name="feedback_content_null">Please enter Feedback contents</string>
     <string name="feedback_email_null">Please enter E-mail</string>
-    <string name="email_not_correct">The e-mail did not conform with the rules.</string>
+    <string name="email_not_correct">Please enter a valid email address.</string>
 
     <string name="submit_fail">Failed to submit</string>
-    <string name="submit_success">Succeeded to submit</string>
+    <string name="submit_success">Successfully submitted</string>
     <string name="terms_agreement">Please read and agree with the Terms of Service</string>
     <string name="what_s_new">What’s New</string>
     <string name="new_version">New Version</string>
     <string name="update_now">Update Now</string>
     <string name="update">Update</string>
     <string name="update_later">Later</string>
-    <string name="asset">Asset Management</string>
+    <string name="asset">Assets Management</string>
     <string name="not_empty_name">Please enter contact name</string>
     <string name="not_empty_address">Please enter address</string>
     <string name="please_enter_transfer_address">Please enter the recepient\'s address</string>
     <string name="please_enter_transfer_amount">Please enter the amount</string>
     <string name="elf_wallet">ELF Wallet</string>
     <string name="more_detail_explorer">Get more details ></string>
-    <string name="feedback_hint">Please enter a detailed description of problem. Please submit the wallet address and transaction hash using text format as far as possible. Don’t submit Mnemonic Phrase,Keystore or Private Key to us!</string>
-    <string name="empty_data">Empty Data</string>
+    <string name="feedback_hint">Please describe the issue in details and submit your wallet address and tx hash in text format. Do not submit your mnemonic phrase, Keystore or private key to us!</string>
+    <string name="empty_data">No Data</string>
     <string name="retry">Retry</string>
     <string name="add_assets">Add Assets</string>
     <string name="edit_assets">Edit Assets</string>
@@ -349,7 +345,7 @@ Enter your mnemonic words or scan QR code to import your wallet. \nAfter scannin
 
 
     <string name="save_success">save success</string>
-    <string name="not_elf_address">Invalid AELF address</string>
+    <string name="not_elf_address">Invalid aelf address</string>
     <string name="permisson_denied">Permission denied</string>
     <string name="preocessing">Processing...</string>
     <string name="please_verify_fingerprint">Please verify with fingerprint</string>
@@ -357,7 +353,7 @@ Enter your mnemonic words or scan QR code to import your wallet. \nAfter scannin
     <string name="version_release">Version Release</string>
     <string name="same_addr_from_to">Recipient\'s address cannot be the same as sender\'s address</string>
     <string name="pwd_len_least_12">12-36 characters password</string>
-    <string name="aelf_community">AELF Community</string>
+    <string name="aelf_community">aelf Community</string>
     <string name="create_fail">Create failed</string>
     <string name="import_fail">Import failed</string>
     <string name="backup_desc">Backup Notes</string>
@@ -387,7 +383,7 @@ Enter your mnemonic words or scan QR code to import your wallet. \nAfter scannin
     <string name="block_tx">Block</string>
 
 
-    <string name="enter_chain_id">Enter chain ID to search</string>
+    <string name="enter_chain_id">Enter chain ID </string>
 
     <string name="unable_to_find_dapp">Unable to find DApp</string>
     <string name="go_to_dapp">Go to DApp :</string>
@@ -396,21 +392,21 @@ Enter your mnemonic words or scan QR code to import your wallet. \nAfter scannin
 
     <string name="cross_chain_dialog">Cross-chain transaction detected. Please select receiving chain:</string>
     <string name="choose_chain_hint"> A cross-chain transfer request was initiated.\n Please confirm that the following transaction information is correct
-</string>
+    </string>
     <string name="trans_proof_title">Transaction Voucher</string>
-    <string name="recommend">Recommend</string>
-    <string name="edit_chain_id">Enter chain ID to search or add</string>
+    <string name="recommend">Recommended</string>
+    <string name="edit_chain_id">Enter chain ID</string>
     <string name="cross_chain_detected">Cross-chain Transaction Detected</string>
 
     <string name="ganme">Games</string>
     <string name="other">Other</string>
     <string name="select_chain">Select Chain</string>
-    <string name="elf_on_chain">%1$s is in following chains(Chain Name - Token Name)</string>
-    <string name="elf_id_chain">Current identity is in following chains \n
-                Click to switch the chain (chain name-the main token name of the chain)</string>
-    <string name="wait_transfer_title">To be confirmed transfer</string>
+    <string name="elf_on_chain">ELF is available in the following chains (Chain Name - Token Name)</string>
+    <string name="elf_id_chain">The current identity is available in the following chains.\n
+        Click to switch chains (Chain name - The main token name of the chain)</string>
+    <string name="wait_transfer_title">Confirm Transactions</string>
     <string name="confirm_success">Confirm success</string>
-    <string name="confirm_title">You are %d pending transactions to be confirmed</string>
+    <string name="confirm_title">You have %d transaction to confirm</string>
     <string name="from_to">from %s to %s</string>
     <string name="transfer_value_low">The amount is too small to transfe</string>
 
@@ -435,22 +431,20 @@ Enter your mnemonic words or scan QR code to import your wallet. \nAfter scannin
     <string name="transgamedialog_text07">Before the wallet application is closed, DApp can automatically complete the whitelist operation without the need to confirm the pop-up window.</string>
 
     <string name="transfer_chain_tip">Chain ID: %1$s not supported</string>
-    <string name="transfer_chain_tip1">Chain %1$s to chain %2$s transfer %3$s in the transformation, please look forward to the release of the new version of AELF</string>
+    <string name="transfer_chain_tip1">Chain %1$s to chain %2$s transfer %3$s in the transformation, please look forward to the release of the new version of aelf</string>
 
 
     <string name="transferfragment_tip01">How to operate cross-chain transfers?</string>
     <string name="transferfragment_tip03">5.How to operate cross-chain transfers?</string>
-    <string name="transferfragment_tip02">If you need cross-chain transfer, you should modify the receive address suffix to the specified chain ID.
-        \n Example:
-        \n If the address is ELF_addressA_AELF, and now you need to transfer the token to the account of tDVV chain,
-        you have to modify the address to ELF_addressA_tDVV and follow the prompts to complete the subsequent transfer operation.</string>
+    <string name="transferfragment_tip02">For cross-chain transfers, you need to change the suffix to the receiver's address to the specified chain ID.\n
+        For example:\n
+        If the address is ELF_addressA_AELF, and you need to transfer the token to the account of tDVV chain, then you have to change the address to ELF_addressA_tDVV and follow the instructions to complete the transfer.</string>
 
     <string name="current_chain">Current Chain - %1$s</string>
     <string name="dapp_list">DApp List</string>
     <string name="empty_address">temporary no cotacts</string>
     <string name="forget_password_tv">Forget Password</string>
-    <string name="forget_password_confim">Forgetting the password will delete all wallet data,
-        you can only recover your identity through mnemonics and private keys, please exercise caution</string>
+    <string name="forget_password_confim">Please be careful. If you forget your password, all wallet data will be deleted. You can only recover your identity via mnemonic phrase and private key. </string>
     <string name="advanced_btn_tv">Advanced</string>
     <string name="private_key_input">Input privatekey</string>
     <string name="click_scan_code">Click Scan</string>
