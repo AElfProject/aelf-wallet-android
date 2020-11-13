@@ -1,3 +1,9 @@
 #!/usr/bin/env bash
 sudo gem install fir-cli
-fir p $APPCENTER_OUTPUT_DIRECTORY/$APP_FILE -T $FIR_TOKEN
+
+echo "FIR_TOKEN" $FIR_TOKEN
+fir login $FIR_TOKEN
+fir me
+
+echo "app file" $APPCENTER_OUTPUT_DIRECTORY"/"$APP_FILE 
+fir p $APPCENTER_OUTPUT_DIRECTORY/$APP_FILE --oversea_turbo --dingtalk-access-token=$DINGTALK_ACCESS_TOKEN --dingtalk-custom-message=$DINGTALK_CUSTOM_MESSAGE
