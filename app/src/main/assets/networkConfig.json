@@ -8,7 +8,7 @@
   {
     "name": "测试网",
     "nameEn": "Testnet",
-    "url": "https://wallet-dev-api-test.aelf.io/",
+    "url": "https://wallet-app-api-test.aelf.io/",
     "node": ""
   }
 ]
