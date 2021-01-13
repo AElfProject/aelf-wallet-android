@@ -397,7 +397,6 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
         showLoading();
         com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(webData);
         String id = jsonObject.getString("id");
-        String endpoint = jsonObject.getString("endpoint");
         JSONObject params = jsonObject.getJSONObject("params");
         String originalParams = params.getString("originalParams");
         String signature = params.getString("signature");
@@ -406,6 +405,7 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
         com.alibaba.fastjson.JSONObject resultJson = JSON.parseObject(result);
         Logger.d(new Gson().toJson(resultJson));
         String timestamp = resultJson.getString("timestamp");
+        String endpoint = resultJson.getString("endpoint");
         if (!DappUtils.checkTimestamp(timestamp)) {
             dismissLoading();
             mWebView.sendFailToWeb(id, "Invalid timestamp", 1001);
@@ -425,7 +425,7 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
                         }
                     }
 
-                    if (endpoint != null && endpoint.length() != 0);
+                    if (endpoint != null && endpoint.length() != 0){
                       resultJson.put("nodeUrl", endpoint);
                     } else {
                       resultJson.put("nodeUrl", nodeUrl);
@@ -533,7 +533,6 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
         showLoading();
         com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(webdata);
         String id = jsonObject.getString("id");
-        String endpoint = jsonObject.getString("endpoint");
         JSONObject params = jsonObject.getJSONObject("params");
         String originalParams = params.getString("originalParams");
         String signature = params.getString("signature");
@@ -541,7 +540,8 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
         String result = Uri.decode(new String(decode));
         com.alibaba.fastjson.JSONObject resultJson = JSON.parseObject(result);
         String timestamp = resultJson.getString("timestamp");
-        
+        String endpoint = resultJson.getString("endpoint");
+
         if (!DappUtils.checkTimestamp(timestamp)) {
             dismissLoading();
             mWebView.sendFailToWeb(id, "Invalid timestamp", 1001);
@@ -561,7 +561,7 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
                             }
                         }
                     }
-                    if (endpoint != null && endpoint.length() != 0);
+                    if (endpoint != null && endpoint.length() != 0){
                       resultJson.put("nodeUrl", endpoint);
                     } else {
                       resultJson.put("nodeUrl", nodeUrl);
@@ -616,7 +616,6 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
         showLoading();
         com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(webdata);
         String id = jsonObject.getString("id");
-        String endpoint = jsonObject.getString("endpoint");
         JSONObject params = jsonObject.getJSONObject("params");
         String originalParams = params.getString("originalParams");
         String signature = params.getString("signature");
@@ -624,6 +623,7 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
         String result = Uri.decode(new String(decode));
         com.alibaba.fastjson.JSONObject resultJson = JSON.parseObject(result);
         String timestamp = resultJson.getString("timestamp");
+        String endpoint = resultJson.getString("endpoint");
         if (!DappUtils.checkTimestamp(timestamp)) {
             dismissLoading();
             mWebView.sendFailToWeb(id, "Invalid timestamp", 1001);
@@ -651,7 +651,7 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
                                     }
                                 }
 
-                                if (endpoint != null && endpoint.length() != 0);
+                                if (endpoint != null && endpoint.length() != 0){
                                   resultJson.put("nodeUrl", endpoint);
                                 } else {
                                   resultJson.put("nodeUrl", nodeUrl);
@@ -680,7 +680,7 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
                         transfer_privateKey = privateKey;
                         resultJson.put("privateKey", transfer_privateKey);
 
-                        if (endpoint != null && endpoint.length() != 0);
+                        if (endpoint != null && endpoint.length() != 0){
                           resultJson.put("nodeUrl", endpoint);
                         } else {
                           resultJson.put("nodeUrl", nodeUrl);
@@ -708,7 +708,6 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
         showLoading();
         com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(webData);
         String id = jsonObject.getString("id");
-        String endpoint = jsonObject.getString("endpoint");
         JSONObject params = jsonObject.getJSONObject("params");
         String originalParams = params.getString("originalParams");
         String signature = params.getString("signature");
@@ -717,6 +716,7 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
         com.alibaba.fastjson.JSONObject resultJson = JSON.parseObject(result);
 
         String timestamp = resultJson.getString("timestamp");
+        String endpoint = resultJson.getString("endpoint");
 
         if (!DappUtils.checkTimestamp(timestamp)) {
             dismissLoading();
@@ -740,7 +740,7 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
                         }
                     }
 
-                    if (endpoint != null && endpoint.length() != 0);
+                    if (endpoint != null && endpoint.length() != 0){
                       resultJson.put("nodeUrl", endpoint);
                     } else {
                       resultJson.put("nodeUrl", nodeUrl);
