@@ -240,10 +240,28 @@ public class WaitTransferFragment extends BaseFragment implements IWaitTransferV
     }
 
     private void requestJs(String key, ChooseChainsBean fromeChain, ChooseChainsBean toChain) {
+        String form = "";
+        String to = "";
+        form = fromeChain.getNode();
+        to = toChain.getNode();
+
+        String fromUrl;
+        if (!TextUtils.isEmpty(form) && form.endsWith("/")) {
+            fromUrl = form.substring(0, form.length() - 1);
+        } else {
+            fromUrl = form;
+        }
+        String toUrl;
+        if (!TextUtils.isEmpty(to) && to.endsWith("/")) {
+            toUrl = to.substring(0, to.length() - 1);
+        } else {
+            toUrl = to;
+        }
+        
         JsonObject param = new JsonObject();
         param.addProperty("privateKey", key);
-        param.addProperty("fromNode", mBean.from_node);
-        param.addProperty("toNode", mBean.to_node);
+        param.addProperty("fromNode", fromUrl);
+        param.addProperty("toNode", toUrl);
         param.addProperty("mainChainId", "9992731");
         param.addProperty("issueChainId", fromeChain.getIssueid());
         param.addProperty("txID", mBean.txid);
