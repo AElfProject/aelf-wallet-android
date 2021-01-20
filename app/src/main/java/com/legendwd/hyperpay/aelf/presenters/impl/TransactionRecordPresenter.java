@@ -81,6 +81,13 @@ public class TransactionRecordPresenter extends BasePresenter implements ITransa
                     }
                 });
     }
+    //add function to fix cross-chain
+    public void addNewIndex(TransferCrossChainParam transferCrossChainParam) {
+        ServiceGenerator.createService(HttpService.class)
+                .addIndex(transferCrossChainParam)
+                .compose(ResponseTransformer.handleResult(getProvider()))
+                .subscribe();
+    }
 
     @Override
     public void getTransferBalance(TransferBalanceParam param) {
