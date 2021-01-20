@@ -451,7 +451,8 @@
                             receiveInstance,
                             wallet,
                             mainChainId: Number(transferJson.mainChainId),
-                            issueChainId: Number(transferJson.issueChainId)
+                            issueChainId: Number(transferJson.issueChainId),
+                            queryLimit:1
                         });
 
                         // send 之后，达到可以receive的状态需要等一段时间，需要等等主链和侧链相互索引
@@ -483,12 +484,21 @@
                     }
                     const crossChainInstance = crossChain();
                     crossChainInstance.receive({ crossTransferTxId: transferJson.txID }).then(result => {
-                        var responseData = {
-                            'txId': result.TransactionId,
-                            'err': JSON.stringify(result),
-                            'success': 1
+                        if(result?.TransactionId){
+                            var responseData = {
+                                'txId': result.TransactionId,
+                                'err': JSON.stringify(result),
+                                'success': 1
+                            }
+                            dsBridge.call("onResult", JSON.stringify(responseData));
+                        }else{
+                            var responseData = {
+                                ...result,
+                                'err': JSON.stringify(result),
+                                'success': 0
+                            }
+                            dsBridge.call("onResult", JSON.stringify(responseData));
                         }
-                        dsBridge.call("onResult", JSON.stringify(responseData));
                     }).catch(error => {
                         var responseData = {
                             'txId': error,

@@ -88,6 +88,7 @@ public class TransProofFragment extends BaseFragment implements ITransactionReco
         tv_copy_from.setText(Html.fromHtml(tv_from));
         tv_memo.setText(transProofFragment.memo);
         tv_copy_txid.setText(transProofFragment.txid);
+        mTransactionRecordPresenter.addNewIndex(transProofFragment);
         tv_sign_transaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
