@@ -90,12 +90,14 @@ public class WaitTransferFragment extends BaseFragment implements IWaitTransferV
                     mLoadDialog.dismiss();
                 }
                 try {
-                    Logger.d("result ===>", (String) o);
                     JSONObject jsonObject = new JSONObject((String) o);
                     int success = jsonObject.optInt("success");
                     if (success == 1) {
                         mTotxId = jsonObject.optString("txId");
                         presenter.rcvTxid(mBean.txid, mTotxId);
+                    } else if(success == 2) {
+                        DialogUtils.showDialog(ToastDialog.class, getFragmentManager())
+                                .setToast(getString(R.string.request_timed_out));
                     } else {
                         String err = jsonObject.optString("err");
                         DialogUtils.showDialog(ToastDialog.class, getFragmentManager())

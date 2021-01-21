@@ -470,4 +470,5 @@
     <string name="network_tip">请输入网络地址</string>
     <string name="network_tip_error">网络地址格式有误，请重新输入</string>
     <string name="network_tip_sucess">网络切换成功</string>
+    <string name="request_timed_out">请求超时</string>
 </resources>

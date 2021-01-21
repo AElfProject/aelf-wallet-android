@@ -450,7 +450,7 @@
     <string name="touch_id_cancle">Are you sure you want to turn off biometrics? After closing, you need to enter the password for each payment</string>
 
     <string name="empty_keystore">Keystore file is not included in the QR code</string>
-    <string name="touch_id_allow">是否允许使用生物识别</string>
+    <string name="touch_id_allow">Whether to allow the use of biometrics</string>
     <string name="dapp_search">Search</string>
     <string name="touch_id_title_1">Do you want to allow \"AELF Wallet\" to use biometrics?
         Using biometrics can be applied to unlock apps and verify payments</string>
@@ -460,5 +460,6 @@
     <string name="custom_address">Custom Network</string>
     <string name="network_tip">Please enter a custom address</string>
     <string name="network_tip_error">Input errors, please re-enter</string>
-    <string name="network_tip_sucess">网络切换成功</string>
+    <string name="network_tip_sucess">Network switch successfully</string>
+    <string name="request_timed_out">Request timed out</string>
 </resources>

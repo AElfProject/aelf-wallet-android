@@ -484,21 +484,29 @@
                     }
                     const crossChainInstance = crossChain();
                     crossChainInstance.receive({ crossTransferTxId: transferJson.txID }).then(result => {
-                        if(result?.TransactionId){
-                            var responseData = {
+                        let responseData;
+                        if(result?.TransactionId) {
+                            responseData = {
                                 'txId': result.TransactionId,
                                 'err': JSON.stringify(result),
                                 'success': 1
                             }
-                            dsBridge.call("onResult", JSON.stringify(responseData));
-                        }else{
-                            var responseData = {
-                                ...result,
-                                'err': JSON.stringify(result),
-                                'success': 0
+                        } else {
+                            if(result?.message !== '{}') {
+                                responseData = {
+                                    ...result,
+                                    'err': result.message,
+                                    'success': 0
+                                }
+                            } else {
+                                responseData = {
+                                    ...result,
+                                    'err': JSON.stringify(result),
+                                    'success': 2
+                                }
                             }
-                            dsBridge.call("onResult", JSON.stringify(responseData));
                         }
+                        dsBridge.call("onResult", JSON.stringify(responseData));
                     }).catch(error => {
                         var responseData = {
                             'txId': error,
