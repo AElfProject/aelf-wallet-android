@@ -7,6 +7,7 @@ import android.support.annotation.RequiresApi;
 
 import com.legendwd.hyperpay.aelf.AelfApplication;
 import com.legendwd.hyperpay.aelf.R;
+import android.text.TextUtils;
 
 /**
  * 指纹认证辅助类
@@ -74,7 +75,9 @@ public class FingerprintDialogController extends FingerprintManager.Authenticati
 
     @Override
     public void onAuthenticationHelp(int helpMsgId, CharSequence helpString) {
-        showError(helpString);
+        if(!TextUtils.isEmpty(helpString)){
+            showError(helpString);
+        }
     }
 
     @Override
