@@ -544,7 +544,8 @@ public class AssetsFragment extends BaseFragment implements IAssetsView {
         param.time = "1";
         param.p = "1";
         //关键字搜索
-        param.coinName = name;
+        //todo:aelf Only elf on the chain is related to eth，Temporarily fixed as aelf
+        param.coinName = "aelf";
         mAssetsPresenter.getCoinList(param, type);
     }
 
