@@ -24,10 +24,10 @@ public class ServiceGenerator {
     // public static String API_BASE_URL = "http://1.119.195.50:11177/app/";//预发布环境
     public static String API_BASE_URL = "https://app-wallet-api.aelf.io/app/";
     public static final String publicKey = "-----BEGIN PUBLIC KEY-----\n" +
-        "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCbX8O7jy5PUwXR5VfsiinxpU8T\n" +
-        "d4q7dCEan75oQeHOkohU3Ci0cqWzRhsV/KBvjR3VMXBblJYkaLjYW/vZwLwWZrua\n" +
-        "rOpv1fE3r8iLpGERbbuAsRPRYY0f+sEioMGhWvXsUuCZR66zAaib7ZOX8UNzLCl4\n" +
-            "eyFEq2CFch2olu2G/wIDAQAB\n" +
+        "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC3S2CnBicCUWtfmf+8J6iy1loq\n" +
+        "mkXoH9oaHXpKs/TtM2DNEmSyEvv66RP1ybITJcifo8slQlHCyzWqhhiEzzcThcQV\n" +
+        "pG5Ga4E3aTcBUNGQ204zCfMYizmnUj0rrWT2wkJk3CTN7ChYQ182vkNQ+2rmZq9p\n" +
+            "pTyNZZPzPRi4+X96GQIDAQAB\n" +
             "-----END PUBLIC KEY-----";
 
 
