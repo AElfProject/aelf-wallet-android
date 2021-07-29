@@ -52,6 +52,7 @@ public class Constant {
         String WALLET_COIN_ADDRESS = "wallet_coin_address";
         String WALLET_BACKUP = "wallet_backup";
         String WALLET_SIGNED_ADDRESS = "wallet_signed_address";
+        String WALLET_SHA256_SIGNED = "wallet_sha256_signed_";
         String WALLET_PUBLIC_KEY = "wallet_public_key";
         String WALLET_PUBLIC_KEY_DAPP = "wallet_public_key_dapp";
         String WALLET_HINT = "Wallet_hint";

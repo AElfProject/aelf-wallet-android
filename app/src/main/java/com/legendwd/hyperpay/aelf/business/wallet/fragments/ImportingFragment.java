@@ -130,6 +130,7 @@ public class ImportingFragment extends BaseFragment implements IMyAccountView {
                     String public_key = jo.optString("publicKey");
                     String public_key_dapp = jo.optString("publicKeyDapp");
                     String signed_address = jo.optString("signedAddress");
+                    String signature = jo.optString("signature");
                     String privatekey = jo.optString("privateKey");
 
                     if (TextUtils.isEmpty(address)) {
@@ -141,6 +142,7 @@ public class ImportingFragment extends BaseFragment implements IMyAccountView {
 
                     CacheUtil.getInstance().setProperty(Constant.Sp.WALLET_ADDRESS, address);
                     CacheUtil.getInstance().setProperty(Constant.Sp.WALLET_SIGNED_ADDRESS, signed_address);
+                    CacheUtil.getInstance().setProperty(Constant.Sp.WALLET_SHA256_SIGNED, signature);
                     CacheUtil.getInstance().setProperty(Constant.Sp.WALLET_PUBLIC_KEY_DAPP, public_key_dapp);
                     CacheUtil.getInstance().setProperty(Constant.Sp.WALLET_PUBLIC_KEY, public_key);
                     CacheUtil.getInstance().setProperty(Constant.Sp.WALLET_HINT, walletBean.hint);
@@ -167,7 +169,6 @@ public class ImportingFragment extends BaseFragment implements IMyAccountView {
                 }
             }
         }), null);
-
         String tag = walletBean.getKeyType() == 0 ? "getWalletByMnemonicJS" : "importWalletPrivateKeyJS";
         webview.callHandler(tag, new Gson().toJson(walletBean), data -> {
 

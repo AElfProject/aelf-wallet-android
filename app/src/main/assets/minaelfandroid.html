@@ -17,6 +17,14 @@
     <script type="text/javascript" src="aelf-cross-chain.umd.js"></script>
 
     <script type="text/javascript">
+        const defaultResponseData = {
+            'privateKey': '',
+            'publicKey': '',
+            'publicKeyDapp': '',
+            'signedAddress': '',
+            'signature': '',
+            'address': ''
+        }
         AElf = window.AElf;
         const Wallet = AElf.wallet;
         window.onerror = function (err) {
@@ -91,12 +99,16 @@
                 })
 
                 let signedAddress = keyPair.sign(address)
+                // TODO Signed
+                const sha256Address = AElf.utils.sha256(address);
+                const signature = keyPair.sign(sha256Address);
                 // document.writeln('signedAddress = ' + JSON.stringify(signedAddress))
                 var responseData = {
                     'privateKey': privateKey,
                     'publicKey': publicKey,
                     'publicKeyDapp': publicKeyDapp,
                     'signedAddress': JSON.stringify(signedAddress),
+                    'signature': JSON.stringify(signature),
                     'address': address
                 }
                 log('iOS called getWalletByMnemonicJS Result ', responseData, 'native')
@@ -184,38 +196,28 @@
                         //console.log('publicKey :',publicKey)
 
                         let signedAddress = keyPair.sign(address)
+                        // TODO Signed
+                        const sha256Address = AElf.utils.sha256(address);
+                        const signature = keyPair.sign(sha256Address)
                         // document.writeln('signedAddress = ' + JSON.stringify(signedAddress))
                         var responseData = {
                             'privateKey': privateKey,
                             'publicKey': publicKey,
                             'publicKeyDapp': publicKeyDapp,
-                            'signedAddress': signedAddress,
-                            'address': address
+                            'signedAddress': JSON.stringify(signedAddress),
+                            'signature': JSON.stringify(signature),
+                            'address': address,
                         }
                         log('iOS called getWalletByMnemonicJS Result ', responseData, 'native')
                         dsBridge.call("onResult", JSON.stringify(responseData));
                     } else {
-                        var responseData = {
-                            'privateKey': '',
-                            'publicKey': '',
-                            'publicKeyDapp': '',
-                            'signedAddress': '',
-                            'address': ''
-                        }
-                        dsBridge.call("onResult", JSON.stringify(responseData));
+                        dsBridge.call("onResult", JSON.stringify(defaultResponseData));
                     }
 
                 } catch (err) {
                     log('iOS called importWalletKeyStoreJS4 with', err, 'native')
                     //TODO handle the exception
-                    var responseData = {
-                        'privateKey': '',
-                        'publicKey': '',
-                        'publicKeyDapp': '',
-                        'signedAddress': '',
-                        'address': ''
-                    }
-                    dsBridge.call("onResult", JSON.stringify(responseData));
+                    dsBridge.call("onResult", JSON.stringify(defaultResponseData));
                 }
 
             })
@@ -250,27 +252,24 @@
                     // let x  = publicKey.x.toString('hex')
                     //console.log('publicKey :',publicKey)
 
-                    let signedAddress = keyPair.sign(address)
+                    let signedAddress = keyPair.sign(address);
+                    // TODO Signed
+                    const sha256Address = AElf.utils.sha256(address);
+                    const signature = keyPair.sign(sha256Address);
                     // document.writeln('signedAddress = ' + JSON.stringify(signedAddress))
                     var responseData = {
                         'privateKey': privateKey,
                         'publicKey': publicKey,
                         'publicKeyDapp': publicKeyDapp,
-                        'signedAddress': signedAddress,
+                        'signedAddress': JSON.stringify(signedAddress),
+                        'signature': JSON.stringify(signature),
                         'address': address
                     }
                     dsBridge.call("onResult", JSON.stringify(responseData));
 
                 } catch (err) {
                     //TODO handle the exception
-                    var responseData = {
-                        'privateKey': '',
-                        'publicKey': '',
-                        'publicKeyDapp': '',
-                        'signedAddress': '',
-                        'address': ''
-                    }
-                    dsBridge.call("onResult", JSON.stringify(responseData));
+                    dsBridge.call("onResult", JSON.stringify(defaultResponseData));
                 }
 
             })

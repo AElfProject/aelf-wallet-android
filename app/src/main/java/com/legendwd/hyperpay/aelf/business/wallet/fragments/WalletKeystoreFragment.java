@@ -235,6 +235,7 @@ public class WalletKeystoreFragment extends BaseFragment implements IMyAccountVi
                             String public_key = jsonObject.optString("publicKey");
                             String public_key_dapp = jsonObject.optString("publicKeyDapp");
                             String signed_address = jsonObject.optString("signedAddress");
+                            String signature = jsonObject.optString("signature");
                             String address = jsonObject.optString("address");
 //                            Log.d("address ===>", address);
                             if (TextUtils.isEmpty(address)) {
@@ -252,6 +253,7 @@ public class WalletKeystoreFragment extends BaseFragment implements IMyAccountVi
 
                             CacheUtil.getInstance().setProperty(Constant.Sp.WALLET_ADDRESS, address);
                             CacheUtil.getInstance().setProperty(Constant.Sp.WALLET_SIGNED_ADDRESS, signed_address);
+                            CacheUtil.getInstance().setProperty(Constant.Sp.WALLET_SHA256_SIGNED, signature);
                             CacheUtil.getInstance().setProperty(Constant.Sp.WALLET_PUBLIC_KEY, public_key);
                             CacheUtil.getInstance().setProperty(Constant.Sp.WALLET_PUBLIC_KEY_DAPP, public_key_dapp);
                             CacheUtil.getInstance().setProperty(Constant.Sp.WALLET_HINT, bean.hint);
