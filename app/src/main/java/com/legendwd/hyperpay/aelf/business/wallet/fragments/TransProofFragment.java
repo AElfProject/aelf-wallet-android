@@ -79,9 +79,10 @@ public class TransProofFragment extends BaseFragment implements ITransactionReco
         mTransactionRecordPresenter = new TransactionRecordPresenter(this);
         tv_balance.setText(transProofFragment.amount + transProofFragment.symbol);
 
+        //FIXME fee symbol 
         tv_miner_fee.setText(TextUtils.isEmpty(transProofFragment.fee) ? "0.00 " +
-                transProofFragment.symbol : StringUtil.formatDataNoZero(Constant.DEFAULT_DECIMALS,
-                transProofFragment.fee) + " " + transProofFragment.symbol);
+                "ELF" : StringUtil.formatDataNoZero(Constant.DEFAULT_DECIMALS,
+                transProofFragment.fee) + " " + "ELF");
         String tv_to = "<font color='#641EB0'><small>" + transProofFragment.to_chain + "</small></font>  " + transProofFragment.to_address;
         tv_copy_to.setText(Html.fromHtml(tv_to));
         String tv_from = "<font color='#F4A11C'><small>" + transProofFragment.from_chain + "</small></font>  " + transProofFragment.from_address;
