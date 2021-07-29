@@ -31,7 +31,6 @@ public class ChainBean {
     private int LastIrreversibleBlockHeight;
     private String BestChainHash;
     private int BestChainHeight;
-    private List<?> NotLinkedBlocks;
 
     public String getChainId() {
         return ChainId;
@@ -111,14 +110,6 @@ public class ChainBean {
 
     public void setBestChainHeight(int BestChainHeight) {
         this.BestChainHeight = BestChainHeight;
-    }
-
-    public List<?> getNotLinkedBlocks() {
-        return NotLinkedBlocks;
-    }
-
-    public void setNotLinkedBlocks(List<?> NotLinkedBlocks) {
-        this.NotLinkedBlocks = NotLinkedBlocks;
     }
 
     public static class BranchesBean {
