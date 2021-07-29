@@ -262,11 +262,16 @@ public class TransactionRecordFragment extends BaseFragment implements View.OnCl
             symbol = "ELF";
         }
         tv_balance.setText(bean.getAmount() + " " + symbol);
-        String fee = mJsFee;
+        
+        String feeSymbol = bean.feeSymbol;
+        if (TextUtils.isEmpty(symbol)) {
+            feeSymbol = "ELF";
+        }
+        String fee = bean.fee;
         if(TextUtils.isEmpty(fee)) {
             fee = "0.00";
         }
-        tv_miner_fee.setText(fee);
+        tv_miner_fee.setText(fee + " " + feeSymbol);
         tv_copy_to.setText(StringUtil.formatAddress(bean.to, bean.to_chainid));
         tv_copy_from.setText(StringUtil.formatAddress(bean.from, bean.from_chainid));
         tv_copy_txid.setText(bean.txid);
