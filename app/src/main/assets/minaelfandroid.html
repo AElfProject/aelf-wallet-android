@@ -286,6 +286,8 @@
                     //# 密码
                     let amount = transferJson.amount
                     let symbol = transferJson.symbol
+
+                    const memo  = transferJson.memo
                     // 新增节点地址
                     let nodeUrl = transferJson.nodeUrl
                     // 新增合约地址
@@ -310,7 +312,8 @@
                     tokenC.Transfer({
                         to: toAddress,
                         symbol: symbol,
-                        amount: amount
+                        amount: amount,
+                        memo: memo ?memo :'',
                     }, (error, txObj) => {
 
                         if (error) {
