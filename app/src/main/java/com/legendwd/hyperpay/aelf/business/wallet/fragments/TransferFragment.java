@@ -53,6 +53,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import java.text.DecimalFormat;
+import java.math.RoundingMode;
 
 
 public class TransferFragment extends BaseFragment implements ITransferView, ChainDialog.ChainClick, TransMsgDialog.TransClick {
@@ -143,7 +145,13 @@ public class TransferFragment extends BaseFragment implements ITransferView, Cha
                                 transferCrossChainParam.to_address = toAddress;
                                 //测试TELF
                                 transferCrossChainParam.symbol = mSymbol;
-                                transferCrossChainParam.amount = et_amount.getText().toString();
+
+                                DecimalFormat df = new DecimalFormat();
+   	                            df.setRoundingMode(RoundingMode.FLOOR);
+                                df.setMaximumFractionDigits(mDataBean.getDecimals());
+                                String newAmount = et_amount.getText().toString();
+
+                                transferCrossChainParam.amount = df.format(Double.valueOf(newAmount));
                                 transferCrossChainParam.memo = et_note.getText().toString();
                                 transferCrossChainParam.chainid_c = fromChainId;
                                 transferCrossChainParam.fee = mfee + "";
