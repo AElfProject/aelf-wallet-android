@@ -21,13 +21,13 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ServiceGenerator {
     // public static final String API_BASE_URL = "http://aelf.phpdl.com/app/";   //线上环境
-    // public static String API_BASE_URL = "http://1.119.195.50:11177/app/";//预发布环境
     public static String API_BASE_URL = "https://app-wallet-api.aelf.io/app/";
+      "-----END PUBLIC KEY-----";
     public static final String publicKey = "-----BEGIN PUBLIC KEY-----\n" +
-        "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC3S2CnBicCUWtfmf+8J6iy1loq\n" +
-        "mkXoH9oaHXpKs/TtM2DNEmSyEvv66RP1ybITJcifo8slQlHCyzWqhhiEzzcThcQV\n" +
-        "pG5Ga4E3aTcBUNGQ204zCfMYizmnUj0rrWT2wkJk3CTN7ChYQ182vkNQ+2rmZq9p\n" +
-            "pTyNZZPzPRi4+X96GQIDAQAB\n" +
+        "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCbX8O7jy5PUwXR5VfsiinxpU8T\n" +
+        "d4q7dCEan75oQeHOkohU3Ci0cqWzRhsV/KBvjR3VMXBblJYkaLjYW/vZwLwWZrua\n" +
+        "rOpv1fE3r8iLpGERbbuAsRPRYY0f+sEioMGhWvXsUuCZR66zAaib7ZOX8UNzLCl4\n" +
+            "eyFEq2CFch2olu2G/wIDAQAB\n" +
             "-----END PUBLIC KEY-----";
 
 
@@ -103,7 +103,12 @@ public class ServiceGenerator {
                     }
 //                    basicParamsInterceptor.paramsMap.put("chainid", getChainId());
                     basicParamsInterceptor.paramsMap.put("udid", CacheUtil.getInstance().getProperty(Constant.Sp.UDID));
-                }
+                    //TODO addParam
+                    basicParamsInterceptor.paramsMap.put("address", CacheUtil.getInstance().getProperty(Constant.Sp.WALLET_ADDRESS));
+                    basicParamsInterceptor.paramsMap.put("signature", CacheUtil.getInstance().getProperty(Constant.Sp.WALLET_SHA256_SIGNED));
+                    basicParamsInterceptor.paramsMap.put("public_key", CacheUtil.getInstance().getProperty(Constant.Sp.WALLET_PUBLIC_KEY));
+
+                }                    
             }
         }
 
@@ -161,6 +166,11 @@ public class ServiceGenerator {
 //                    basicParamsInterceptor.paramsMap.put("chainid", getChainId());
                     String uuid = CacheUtil.getInstance().getProperty(Constant.Sp.UDID);
                     basicParamsInterceptor.paramsMap.put("udid", uuid);
+
+                    //TODO addParam
+                    basicParamsInterceptor.paramsMap.put("address", CacheUtil.getInstance().getProperty(Constant.Sp.WALLET_ADDRESS));
+                    basicParamsInterceptor.paramsMap.put("signature", CacheUtil.getInstance().getProperty(Constant.Sp.WALLET_SHA256_SIGNED));
+                    basicParamsInterceptor.paramsMap.put("public_key", CacheUtil.getInstance().getProperty(Constant.Sp.WALLET_PUBLIC_KEY));
                 }
             }
         }

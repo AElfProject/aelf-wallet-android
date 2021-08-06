@@ -4,7 +4,6 @@ buildscript {
     repositories {
         google()
         jcenter()
-        maven { url 'https://dl.bintray.com/umsdk/release' }
 
     }
     dependencies {
@@ -21,7 +20,6 @@ allprojects {
         jcenter()
         maven { url "https://jitpack.io" }
         maven { url "net.sf.json.JSONObject" }
-        maven { url 'https://dl.bintray.com/umsdk/release' }
     }
 }
 
@@ -29,8 +27,8 @@ ext {
     minSdkVersion = 16
     targetSdkVersion = 29
     compileSdkVersion = 28
-    versionName = '1.0.3'
-    versionCode = 2
+    versionName = '1.0.4'
+    versionCode = 1612347895
 }
 
 task clean(type: Delete) {
