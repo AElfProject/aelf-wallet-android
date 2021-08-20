@@ -1,6 +1,7 @@
 package com.legendwd.hyperpay.lib;
 
 import com.securepreferences.SecurePreferences;
+import com.legendwd.hyperpay.lib.Constant;
 
 public class CacheUtil {
 
@@ -54,7 +55,11 @@ public class CacheUtil {
      * 清空所有数据
      */
     public void clearAllData() {
+        String deviceToken = getProperty(Constant.Sp.DEVICE_TOKEN,"");
         mSecurePrefs.edit().clear().commit();
+        // fix exit bug
+        CacheUtil.SingleHolder.INSTANCE = new CacheUtil();
+        setProperty(Constant.Sp.DEVICE_TOKEN, deviceToken);
     }
 
     private static class SingleHolder {
