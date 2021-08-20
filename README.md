@@ -25,7 +25,7 @@ AElf 是一个区块链系统，旨在通过使用侧链和灵活的设计实现
 - [x] glide图片框架 (com.github.bumptech.glide:glide:4.9.0)
 - [x] eventbus (org.greenrobot:eventbus:3.1.1)
 - [x] RSA 加密算法
-- [x] 缓存加密框架 (com.scottyab:secure-preferences-lib:0.1.4)
+- [x] 缓存加密框架 (com.scottyab:secure-preferences-lib:0.1.7)
 - [x] 比特币协议框架 (org.bitcoinj:bitcoinj-core:0.14.7)
 - [x] frangmentation 页面管理框架 (me.yokeyword:fragmentation:1.3.6)
 
