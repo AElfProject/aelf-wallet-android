@@ -22,7 +22,6 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class ServiceGenerator {
     // public static final String API_BASE_URL = "http://aelf.phpdl.com/app/";   //线上环境
     public static String API_BASE_URL = "https://app-wallet-api.aelf.io/app/";
-      "-----END PUBLIC KEY-----";
     public static final String publicKey = "-----BEGIN PUBLIC KEY-----\n" +
         "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCbX8O7jy5PUwXR5VfsiinxpU8T\n" +
         "d4q7dCEan75oQeHOkohU3Ci0cqWzRhsV/KBvjR3VMXBblJYkaLjYW/vZwLwWZrua\n" +
@@ -104,9 +103,13 @@ public class ServiceGenerator {
 //                    basicParamsInterceptor.paramsMap.put("chainid", getChainId());
                     basicParamsInterceptor.paramsMap.put("udid", CacheUtil.getInstance().getProperty(Constant.Sp.UDID));
                     //TODO addParam
-                    basicParamsInterceptor.paramsMap.put("address", CacheUtil.getInstance().getProperty(Constant.Sp.WALLET_ADDRESS));
-                    basicParamsInterceptor.paramsMap.put("signature", CacheUtil.getInstance().getProperty(Constant.Sp.WALLET_SHA256_SIGNED));
-                    basicParamsInterceptor.paramsMap.put("public_key", CacheUtil.getInstance().getProperty(Constant.Sp.WALLET_PUBLIC_KEY));
+
+                    String wallet_addresss = CacheUtil.getInstance().getProperty(Constant.Sp.WALLET_ADDRESS);
+                    String signature = CacheUtil.getInstance().getProperty(Constant.Sp.WALLET_SHA256_SIGNED);
+                    String public_key = CacheUtil.getInstance().getProperty(Constant.Sp.WALLET_PUBLIC_KEY);
+                    basicParamsInterceptor.paramsMap.put("address",TextUtils.isEmpty(wallet_addresss) ?"" :wallet_addresss);
+                    basicParamsInterceptor.paramsMap.put("signature", TextUtils.isEmpty(signature) ?"" :signature);
+                    basicParamsInterceptor.paramsMap.put("public_key", TextUtils.isEmpty(public_key) ?"" :public_key);
 
                 }                    
             }
