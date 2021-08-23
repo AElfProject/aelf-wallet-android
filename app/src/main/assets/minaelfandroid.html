@@ -487,14 +487,14 @@
                     const crossChainInstance = crossChain();
                     crossChainInstance.receive({ crossTransferTxId: transferJson.txID }).then(result => {
                         let responseData;
-                        if(result?.TransactionId) {
+                        if(result && result.TransactionId) {
                             responseData = {
                                 'txId': result.TransactionId,
                                 'err': JSON.stringify(result),
                                 'success': 1
                             }
                         } else {
-                            if(result?.message !== '{}') {
+                            if(result && result.message !== '{}') {
                                 responseData = {
                                     ...result,
                                     'err': result.message,
