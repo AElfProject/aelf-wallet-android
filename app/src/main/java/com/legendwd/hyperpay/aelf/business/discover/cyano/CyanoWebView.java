@@ -102,7 +102,24 @@ public class CyanoWebView extends WebView {
 
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                // Google play review proceed -> cancel
                 handler.proceed();
+                // AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                // alertDialog.setMessage("SSL Error");
+                // alertDialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                //     @Override
+                //     public void onClick(DialogInterface dialog, int which) {
+                //             handler.cancel();
+                //     }
+                // });
+                // alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                //     @Override
+                //     public void onClick(DialogInterface dialog, int which) {
+                //         handler.proceed();
+                //     }
+                // });
+                // AlertDialog dialog = alertDialog.create();
+                // alertDialog.show();
                 super.onReceivedSslError(view, handler, error);
             }
         });
