@@ -322,13 +322,12 @@ public interface HttpService {
     @POST("elf/waiting_cross_trans")
     Observable<Response<ResultBean<WaitTransactionBean>>> waitCrossTrans(@Body JsonObject param);
 
-    @GET("coins/markets")
+    @GET("app/market-data/markets")
     Observable<Response<List<MarketDataBean>>> getCoinList(@QueryMap Map<String, String> param);
 
-    @GET("coins/list")
+    @GET("app/market-data/coin-list")
     Observable<Response<List<MarketCoindb>>> getMarketCoinList();
 
-    @GET("coins/{bi}/market_chart")
-    Observable<Response<MarketLineBean>> getTradeLine(@Path("bi") String id,
-                                                      @QueryMap Map<String, String> param);
+    @GET("app/market-data/chart")
+    Observable<Response<MarketLineBean>> getTradeLine(@QueryMap Map<String, String> param);
 }

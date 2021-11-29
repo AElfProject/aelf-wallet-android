@@ -18,5 +18,5 @@ public class ApiUrlConfig {
     /**
      * 第三方行情api
      */
-    public static final String MARKET_UTL = "https://api.coingecko.com/api/v3/";
+    public static final String MARKET_UTL = "https://app-wallet-api.aelf.io/";
 }

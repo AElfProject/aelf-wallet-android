@@ -267,7 +267,12 @@ public class WaitTransferFragment extends BaseFragment implements IWaitTransferV
         param.addProperty("mainChainId", "9992731");
         param.addProperty("issueChainId", fromeChain.getIssueid());
         param.addProperty("txID", mBean.txid);
-
+        /**
+        tokenContractAddressSend: transferJson.fromTokenContractAddres,
+        crossChainContractAddressSend: transferJson.fromChainContractAddres,
+        tokenContractAddressReceive: transferJson.toTokenContractAddres,
+        crossChainContractAddressReceive: transferJson.toChainContractAddres 
+        */
         param.addProperty("fromTokenContractAddres", fromeChain.getContract_address());
         param.addProperty("fromChainContractAddres", fromeChain.getCrossChainContractAddress());
         param.addProperty("toTokenContractAddres", toChain.getContract_address());

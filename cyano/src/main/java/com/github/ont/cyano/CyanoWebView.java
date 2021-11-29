@@ -129,8 +129,8 @@ public class CyanoWebView extends WebView {
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
                 // https
-                // Google play review proceed -> cancel
-                handler.proceed();
+                // TODO: Google play review proceed -> cancel
+                handler.cancel();
 //                super.onReceivedSslError(view, handler, error);
             }
         });

@@ -102,8 +102,8 @@ public class CyanoWebView extends WebView {
 
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                // Google play review proceed -> cancel
-                handler.proceed();
+                // TODO:Google play review proceed -> cancel
+                handler.cancel();
                 // AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                 // alertDialog.setMessage("SSL Error");
                 // alertDialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {

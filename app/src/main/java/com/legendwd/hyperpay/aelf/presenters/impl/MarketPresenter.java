@@ -29,14 +29,14 @@ public class MarketPresenter extends BasePresenter implements IMarketPresenter {
     public void getCoinList(MarketParam param, String type) {
         HttpService service = ServiceGenerator.createServiceMarket(HttpService.class, ApiUrlConfig.MARKET_UTL);
         Map<String, String> map = new HashMap<>();
-        map.put("vs_currency", param.currency);
+        map.put("Currency", param.currency);
         if (!TextUtils.isEmpty(param.coinName)) {
-            map.put("ids", param.coinName);
+            map.put("Ids", param.coinName);
         }
-        map.put("order", "market_cap_desc");
+        map.put("Order", "market_cap_desc");
         if (!TextUtils.isEmpty(param.p)) {
-            map.put("per_page", "100");
-            map.put("page", param.p);
+            map.put("PerPage", "100");
+            map.put("Page", param.p);
         }
         map.put("sparkline", "false");
         service.getCoinList(map)

@@ -57,16 +57,16 @@ public class AssetsPresenter extends BasePresenter implements IAssetsPresenter {
     public void getCoinList(MarketParam param, String type) {
         HttpService service = ServiceGenerator.createServiceMarket(HttpService.class, ApiUrlConfig.MARKET_UTL);
         Map<String, String> map = new HashMap<>();
-        map.put("vs_currency", param.currency);
+        map.put("Currency", param.currency);
         if (!TextUtils.isEmpty(param.coinName)) {
-            map.put("ids", param.coinName);
+            map.put("Ids", param.coinName);
         }
         if (!TextUtils.isEmpty(param.sort)) {
-            map.put("order", param.sort);
+            map.put("Order", param.sort);
         }
         if (!TextUtils.isEmpty(param.p)) {
-            map.put("per_page", "50");
-            map.put("page", param.p);
+            map.put("PerPage", "50");
+            map.put("Page", param.p);
         }
         map.put("sparkline", "false");
         service.getCoinList(map)

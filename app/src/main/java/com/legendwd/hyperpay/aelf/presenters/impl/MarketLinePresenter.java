@@ -38,9 +38,10 @@ public class MarketLinePresenter extends BasePresenter implements IMarketLinePre
     public void getTradeLine(MarketLineParam param) {
         HttpService service = ServiceGenerator.createServiceMarket(HttpService.class, ApiUrlConfig.MARKET_UTL);
         Map<String, String> map = new HashMap<>();
-        map.put("vs_currency", param.currency);
-        map.put("days", param.time);
-        service.getTradeLine(param.name, map).compose(ResponseTransformer.handleResult(getProvider()))
+        map.put("Currency", param.currency);
+        map.put("Days", param.time);
+        map.put("Id", param.name);
+        service.getTradeLine(map).compose(ResponseTransformer.handleResult(getProvider()))
                 .subscribe(beanList -> iView.onSuccess(beanList), throwable -> iView.onError(-1, throwable.toString()));
     }
 
@@ -49,8 +50,8 @@ public class MarketLinePresenter extends BasePresenter implements IMarketLinePre
         HttpService service = ServiceGenerator.createServiceMarket(HttpService.class, ApiUrlConfig.MARKET_UTL);
         String currency = CacheUtil.getInstance().getProperty(Constant.Sp.PRICING_CURRENCY_ID_DEFAULT, "USD");
         Map<String, String> map = new HashMap<>();
-        map.put("vs_currency", currency);
-        map.put("ids", id);
+        map.put("Currency", currency);
+        map.put("Ids", id);
         map.put("sparkline", "false");
         service.getCoinList(map)
                 .compose(ResponseTransformer.handleResult(getProvider()))
