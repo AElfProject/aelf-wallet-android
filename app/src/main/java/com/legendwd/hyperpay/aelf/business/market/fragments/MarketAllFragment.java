@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -62,6 +64,8 @@ public class MarketAllFragment extends BaseFragment implements IMarketView {
     private int mPriceClickTimes;
     private int mChangeClickTimes;
     private int mCurrentPage = 1;
+
+    private MarketDataBean aelfBean ;
 
     public static MarketAllFragment newInstance() {
         Bundle args = new Bundle();
@@ -181,8 +185,20 @@ public class MarketAllFragment extends BaseFragment implements IMarketView {
         }
         MarketDataBean.mSort = mSortType;
         Collections.sort(mBeanList);
-        mMarketAdapter.notifyDataSetChanged();
-//        mMarketAdapter.refreshView(mBeanList);
+        //mMarketAdapter.notifyDataSetChanged();
+
+        Iterator<MarketDataBean> iterator = mBeanList.iterator();
+        while (iterator.hasNext()) {
+            MarketDataBean tmp = iterator.next();
+
+            if (tmp.getName().equals("aelf")) {
+                iterator.remove();
+            }
+        }
+
+        if (aelfBean != null)
+            mBeanList.add(2,aelfBean);
+        mMarketAdapter.refreshView(mBeanList);
     }
 
     @OnClick({R.id.ll_sort_price, R.id.ll_sort_change})
@@ -204,12 +220,14 @@ public class MarketAllFragment extends BaseFragment implements IMarketView {
     }
 
     private void getMarketList(String sort, String type) {
+        getAelfMarketList(sort,type);
+    }
+
+    private void getAelfMarketList(String sort, String type) {
         MarketParam param = new MarketParam();
         param.currency = CacheUtil.getInstance().getProperty(Constant.Sp.PRICING_CURRENCY_ID_DEFAULT, Constant.DEFAULT_CURRENCY);
-        param.sort = sort;
-        param.time = "1";
-        param.p = String.valueOf(mCurrentPage);
-        mMarketPresenter.getCoinList(param, type);
+        param.coinName = "aelf";
+        mMarketPresenter.getAelfCoinList(param, type,sort);
     }
 
     @Override
@@ -251,7 +269,12 @@ public class MarketAllFragment extends BaseFragment implements IMarketView {
             }
         }
 
-        if (mMarketAdapter == null) {
+
+        if (aelfBean != null)
+            mBeanList.add(2,aelfBean);
+
+
+            if (mMarketAdapter == null) {
             mRvMarket.setLayoutManager(new LinearLayoutManager(_mActivity));
             mMarketAdapter = new MarketAllAdapter(mBeanList);
             mRvMarket.setAdapter(mMarketAdapter);
@@ -271,6 +294,22 @@ public class MarketAllFragment extends BaseFragment implements IMarketView {
         } else {
             mMarketAdapter.refreshView(mBeanList);
         }
+    }
+
+    @Override
+    public void onAelfCoinListSuccess(List<MarketDataBean> resultBean, String type,String sort) {
+
+        if (resultBean.size() >0){
+
+            aelfBean = resultBean.get(0);
+        }
+        MarketParam param = new MarketParam();
+        param.currency = CacheUtil.getInstance().getProperty(Constant.Sp.PRICING_CURRENCY_ID_DEFAULT, Constant.DEFAULT_CURRENCY);
+        param.sort = sort;
+        param.time = "1";
+        param.p = String.valueOf(mCurrentPage);
+        mMarketPresenter.getCoinList(param, type);
+
     }
 
     @Override

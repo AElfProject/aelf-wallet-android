@@ -73,8 +73,9 @@ public class WalletMnemonicsFragment extends BaseFragment {
     @Override
     public void process() {
         if (BuildConfig.DEBUG){
-            et_pwd.setText("Aa111111111.");
-            et_pwd_confirm.setText("Aa111111111.");
+            et_pwd.setText("111111111aA!");
+            et_pwd_confirm.setText("111111111aA!");
+            et_mnemonic.setText("f341026dd7a2512aadb197303eea203043f8fe9180d459cf19590c54a0264a31");
         }
         if(mKeyType == 0) {
             et_mnemonic.setHint(R.string.import_wallet_hint_seperate_each_mnemonic);

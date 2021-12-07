@@ -45,8 +45,8 @@
                 android:layout_toRightOf="@id/tv_from"
                 android:textColor="#09162D"
                 android:textSize="15sp"
-                tools:text="A Chain Cross-Chain"
-                android:visibility="visible"/>
+                android:visibility="visible"
+                tools:text="A Chain Cross-Chain" />
 
             <TextView
                 android:id="@+id/tv_amount"
@@ -65,8 +65,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:visibility="gone"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="30dp"
@@ -85,10 +85,10 @@
                     android:id="@+id/tv_copy_from"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:ellipsize="middle"
                     android:drawableRight="@mipmap/copy_grey"
                     android:drawablePadding="10dp"
+                    android:ellipsize="middle"
+                    android:singleLine="true"
                     android:textColor="#09162D"
                     android:textSize="13sp"
                     tools:text="无" />
@@ -120,10 +120,10 @@
                     android:id="@+id/tv_copy_to"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:ellipsize="middle"
                     android:drawableRight="@mipmap/copy_grey"
                     android:drawablePadding="10dp"
+                    android:ellipsize="middle"
+                    android:singleLine="true"
                     android:textColor="#09162D"
                     android:textSize="13sp"
                     tools:text="无" />
@@ -163,8 +163,8 @@
                     android:id="@+id/tv_memo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
                     android:ellipsize="middle"
+                    android:singleLine="true"
                     android:textColor="#09162D"
                     android:textSize="13sp"
                     tools:text="1.2345 ELF" />

@@ -47,6 +47,28 @@ public class MarketPresenter extends BasePresenter implements IMarketPresenter {
     }
 
     @Override
+    public void getAelfCoinList(MarketParam param, String type,String sort) {
+
+        HttpService service = ServiceGenerator.createServiceMarket(HttpService.class, ApiUrlConfig.MARKET_UTL);
+        Map<String, String> map = new HashMap<>();
+        map.put("Currency", param.currency);
+        if (!TextUtils.isEmpty(param.coinName)) {
+            map.put("Ids", param.coinName);
+        }
+        map.put("Order", "market_cap_desc");
+        if (!TextUtils.isEmpty(param.p)) {
+            map.put("PerPage", "100");
+            map.put("Page", param.p);
+        }
+        map.put("sparkline", "false");
+        service.getCoinList(map)
+                .compose(ResponseTransformer.handleResult(getProvider()))
+                .subscribe(marketListBeanResultBean -> mMarketView.onAelfCoinListSuccess(marketListBeanResultBean, type,sort)
+                        , throwable -> mMarketView.onCoinListError(-1, throwable.getMessage(), type));
+
+    }
+
+    @Override
     public void getMyCoinList(MarketParam param) {
 
 //        HttpService service = ServiceGenerator.createServiceMarket(HttpService.class, ApiUrlConfig.MARKET_UTL);

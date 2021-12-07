@@ -50,6 +50,11 @@ public class MarketSearchPresenter extends BasePresenter implements IMarketPrese
     }
 
     @Override
+    public void getAelfCoinList(MarketParam param, String type,String sort) {
+
+    }
+
+    @Override
     public void getMyCoinList(MarketParam jsonObject) {
 
     }

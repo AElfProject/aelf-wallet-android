@@ -126,11 +126,16 @@ public class TransferWaitAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     viewHolder.tv_amount.setText(StringUtil.formatDataNoZero(Constant.DEFAULT_DECIMALS, bean.amount));
                 }
 
-                viewHolder.itemView.setOnClickListener(v -> {
-                    int visi = viewHolder.more_ll.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE;
-                    viewHolder.more_ll.setVisibility(visi);
-                    viewHolder.tv_cancel.setVisibility(visi);
-                });
+//需求优化 需要默认展开菜单 暂时注释掉手动展开菜单的功能
+
+//                viewHolder.itemView.setOnClickListener(v -> {
+//                    int visi = viewHolder.more_ll.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE;
+//                    viewHolder.more_ll.setVisibility(View.VISIBLE);
+//                    viewHolder.tv_cancel.setVisibility(View.VISIBLE);
+//                });
+
+                viewHolder.more_ll.setVisibility(View.VISIBLE);
+                viewHolder.tv_cancel.setVisibility(View.VISIBLE);
             }
 
         }

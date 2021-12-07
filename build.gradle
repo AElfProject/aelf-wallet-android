@@ -2,6 +2,12 @@
 
 buildscript {
     repositories {
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
         google()
         jcenter()
 
@@ -16,10 +22,16 @@ buildscript {
 
 allprojects {
     repositories {
+        maven { url 'https://jitpack.io' }
+        maven { url "net.sf.json.JSONObject" }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
         google()
         jcenter()
-        maven { url "https://jitpack.io" }
-        maven { url "net.sf.json.JSONObject" }
+
     }
 }
 
@@ -27,8 +39,8 @@ ext {
     minSdkVersion = 16
     targetSdkVersion = 29
     compileSdkVersion = 28
-    versionName = '1.1.1'
-    versionCode = 1632998201
+    versionName = '1.1.2'
+    versionCode = 1632998202
 }
 
 task clean(type: Delete) {

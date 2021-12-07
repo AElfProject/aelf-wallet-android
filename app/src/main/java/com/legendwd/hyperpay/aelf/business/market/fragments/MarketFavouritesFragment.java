@@ -185,6 +185,11 @@ public class MarketFavouritesFragment extends BaseFragment implements IMarketVie
     }
 
     @Override
+    public void onAelfCoinListSuccess(List<MarketDataBean> resultBean, String type,String sort) {
+
+    }
+
+    @Override
     public void onCoinListError(int code, String msg, String type) {
         refresh.finishRefresh();
     }
