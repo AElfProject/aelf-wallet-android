@@ -9,12 +9,15 @@ import com.legendwd.hyperpay.aelf.model.param.MarketParam;
 import com.legendwd.hyperpay.aelf.presenters.BasePresenter;
 import com.legendwd.hyperpay.aelf.presenters.IMarketPresenter;
 import com.legendwd.hyperpay.aelf.views.IMarketView;
+import com.legendwd.hyperpay.aelf.model.bean.MarketDataBean;
 import com.legendwd.hyperpay.httputil.ServiceGenerator;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Collections;  
+import java.util.Comparator;
 
 public class MarketPresenter extends BasePresenter implements IMarketPresenter {
 
@@ -41,7 +44,19 @@ public class MarketPresenter extends BasePresenter implements IMarketPresenter {
         map.put("sparkline", "false");
         service.getCoinList(map)
                 .compose(ResponseTransformer.handleResult(getProvider()))
-                .subscribe(marketListBeanResultBean -> mMarketView.onCoinListSuccess(marketListBeanResultBean, type)
+                .subscribe(marketListBeanResultBean -> {
+                    // sort marketList in ids order
+                    if (!TextUtils.isEmpty(param.coinName)) {
+                        String ids = param.coinName;
+                        Collections.sort(marketListBeanResultBean, new Comparator<MarketDataBean>() {
+                            @Override
+                            public int compare(MarketDataBean b1, MarketDataBean b2) {
+                                return ids.indexOf(b1.getId()) - ids.indexOf(b2.getId());
+                            }
+                        });
+                    }
+                    mMarketView.onCoinListSuccess(marketListBeanResultBean, type);
+                }
                         , throwable -> mMarketView.onCoinListError(-1, throwable.getMessage(), type));
 
     }
