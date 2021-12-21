@@ -84,8 +84,7 @@ import static com.legendwd.hyperpay.aelf.AelfApplication.PRIVATEKEY_DAPP;
 import static com.legendwd.hyperpay.aelf.business.discover.cyano.Constant.ACTION_GET_CONTRACT_METHODS;
 import static com.legendwd.hyperpay.aelf.business.discover.cyano.Constant.ACTION_INVOKE;
 import static com.legendwd.hyperpay.aelf.business.discover.cyano.Constant.ACTION_INVOKEREAD;
-
-
+import static com.legendwd.hyperpay.aelf.business.discover.cyano.Constant.ACTION_KEY_PAIR_UTILS;
 /**
  * Created by Administrator on 2015/9/17.
  */
@@ -175,6 +174,7 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
             mWebView.getNativeJsBridge().setHandleApi(data -> actionApi(data));
             mWebView.getNativeJsBridge().setHandleDisconnect(data -> actionDisconnect(data));
             mWebView.getNativeJsBridge().setHandleGetContractMethos(data -> actionGetContractMethos(data));
+            mWebView.getNativeJsBridge().setHandleKeyPairUtils(data -> actionKeyPairUtils(data));
         }
     }
 
@@ -515,6 +515,83 @@ public class GameWebActivity extends BaseActivity implements ITransferView, IDis
         DappUtils.VerifySignParam(Base64.decode(originalParams, Base64.NO_WRAP), signature, o -> {
             if ((boolean) o) {
                 runOnUiThread(() -> presenter.getCrossChains_forDapp(id));
+            } else {
+                runOnUiThread(() -> dismissLoading());
+                mWebView.sendFailToWeb(id, "Data parsing failed", 1002);
+            }
+        });
+
+    }
+
+
+    /**
+     * KeyPairUtils
+     *
+     * @param webdata
+     */
+    private void actionKeyPairUtils(String webdata) {
+        showLoading();
+        com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(webdata);
+        String id = jsonObject.getString("id");
+        JSONObject params = jsonObject.getJSONObject("params");
+        String originalParams = params.getString("originalParams");
+        String signature = params.getString("signature");
+        byte[] decode = Base64.decode(originalParams, Base64.NO_WRAP);
+        String result = Uri.decode(new String(decode));
+        com.alibaba.fastjson.JSONObject resultJson = JSON.parseObject(result);
+        String timestamp = resultJson.getString("timestamp");
+        String endpoint = resultJson.getString("endpoint");
+        if (!DappUtils.checkTimestamp(timestamp)) {
+            dismissLoading();
+            mWebView.sendFailToWeb(id, "Invalid timestamp", 1001);
+            return;
+        }
+        DappUtils.VerifySignParam(Base64.decode(originalParams, Base64.NO_WRAP), signature, o -> {
+            if ((boolean) o) {
+                runOnUiThread(() -> {
+                    String privateKey = PRIVATEKEY_DAPP.get(mUrl);
+                    if (TextUtils.isEmpty(privateKey)) {
+                        showPasswordDialogForPrivate(obj -> {
+                            if ("".equalsIgnoreCase(obj[0].toString())) {
+                                mWebView.sendFailToWeb(id, "Cancelled", 1101);
+                            } else {
+                                resultJson.put("action", ACTION_KEY_PAIR_UTILS);
+                                resultJson.put("id", id);
+                                resultJson.put("privateKey", transfer_privateKey);
+                                mWvbridge.callHandler("dappKeyPairUtils", new Gson().toJson(resultJson), data -> {
+                                    com.alibaba.fastjson.JSONObject resultObject = JSON.parseObject((String) data);
+                                    int success = resultObject.getInteger("success");
+                                    if (success == 1) {
+                                        mWebView.sendSuccessToWeb(resultObject.get("data"),jsonObject.getString("id"));
+                                    } else {
+                                        mWebView.sendFailToWeb(
+                                            jsonObject.getString("id"),
+                                            resultObject.getString("msg"),1000);
+                                    }
+                                });
+                            }
+
+                        }, resultJson.getString("contractAddress"), result);
+                    } else {
+                        transfer_privateKey = privateKey;
+                        resultJson.put("privateKey", transfer_privateKey);
+                        resultJson.put("action", ACTION_KEY_PAIR_UTILS);
+                        resultJson.put("id", id);
+                        mWvbridge.callHandler("dappKeyPairUtils", new Gson().toJson(resultJson), data -> {
+                            Logger.d("dappKeyPairUtils====>",(String) data);
+                            com.alibaba.fastjson.JSONObject resultObject = JSON.parseObject((String) data);
+                            int success = resultObject.getInteger("success");
+                            Logger.d("dappKeyPairUtils====>",new Gson().toJson(success));
+                            if (success == 1) {
+                                mWebView.sendSuccessToWeb(resultObject.get("data"),jsonObject.getString("id"));
+                            } else {
+                                mWebView.sendFailToWeb(
+                                    jsonObject.getString("id"),
+                                    resultObject.getString("msg"),1000);
+                            }                        
+                        });
+                    }
+                });
             } else {
                 runOnUiThread(() -> dismissLoading());
                 mWebView.sendFailToWeb(id, "Data parsing failed", 1002);

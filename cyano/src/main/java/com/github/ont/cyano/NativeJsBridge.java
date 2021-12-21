@@ -19,6 +19,7 @@ import static com.github.ont.cyano.Constant.INVOKE;
 import static com.github.ont.cyano.Constant.INVOKE_PASSWORD_FREE;
 import static com.github.ont.cyano.Constant.INVOKE_READ;
 import static com.github.ont.cyano.Constant.LOGIN;
+import static com.github.ont.cyano.Constant.KEY_PAIR_UTILS;
 
 public class NativeJsBridge {
     private HandleAuthentication handleAuthentication;
@@ -31,6 +32,7 @@ public class NativeJsBridge {
     private HandleInvokePasswordFree handleInvokePasswordFree;
     private HandleGetIdentity handleGetIdentity;
     private HandleConnect handleConnect;
+    private HandleKeyPairUtils handleKeyPairUtils;
 
 
     private CyanoWebView cyanoWebView;
@@ -114,6 +116,11 @@ public class NativeJsBridge {
                         handleGetIdentity.handleAction(result);
                     }
                     break;
+                case KEY_PAIR_UTILS:
+                    if (handleKeyPairUtils != null) {
+                        handleKeyPairUtils.handleAction(result);
+                    }
+                    break;
                 default:
             }
         } catch (JSONException e) {
@@ -162,6 +169,10 @@ public class NativeJsBridge {
         this.handleInvokePasswordFree = handleInvokePasswordFree;
     }
 
+    public void setHandleKeyPairUtils(HandleKeyPairUtils handleKeyPairUtils) {
+        this.handleKeyPairUtils = handleKeyPairUtils;
+    }
+
     public interface HandleAuthentication {
         public void handleAction(String data);
     }
@@ -200,6 +211,10 @@ public class NativeJsBridge {
 
     public interface HandleInvokePasswordFree {
         public void handleAction(String data, String message);
+    }
+    
+    public interface HandleKeyPairUtils {
+        public void handleAction(String data);
     }
 
 

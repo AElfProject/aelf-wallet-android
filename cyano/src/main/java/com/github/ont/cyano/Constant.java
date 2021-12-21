@@ -47,6 +47,7 @@ public class Constant {
     public static final String CYANO_WEB_TAG = "aelf://aelf.io?";
     public static final String CYANO_SPLIT_TAG = "params=";
     public static final String CONNECT = "connect";//与客户端进行初始化连接交换公钥
+    public static final String KEY_PAIR_UTILS = "keyPairUtils";
 
     //Error Code
     public static final int PARAMS_ERROR = 80001;

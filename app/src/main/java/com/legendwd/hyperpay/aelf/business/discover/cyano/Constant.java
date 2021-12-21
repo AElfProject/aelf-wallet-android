@@ -11,6 +11,7 @@ public class Constant {
     public static final String ACTION_API = "api";
     public static final String ACTION_DISCONNECT = "disconnect";
     public static final String ACTION_GET_CONTRACT_METHODS = "getContractMethods";
+    public static final String ACTION_KEY_PAIR_UTILS = "keyPairUtils";
 
 
 

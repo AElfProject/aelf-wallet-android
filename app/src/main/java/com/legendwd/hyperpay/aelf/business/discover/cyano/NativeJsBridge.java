@@ -17,6 +17,7 @@ import static com.legendwd.hyperpay.aelf.business.discover.cyano.Constant.ACTION
 import static com.legendwd.hyperpay.aelf.business.discover.cyano.Constant.ACTION_INVOKEREAD;
 import static com.legendwd.hyperpay.aelf.business.discover.cyano.Constant.CYANO_SPLIT_TAG;
 import static com.legendwd.hyperpay.aelf.business.discover.cyano.Constant.CYANO_WEB_TAG;
+import static com.legendwd.hyperpay.aelf.business.discover.cyano.Constant.ACTION_KEY_PAIR_UTILS;
 
 
 public class NativeJsBridge {
@@ -29,6 +30,7 @@ public class NativeJsBridge {
     private HandleDisconnect handleDisconnect;
     private HandleGetContractMethos handleGetContractMethos;
     private CyanoWebView cyanoWebView;
+    private HandleKeyPairUtils handleKeyPairUtils;
 
     public NativeJsBridge(CyanoWebView cyanoWebView) {
         this.cyanoWebView = cyanoWebView;
@@ -87,6 +89,11 @@ public class NativeJsBridge {
                         handleGetContractMethos.handleAction(result);
                     }
                     break;
+                case ACTION_KEY_PAIR_UTILS:
+                    if (handleKeyPairUtils != null) {
+                        handleKeyPairUtils.handleAction(result);
+                    }
+                    break;
                 default:
             }
         } catch (JSONException e) {
@@ -120,6 +127,10 @@ public class NativeJsBridge {
         void handleAction(String data);
     }
 
+    public interface HandleKeyPairUtils {
+        void handleAction(String data);
+    }
+
 
     public void setHandleInvokeRead(HandleInvokeRead handleInvokeRead) {
         this.handleInvokeRead = handleInvokeRead;
@@ -147,5 +158,8 @@ public class NativeJsBridge {
 
     public void setHandleGetContractMethos(HandleGetContractMethos handleGetContractMethos) {
         this.handleGetContractMethos = handleGetContractMethos;
+    }
+    public void setHandleKeyPairUtils(HandleKeyPairUtils handleKeyPairUtils) {
+        this.handleKeyPairUtils = handleKeyPairUtils;
     }
 }
