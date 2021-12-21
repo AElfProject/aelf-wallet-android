@@ -195,9 +195,7 @@ public class MarketAllFragment extends BaseFragment implements IMarketView {
                 iterator.remove();
             }
         }
-
-        if (aelfBean != null)
-            mBeanList.add(2,aelfBean);
+        if (aelfBean != null && mSortType == -1) mBeanList.add(2,aelfBean);
         mMarketAdapter.refreshView(mBeanList);
     }
 
@@ -269,31 +267,28 @@ public class MarketAllFragment extends BaseFragment implements IMarketView {
             }
         }
 
+        if (aelfBean != null && type == TYPE_PULL_DOWN) mBeanList.add(2,aelfBean);
 
-        if (aelfBean != null)
-            mBeanList.add(2,aelfBean);
-
-
-            if (mMarketAdapter == null) {
-            mRvMarket.setLayoutManager(new LinearLayoutManager(_mActivity));
-            mMarketAdapter = new MarketAllAdapter(mBeanList);
-            mRvMarket.setAdapter(mMarketAdapter);
-            mMarketAdapter.setOnItemClickListener(o -> {
-                if (o == null) {
-                    refresh.autoRefresh();
-                } else {
-                    Bundle bundle = new Bundle();
-                    MarketDataBean bean = mBeanList.get((Integer) o);
-                    bundle.putSerializable("bean", bean);
-                    bundle.putString("name", bean.getId());
-                    bundle.putString("price", bean.getCurrentPrice() + "");
-                    bundle.putString("increase", bean.getPriceChangePercentage24h() + "");
-                    ((BaseFragment) getParentFragment()).startBrotherFragment(HomeMarketFragment.newInstance(bundle));
-                }
-            });
-        } else {
-            mMarketAdapter.refreshView(mBeanList);
-        }
+        if (mMarketAdapter == null) {
+        mRvMarket.setLayoutManager(new LinearLayoutManager(_mActivity));
+        mMarketAdapter = new MarketAllAdapter(mBeanList);
+        mRvMarket.setAdapter(mMarketAdapter);
+        mMarketAdapter.setOnItemClickListener(o -> {
+            if (o == null) {
+                refresh.autoRefresh();
+            } else {
+                Bundle bundle = new Bundle();
+                MarketDataBean bean = mBeanList.get((Integer) o);
+                bundle.putSerializable("bean", bean);
+                bundle.putString("name", bean.getId());
+                bundle.putString("price", bean.getCurrentPrice() + "");
+                bundle.putString("increase", bean.getPriceChangePercentage24h() + "");
+                ((BaseFragment) getParentFragment()).startBrotherFragment(HomeMarketFragment.newInstance(bundle));
+            }
+        });
+    } else {
+        mMarketAdapter.refreshView(mBeanList);
+    }
     }
 
     @Override
