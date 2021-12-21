@@ -50,6 +50,8 @@ import io.reactivex.subjects.BehaviorSubject;
 import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
+import static com.legendwd.hyperpay.aelf.AelfApplication.PRIVATEKEY_DAPP;
+import java.util.HashMap;
 
 public abstract class BaseFragment extends SwipeBackFragment implements LifecycleProvider<ActivityEvent> {
     protected Toolbar mToolbar;
@@ -244,6 +246,7 @@ public abstract class BaseFragment extends SwipeBackFragment implements Lifecycl
         String udid = CacheUtil.getInstance().getProperty(Constant.Sp.UDID);
         CacheUtil.getInstance().clearAllData();
         CacheUtil.getInstance().setProperty(Constant.Sp.UDID, udid);
+        PRIVATEKEY_DAPP = new HashMap();
     }
 
     /**
