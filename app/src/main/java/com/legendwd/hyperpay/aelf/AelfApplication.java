@@ -76,7 +76,7 @@ public class AelfApplication extends MultiDexApplication {
 
         initUmeng();
 
-        CrashReport.initCrashReport(getApplicationContext(), "176e87ee13", false);
+        CrashReport.initCrashReport(getApplicationContext(), "00071bffac", false);
 
         sContext = this;
         String udid = Util.getUDID(AelfApplication.this);
