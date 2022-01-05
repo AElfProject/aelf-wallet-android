@@ -347,7 +347,7 @@ public class HomeMarketFragment extends BaseFragment implements IMarketLineView 
 
             createMarketDetailBean(getString(R.string.market_value), symbol +" "+ bean.getMarketCap());
             createMarketDetailBean(getString(R.string.market_rank), "#" + bean.getMarketCapRank());
-            createMarketDetailBean(getString(R.string.market_24), symbol+" "+bean.getMarketCapChange24h());
+            createMarketDetailBean(getString(R.string.market_24), symbol+" "+bean.getTotalVolume());
             createMarketDetailBean(getString(R.string.market_supply), bean.getTotalSupply());
 
 

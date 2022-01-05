@@ -3,6 +3,7 @@ package com.legendwd.hyperpay.aelf.db;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import android.text.TextUtils;
 
 /**
  * @author myth_li
@@ -197,7 +198,10 @@ public class MarketDatadb {
     }
 
     public String getTotalSupply() {
-        return totalSupply;
+        if(TextUtils.isEmpty(totalSupply)){
+            return "--";
+        }
+        return totalSupply ;
     }
 
     public void setTotalSupply(String totalSupply) {

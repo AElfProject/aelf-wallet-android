@@ -3,6 +3,7 @@ package com.legendwd.hyperpay.aelf.model.bean;
 import com.google.gson.annotations.SerializedName;
 import com.legendwd.hyperpay.aelf.base.BaseAdapterModel;
 import com.legendwd.hyperpay.aelf.util.StringUtil;
+import android.text.TextUtils;
 
 import java.io.Serializable;
 
@@ -234,7 +235,10 @@ public class MarketDataBean extends BaseAdapterModel implements Serializable, Co
     }
 
     public String getTotalSupply() {
-        return totalSupply;
+        if(TextUtils.isEmpty(totalSupply)){
+            return "--";
+        }
+        return totalSupply ;
     }
 
     public void setTotalSupply(String totalSupply) {
