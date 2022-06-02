@@ -40,6 +40,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.legendwd.hyperpay.lib.Logger;
+import com.google.gson.Gson;
 
 public class DappAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -155,18 +157,23 @@ public class DappAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if (holder instanceof RecommendedViewHolder) {
             mReList = mDappListBean.getDapp();
             mDappRecommedItemAdapter = new DappRecommendItemAdapter(mFragment, mReList);
-            ((RecommendedViewHolder) holder).recyclerView.addItemDecoration(new GridSpacingItemDecoration(4, ScreenUtils.dip2px(mFragment.getContext(), 25), false));
-            ((RecommendedViewHolder) holder).recyclerView.setLayoutManager(new GridLayoutManager(mFragment.getContext(), 4));
-            ((RecommendedViewHolder) holder).recyclerView.setAdapter(mDappRecommedItemAdapter);
-            ((RecommendedViewHolder) holder).tv_more.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString(Constant.BundleKey.DAPP_GROUP_NAME, mFragment.getString(R.string.recommended));
-                    bundle.putString(Constant.BundleKey.DAPP_GROUP_CAT, "-1");
-                    mFragment.startBrotherFragment(DappGameListFragment.newInstance(bundle));
-                }
-            });
+            RecommendedViewHolder recommendedViewHolder = (RecommendedViewHolder) holder;
+            recommendedViewHolder.recyclerView.addItemDecoration(new GridSpacingItemDecoration(4, ScreenUtils.dip2px(mFragment.getContext(), 25), false));
+            recommendedViewHolder.recyclerView.setLayoutManager(new GridLayoutManager(mFragment.getContext(), 4));
+            recommendedViewHolder.recyclerView.setAdapter(mDappRecommedItemAdapter);
+            if(mReList instanceof DappListBean  && mReList.size() > 8) {
+                recommendedViewHolder.tv_more.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(Constant.BundleKey.DAPP_GROUP_NAME, mFragment.getString(R.string.recommended));
+                        bundle.putString(Constant.BundleKey.DAPP_GROUP_CAT, "-1");
+                        mFragment.startBrotherFragment(DappGameListFragment.newInstance(bundle));
+                    }
+                });
+            } else {
+                recommendedViewHolder.tv_more.setVisibility(View.GONE);
+            }
         } else if (holder instanceof ExchangeViewHolder) {
             mExList = mDappListBean.getList();
             DappGroupItemAdapter adapter = new DappGroupItemAdapter(mFragment, mExList);

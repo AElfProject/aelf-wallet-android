@@ -21,6 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import android.view.View;
 
 /**
  * Created by haohz
@@ -51,7 +52,6 @@ public class DappGroupItemAdapter extends RecyclerView.Adapter<RecyclerView.View
         viewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(mFragment.getContext()));
         viewHolder.tv_name.setText(dappGroupBean.getCategoryTitle());
         viewHolder.recyclerView.setAdapter(adapter);
-
         viewHolder.tx_game_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +61,7 @@ public class DappGroupItemAdapter extends RecyclerView.Adapter<RecyclerView.View
                 mFragment.startBrotherFragment(DappGameListFragment.newInstance(bundle));
             }
         });
+        viewHolder.tx_game_more.setVisibility(View.GONE);
     }
 
     @Override
