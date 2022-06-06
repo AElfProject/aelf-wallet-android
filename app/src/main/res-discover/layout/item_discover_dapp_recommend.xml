@@ -13,13 +13,13 @@
         android:layout_height="60dp" />
 
     <TextView
-        android:singleLine="true"
-        android:lines="1"
-        android:ellipsize="end"
+        android:maxLines="2"
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="28sp"
         android:layout_marginTop="3dp"
         android:textColor="#09162D"
-        android:textSize="13sp" />
+        android:textSize="10sp" 
+        android:textStyle="bold"
+        android:gravity="center"/>
 </LinearLayout>

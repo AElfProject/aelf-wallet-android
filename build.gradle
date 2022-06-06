@@ -2,12 +2,12 @@
 
 buildscript {
     repositories {
-        maven { url 'https://jitpack.io' }
-        maven { url 'https://maven.aliyun.com/repository/public' }
-        maven { url 'https://maven.aliyun.com/repository/central' }
-        maven { url 'https://maven.aliyun.com/repository/google' }
-        maven { url 'https://maven.aliyun.com/repository/public' }
-        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        // maven { url 'https://jitpack.io' }
+        // maven { url 'https://maven.aliyun.com/repository/public' }
+        // maven { url 'https://maven.aliyun.com/repository/central' }
+        // maven { url 'https://maven.aliyun.com/repository/google' }
+        // maven { url 'https://maven.aliyun.com/repository/public' }
+        // maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
         google()
         jcenter()
 
@@ -22,15 +22,15 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url 'https://jitpack.io' }
-        maven { url "net.sf.json.JSONObject" }
-        maven { url 'https://maven.aliyun.com/repository/public' }
-        maven { url 'https://maven.aliyun.com/repository/central' }
-        maven { url 'https://maven.aliyun.com/repository/google' }
-        maven { url 'https://maven.aliyun.com/repository/public' }
-        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        // maven { url 'https://maven.aliyun.com/repository/public' }
+        // maven { url 'https://maven.aliyun.com/repository/central' }
+        // maven { url 'https://maven.aliyun.com/repository/google' }
+        // maven { url 'https://maven.aliyun.com/repository/public' }
+        // maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
         google()
         jcenter()
+        maven { url 'https://jitpack.io' }
+        maven { url "net.sf.json.JSONObject" }
 
     }
 }
@@ -39,8 +39,8 @@ ext {
     minSdkVersion = 16
     targetSdkVersion = 30
     compileSdkVersion = 28
-    versionName = '1.1.4'
-    versionCode = 1641373746
+    versionName = '1.1.6'
+    versionCode = 1654067434
 }
 
 task clean(type: Delete) {

@@ -1,7 +1,7 @@
 [
   {
-    "name": "默认配置",
-    "nameEn": "Default",
+    "name": "主网",
+    "nameEn": "Mainnet",
     "url": "https://app-wallet-api.aelf.io/",
     "node": ""
   },
