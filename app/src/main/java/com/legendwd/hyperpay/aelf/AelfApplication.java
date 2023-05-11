@@ -29,8 +29,7 @@ import com.legendwd.hyperpay.lib.Logger;
 import com.legendwd.hyperpay.lib.Util;
 import com.legendwd.hyperpay.router.IMainService;
 import com.legendwd.hyperpay.router.Router;
-import com.tencent.bugly.crashreport.CrashReport;
-// import com.tencent.smtt.sdk.QbSdk;
+// import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
@@ -76,7 +75,7 @@ public class AelfApplication extends MultiDexApplication {
 
         initUmeng();
 
-        CrashReport.initCrashReport(getApplicationContext(), "00071bffac", false);
+        // CrashReport.initCrashReport(getApplicationContext(), "00071bffac", false);
 
         sContext = this;
         String udid = Util.getUDID(AelfApplication.this);

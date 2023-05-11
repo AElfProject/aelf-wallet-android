@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.umeng.message.lib"
-    android:versionCode="1654067434"
-    android:versionName="1.1.6">
+    android:versionCode="1683772051"
+    android:versionName="1.1.7">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -44,7 +44,8 @@
 
         <receiver
             android:name="com.taobao.accs.EventReceiver"
-            android:process=":channel">
+            android:process=":channel"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -62,7 +63,8 @@
 
         <receiver
             android:name="com.taobao.accs.ServiceReceiver"
-            android:process=":channel">
+            android:process=":channel"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.taobao.accs.intent.action.COMMAND" />
             </intent-filter>
@@ -134,7 +136,7 @@
 
         <service
             android:name="com.umeng.message.UmengMessageCallbackHandlerService"
-            android:exported="false"
+            android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE">
             <intent-filter>
                 <action android:name="com.umeng.messge.registercallback.action" />
